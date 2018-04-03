@@ -24,6 +24,8 @@ public class UserInfoQuerry implements MessageCreateListener {
 					.addField("Display Name", author.getDisplayName(), true)
 					.addField("Name + Discriminator", author.getDiscriminatedName(), true)
 					.addField("User Id", author.getIdAsString(), true)
+//					.addField("Cash", , )
+//					.addField("Level", , )
 					.setAuthor(author);
 			// Keep in mind that a message author can either be a webhook or a normal user
 			author.asUser().ifPresent(user -> {

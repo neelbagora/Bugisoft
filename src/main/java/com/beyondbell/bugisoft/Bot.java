@@ -1,7 +1,10 @@
 package com.beyondbell.bugisoft;
 
+import com.beyondbell.bugisoft.AdminCommands.CopyAvatar;
 import com.beyondbell.bugisoft.Ping.Ping;
+import com.beyondbell.bugisoft.Ping.PingReceiver;
 import com.beyondbell.bugisoft.UserInfo.UserInfoQuerry;
+import com.beyondbell.bugisoft.UserInfo.UserInfoRegister;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 
@@ -13,30 +16,23 @@ public class Bot {
 	 * @param args The arguments for the program. The first element should be the bot's token.
 	 */
 	public static void main(String[] args) {
-		if (args.length < 1) {
-			System.err.println("Please provide a valid token as the first argument!");
-			return;
-		}
+		String token = ""; // TODO Make This Read From a File
 
-		// Enable debugging, if no slf4j logger was found
-//		LoggerUtil.setDebug(true);
+		DiscordApi client = new DiscordApiBuilder().setToken(token).login().join();
 
-		// The token is the first argument of the program
-		String token = args[0];
+		// Ping
+		client.addMessageCreateListener(new Ping());
+		client.addMessageCreateListener(new PingReceiver());
 
-		// We login blocking, just because it is simpler and doesn't matter here
-		DiscordApi api = new DiscordApiBuilder().setToken(token).login().join();
+		// User Info
+		client.addMessageCreateListener(new UserInfoRegister());
+		client.addMessageCreateListener(new UserInfoQuerry());
 
-		// Print the invite url of the bot
-		System.out.println("You can invite me by using the following url: " + api.createBotInvite());
+		// Admin Commands
+		client.addMessageCreateListener(new CopyAvatar());
 
-		// Add listeners
-		api.addMessageCreateListener(new Ping());
-		api.addMessageCreateListener(new UserInfoQuerry());
-
-		// Log a message, if the bot joined or left a server
-		api.addServerJoinListener(event -> System.out.println("Joined server " + event.getServer().getName()));
-		api.addServerLeaveListener(event -> System.out.println("Left server " + event.getServer().getName()));
+		// Other
+		client.addMessageCreateListener(new TestCommand()); // TODO Remove
 	}
 
 }

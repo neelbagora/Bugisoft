@@ -1,35 +1,18 @@
 package com.beyondbell.bugisoft.Ping;
 
+import com.beyondbell.bugisoft.TextFormatters.InputFormatter;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
 
-public class Ping implements MessageCreateListener {
+import java.util.ArrayList;
 
-	/*
-	 * This command can be used to set the bot's avatar.
-	 * It can only be used by the bot's owner.
-	 */
+public class Ping implements MessageCreateListener {
 	@Override
 	public void onMessageCreate(MessageCreateEvent event) {
-		// Check if the message content equals "!copyAvatar"
-		if (event.getMessage().getContent().equalsIgnoreCase("!copyAvatar")) {
-
-			// Check if the author is the creator of the bot (you!).
-			// You don't want that everyone can set the bot's avatar.
-			if (!event.getMessage().getAuthor().isBotOwner()) {
-				event.getChannel().sendMessage("You are not allowed to use this command!");
-				return;
-			}
-
-			event.getApi()
-					.updateAvatar(event.getMessage().getAuthor().getAvatar()) // Update the avatar
-					.thenAccept(aVoid -> event.getChannel().sendMessage("Ok, I'm now using your avatar :-)")) // Send the user a message if the update was successful
-					.exceptionally(throwable -> {
-						// Send the user a message, if the update failed
-						event.getChannel().sendMessage("Something went wrong: " + throwable.getMessage());
-						return null;
-					});
+		ArrayList<String> parameters = InputFormatter.stringToParameters(event);
+		if (parameters.size() == 2 && parameters.get(0).equals("!") && parameters.get(1).equals("ping")) {
+			event.getChannel().sendMessage("Ping Calculating...");
+			PingCoordinator.startingTime = System.currentTimeMillis();
 		}
 	}
-
 }
