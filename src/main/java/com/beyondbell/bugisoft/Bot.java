@@ -3,36 +3,62 @@ package com.beyondbell.bugisoft;
 import com.beyondbell.bugisoft.AdminCommands.CopyAvatar;
 import com.beyondbell.bugisoft.Ping.Ping;
 import com.beyondbell.bugisoft.Ping.PingReceiver;
-import com.beyondbell.bugisoft.UserInfo.UserInfoQuerry;
+import com.beyondbell.bugisoft.UserInfo.UserInfoQuery;
 import com.beyondbell.bugisoft.UserInfo.UserInfoRegister;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 
-public class Bot {
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
-	/**
-	 * The entrance point of our program.
-	 *
-	 * @param args The arguments for the program. The first element should be the bot's token.
-	 */
+class Bot {
+	private static DiscordApi client;
+	private static String token;
+
 	public static void main(String[] args) {
-		String token = ""; // TODO Make This Read From a File
+		loadProperties();
+		initBot();
+		addListeners();
+	}
 
-		DiscordApi client = new DiscordApiBuilder().setToken(token).login().join();
+	private static void loadProperties() {
+		Properties botProperties = new Properties();
+		FileInputStream botPropertiesFile;
+		try {
+			botPropertiesFile = new FileInputStream("botProperties");
+			botProperties.load(botPropertiesFile);
+			botPropertiesFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		token = String.valueOf(botProperties.get("token"));
+	}
 
-		// Ping
-		client.addMessageCreateListener(new Ping());
-		client.addMessageCreateListener(new PingReceiver());
+	private static void initBot() {
+		client = new DiscordApiBuilder().setToken(token).login().join();
+	}
 
-		// User Info
-		client.addMessageCreateListener(new UserInfoRegister());
-		client.addMessageCreateListener(new UserInfoQuerry());
-
-		// Admin Commands
-		client.addMessageCreateListener(new CopyAvatar());
-
+	private static void addListeners() {
+		addAdminListeners();
+		addUserInfoListeners();
+		addPingListeners();
 		// Other
 		client.addMessageCreateListener(new TestCommand()); // TODO Remove
+	}
+
+	private static void addAdminListeners() {
+		client.addMessageCreateListener(new CopyAvatar());
+	}
+
+	private static void addUserInfoListeners() {
+		client.addMessageCreateListener(new UserInfoRegister());
+		client.addMessageCreateListener(new UserInfoQuery());
+	}
+
+	private static void addPingListeners() {
+		client.addMessageCreateListener(new Ping());
+		client.addMessageCreateListener(new PingReceiver());
 	}
 
 }
