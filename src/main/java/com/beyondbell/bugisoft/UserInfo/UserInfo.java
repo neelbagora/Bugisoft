@@ -1,45 +1,75 @@
 package com.beyondbell.bugisoft.UserInfo;
 
+import org.javacord.api.entity.message.MessageAuthor;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 class UserInfo {
-	private final String username;
-	private int level;
-	private double cash;
+	private Properties userProperties = new Properties();
 
-	private int wins;
-	private int losses;
+	UserInfo(MessageAuthor user) {
+		FileInputStream userPropertiesFileIn;
+		try { // Attempts to Reach the File
+			userPropertiesFileIn = new FileInputStream("users/" + user.getIdAsString());
+			userProperties.load(userPropertiesFileIn);
+		} catch (FileNotFoundException e) {
+			Properties defaultUserProperties = new Properties();
+			try {
+				FileInputStream defaultUserPropertiesFile = new FileInputStream("defaultUserProperties");
+				defaultUserProperties.load(defaultUserPropertiesFile);
+				defaultUserPropertiesFile.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 
-	UserInfo(String username) {
-		this.username = username;
-	}
+			defaultUserProperties.setProperty("id", user.getIdAsString());
+			defaultUserProperties.setProperty("username", user.getDiscriminatedName());
 
-	UserInfo(String username, double cash) {
-		this.username = username;
-		this.cash = cash;
-	}
+			try {
+				FileOutputStream userPropertiesFileOut = new FileOutputStream("users/" + user.getIdAsString());
+				defaultUserProperties.store(userPropertiesFileOut, user.getName());
+				userPropertiesFileOut.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 
-	UserInfo(String username, int level, double cash) {
-		this.username = username;
-		this.level = level;
-		this.cash = cash;
+			try {
+				userPropertiesFileIn = new FileInputStream("users/" + user.getIdAsString());
+				userProperties.load(userPropertiesFileIn);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	String getUsername() {
-		return username;
+		return userProperties.getProperty("username");
 	}
 
-	public int getLevel() {
-		return level;
+	String getLevel() {
+		return userProperties.getProperty("level");
 	}
 
-	public double getCash() {
-		return cash;
+	String getCash() {
+		return userProperties.getProperty("cash");
 	}
 
-	public int getWins() {
-		return wins;
+	String getWins() {
+		return userProperties.getProperty("wins");
 	}
 
-	public int getLosses() {
-		return losses;
+	String getLosses() {
+		return userProperties.getProperty("losses");
+	}
+
+	String getID() {
+		return userProperties.getProperty("id");
 	}
 }
