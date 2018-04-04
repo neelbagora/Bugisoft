@@ -12,9 +12,10 @@ public class UserInfoRegister implements MessageCreateListener {
 	public void onMessageCreate(MessageCreateEvent event) {
 		ArrayList<String> parameters = InputFormatter.stringToParameters(event);
 		if (parameters.size() == 2 && parameters.get(0).equals(";") && parameters.get(1).equals("register")) {
+			UserInfoDatabase.registerUser(event.getMessage().getAuthor());
 			event.getChannel().sendMessage(new EmbedBuilder()
-					.setTitle("Ping Query")
-					.addField("Ping", "IDFK", true)
+					.setTitle("Register Receipt")
+					.addField("Has Registered", "Yes", true)
 					.setAuthor(event.getMessage().getAuthor()));
 		}
 	}
