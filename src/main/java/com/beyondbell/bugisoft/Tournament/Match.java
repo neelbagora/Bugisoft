@@ -1,4 +1,6 @@
 package com.beyondbell.bugisoft.Tournament;
 
-public class Match {
+class Match {
+	private Player[] blueTeam;
+	private Player[] orangeTeam;
 }

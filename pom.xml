@@ -6,7 +6,7 @@
 
     <groupId>com.beyondbell</groupId>
     <artifactId>bugisoft</artifactId>
-    <version>2018.3.27</version>
+    <version>2018.4.18</version>
     <build>
         <plugins>
             <plugin>
@@ -31,9 +31,7 @@
         <dependency>
             <groupId>de.btobastian</groupId>
             <artifactId>Javacord</artifactId>
-            <version>d6940c5</version>
+            <version>f306ace</version>
         </dependency>
-
     </dependencies>
-
 </project>
