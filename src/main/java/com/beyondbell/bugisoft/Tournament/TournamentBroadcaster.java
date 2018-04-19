@@ -16,17 +16,18 @@ public class TournamentBroadcaster {
 
 
 
-
+/*
 		switch (messageType) {
 			case GENERATING_BRACKET:
 				messages.add(event.getChannel().sendMessage("Ping Calculating..."));
 				return messages.size() - 1;
 				break;
 		}
+		*/
 
 		return -1;
 	}
-
+/*
 	static void endBroadcast(int ) {
 		if () {
 			ArrayList
@@ -36,8 +37,8 @@ public class TournamentBroadcaster {
 			messages.clear();
 		}
 	}
-
+*/
 	private static boolean isEmpty() {
-
+		return true;
 	}
 }

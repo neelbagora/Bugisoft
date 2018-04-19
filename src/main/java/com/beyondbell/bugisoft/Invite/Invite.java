@@ -16,7 +16,7 @@ public class Invite implements MessageCreateListener {
 
 		if (parameters.size() == 2 && parameters.get(0).equals("!") && parameters.get(1).equals("invite")) {
 			InviteBuilder inviteBuilder = new InviteBuilder((ServerChannel) event.getChannel());
-			inviteBuilder.create()
+			inviteBuilder.create();
 			event.getChannel().sendMessage();
 		}
 	}

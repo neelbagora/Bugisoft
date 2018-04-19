@@ -12,7 +12,7 @@ public class TournamentDatabase {
 	public void createTournament(TournamentType tournamentType) {
 		switch (tournamentType) {
 			case SingleElimination:
-				tournaments.add(new SingleEliminationTournament(matches));
+//				tournaments.add(new SingleEliminationTournament(matches));
 				break;
 			default:
 
