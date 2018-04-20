@@ -1,6 +1,7 @@
 package com.beyondbell.bugisoft.Report;
 
 
+import com.beyondbell.bugisoft.Logger.LoggerDatabase;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.user.User;
 import com.beyondbell.bugisoft.TextFormatters.InputFormatter;
@@ -9,6 +10,8 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
 import java.util.ArrayList;
+
+import com.beyondbell.bugisoft.Logger.LoggerDatabase.*;
 
 
 public class Report implements MessageCreateListener {
@@ -33,7 +36,7 @@ public class Report implements MessageCreateListener {
 
             //arranges messages into messages arrayList
             int count = 1;
-            Message messages = (Message) event.getChannel().getMessagesBefore(count, event.getMessageId());
+            Message[] messages = LoggerDatabase.getMessages(event, count);
             ArrayList<Message> storage = new ArrayList<>();
 
 
@@ -43,11 +46,11 @@ public class Report implements MessageCreateListener {
                 }else if(storage.size() == amount) {
                     break;
                 }
-                 else if(messages.getAuthor().getId() != id) {
+                 else if(messages[i].getAuthor().getId() != id) {
                     count+=1;
-                    messages = (Message) event.getChannel().getMessagesBefore(count, event.getMessage());
+                    messages = LoggerDatabase.getMessages(event,count);
                 } else if(storage.size() != amount){
-                    storage.add(messages);
+                    storage.add(messages[i]);
                 }
             }
 
