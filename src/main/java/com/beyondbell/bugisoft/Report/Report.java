@@ -40,8 +40,8 @@ public class Report implements MessageCreateListener {
             ArrayList<Message> storage = new ArrayList<>();
 
 
-            for(int i = 0; i < Integer.MAX_VALUE; i++) {
-                if(messages == null) {
+            for(int i = 0; i < messages.length; i++) {
+                if(messages[i] == null) {
                     break;
                 }else if(storage.size() == amount) {
                     break;
@@ -62,7 +62,7 @@ public class Report implements MessageCreateListener {
                 //for loop to add fields to embed
                 for(int i = amount; i > 0; i--) {
                     embed.addField("", storage.get(i).getContent());
-                    //embed.addField("Time: ", event.getMessage().get)
+
 
                 }
 
