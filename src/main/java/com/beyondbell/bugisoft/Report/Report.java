@@ -17,19 +17,19 @@ import com.beyondbell.bugisoft.Logger.LoggerDatabase.*;
 public class Report implements MessageCreateListener {
 
     public void onMessageCreate(MessageCreateEvent event) {
-        ArrayList<String> parameters = InputFormatter.stringToParameters(event);
+        final String[] parameters = InputFormatter.stringToParameters(event.getMessage().getReadableContent());
 
-        if(parameters.get(0).equals("!") && parameters.get(1).equals("report")) {
+        if(parameters[0].equals("!") && parameters[1].equals("report")) {
 
             //planning on using command to get amount user messages and sending them to chat
-            long id = Long.parseLong(parameters.get(2));
+            long id = Long.parseLong(parameters[2]);
 
             //identifies User
             User member = event.getServer().get().getMemberById(id).get();
             String display = event.getServer().get().getDisplayName(member);
 
             //number of messages
-            int amount = Integer.parseInt(parameters.get(3));
+            int amount = Integer.parseInt(parameters[3]);
 
             //current channel;
             TextChannel channel = event.getChannel();
