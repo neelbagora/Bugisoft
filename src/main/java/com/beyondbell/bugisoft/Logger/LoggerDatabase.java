@@ -4,7 +4,7 @@ import org.javacord.api.entity.message.Message;
 import org.javacord.api.event.Event;
 
 public class LoggerDatabase {
-	public Message[] getMessages(Event event, int numberOfMessages) {
+	public static Message[] getMessages(Event event, int numberOfMessages) {
 		return null;
 	}
 }
