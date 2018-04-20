@@ -5,13 +5,11 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
 
-import java.util.ArrayList;
-
 public class UserInfoQuery implements MessageCreateListener {
 	@Override
 	public void onMessageCreate(MessageCreateEvent event) {
-		ArrayList<String> parameters = InputFormatter.stringToParameters(event);
-		if (parameters.size() == 2 && parameters.get(0).equals(";") && parameters.get(1).equals("query")) {
+		final String[] parameters = InputFormatter.stringToParameters(event.getMessage().getReadableContent());
+		if (parameters.length == 2 && parameters[0].equals(";") && parameters[1].equals("query")) {
 			UserInfo user = UserInfoDatabase.findUser(event.getMessage().getAuthor());
 
 			EmbedBuilder embed = new EmbedBuilder()

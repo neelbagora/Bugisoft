@@ -1,18 +1,16 @@
 package com.beyondbell.bugisoft.TextFormatters;
 
-import org.javacord.api.event.message.MessageCreateEvent;
-
 import java.util.ArrayList;
 
 public class InputFormatter {
-	public static ArrayList<String> stringToParameters(MessageCreateEvent event) {
-		String message = event.getMessage().getContent();
 
+	public static String[] stringToParameters(String message) {
 		ArrayList<String> parameters = new ArrayList<>();
+		String[] finalizedParameters = new String[0];
 
-		if (event.getMessage().getAuthor().isYourself() || message.length() == 0) {
+		if (message.length() == 0 || message.length() == 1) {
 			parameters.add("null");
-			return parameters;
+			return parameters.toArray(finalizedParameters);
 		}
 
 		// Checks for Command Prefix
@@ -31,7 +29,7 @@ public class InputFormatter {
 				break;
 			default:
 				parameters.add("null");
-				return parameters;
+				return parameters.toArray(finalizedParameters);
 		}
 
 		// Builds the Other Parameters
@@ -46,6 +44,10 @@ public class InputFormatter {
 		}
 		parameters.add(currentParameter.toString());
 
-		return parameters;
+		while (parameters.get(parameters.size() - 1).equals("")) {
+			parameters.remove(parameters.size() - 1);
+		}
+
+		return parameters.toArray(finalizedParameters);
 	}
 }

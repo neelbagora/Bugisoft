@@ -6,15 +6,13 @@ import org.javacord.api.entity.server.invite.InviteBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
 
-import java.util.ArrayList;
-
 public class Invite implements MessageCreateListener {
 
 	@Override
 	public void onMessageCreate(MessageCreateEvent event) {
-		ArrayList<String> parameters = InputFormatter.stringToParameters(event);
+		final String[] parameters = InputFormatter.stringToParameters(event.getMessage().getReadableContent());
 
-		if (parameters.size() == 2 && parameters.get(0).equals("!") && parameters.get(1).equals("invite")) {
+		if (parameters.length == 2 && parameters[0].equals("!") && parameters[1].equals("invite")) {
 			InviteBuilder inviteBuilder = new InviteBuilder((ServerChannel) event.getChannel());
 			inviteBuilder.create();
 			event.getChannel().sendMessage();
