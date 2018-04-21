@@ -20,6 +20,7 @@ class Bot {
 		loadProperties();
 		initBot();
 		addListeners();
+		token = null;
 	}
 
 	private static void loadProperties() {
@@ -43,8 +44,6 @@ class Bot {
 		addAdminListeners();
 		addUserInfoListeners();
 		addPingListeners();
-		// Other
-		client.addMessageCreateListener(new TestCommand()); // TODO Remove
 	}
 
 	private static void addAdminListeners() {
