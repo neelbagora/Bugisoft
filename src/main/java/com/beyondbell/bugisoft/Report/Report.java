@@ -37,6 +37,7 @@ public class Report implements MessageCreateListener {
             //arranges messages into messages arrayList
             int count = 1;
             Message[] messages = LoggerDatabase.getMessages(event, count);
+
             ArrayList<Message> storage = new ArrayList<>();
 
 
