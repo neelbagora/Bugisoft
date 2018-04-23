@@ -59,7 +59,7 @@ public class Report implements MessageCreateListener {
                 embed.setTitle("Messages from: " + display);
 
                 //for loop to add fields to embed
-                for(int i = amount - 1; i > -1; i--) {
+                for(int i = storage.size() - 1; i > -1; i--) {
                     embed.addField("", storage.get(i).getCreationTimestamp().toString() + ": " + storage.get(i).getContent());
                 }
                 embed.setAuthor(event.getMessage().getAuthor().getName());
