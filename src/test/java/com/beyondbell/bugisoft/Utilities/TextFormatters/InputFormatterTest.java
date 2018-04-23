@@ -1,4 +1,4 @@
-package com.beyondbell.bugisoft.TextFormatters;
+package com.beyondbell.bugisoft.Utilities.TextFormatters;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

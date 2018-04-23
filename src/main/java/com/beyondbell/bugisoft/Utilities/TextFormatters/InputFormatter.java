@@ -1,4 +1,4 @@
-package com.beyondbell.bugisoft.TextFormatters;
+package com.beyondbell.bugisoft.Utilities.TextFormatters;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
 package com.beyondbell.bugisoft.Invite;
 
-import com.beyondbell.bugisoft.TextFormatters.InputFormatter;
+import com.beyondbell.bugisoft.Utilities.TextFormatters.InputFormatter;
 import org.javacord.api.entity.channel.ServerChannel;
 import org.javacord.api.entity.server.invite.InviteBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
