@@ -7,11 +7,14 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class LoggerDatabase {
-	static String fileName = "";
+
+
+
+/*
 	public static Message[] getMessages(Event event, int numberOfMessages) throws IOException {
 		String log = readFile(fileName,numberOfMessages);
 		String[] messages = new String[numberOfMessages];
-		int index = log.indexOf("/n"); 
+		int index = log.indexOf("/n");
 		int initialIndex = 0;
 
 		for(int i = 0; i < messages.length; i++) {
@@ -48,5 +51,5 @@ public class LoggerDatabase {
 			br.close();
 		}
 	}
-
+	*/
 }
