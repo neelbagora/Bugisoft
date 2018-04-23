@@ -30,43 +30,37 @@ public class Report implements MessageCreateListener {
             //number of messages
             int amount = Integer.parseInt(parameters[3]);
 
-            //current channel;
-            TextChannel channel = event.getChannel();
+            //arranges messages into messages Array
+            int count = 100;
+            Message[] messages = LoggerDatabase.getMessages(event, count);
 
-            //arranges messages into messages arrayList
-            int count = 1;
-            MessageSet[] messages = new MessageSet[10];
-
-            ArrayList<Message> storage = new ArrayList<>();
+            ArrayList<Message> storage = new ArrayList<Message>();
 
 
             for(int i = 0; i < messages.length; i++) {
-
-                if(messages[i] == null) {
+                if(amount != storage.size()) {
+                    if(messages[i].getAuthor().getId() == id) {
+                        storage.add(messages[i]);
+                    } else if(messages[i] == null) {
+                        break;
+                    }
+                    if(i == count) {
+                        count += 100;
+                        messages = LoggerDatabase.getMessages(event, count);
+                    }
+                } else {
                     break;
-                }else if(storage.size() == amount) {
-                    break;
-                }
-                 else if() {
-                    count+=1;
-
-                } else if(storage.size() != amount){
-                    storage.add();
                 }
             }
 
             EmbedBuilder embed = new EmbedBuilder();
 
-                embed.setTitle(event.getServer().get().getDisplayName((event.getApi().getYourself()))
-                        + "Messages from: " + display);
+                embed.setTitle("Messages from: " + display);
 
                 //for loop to add fields to embed
                 for(int i = amount; i > 0; i--) {
-                    embed.addField("", storage.get(i).getContent());
-
-
+                    embed.addField("", storage.get(i).getCreationTimestamp().toString() + ": " + storage.get(i).getContent());
                 }
-
                 embed.setAuthor(event.getMessage().getAuthor().getName());
             event.getChannel().sendMessage(embed);
             event.getMessage().delete(event.getMessage().getIdAsString());
