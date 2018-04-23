@@ -4,14 +4,12 @@ package com.beyondbell.bugisoft.Report;
 import com.beyondbell.bugisoft.Logger.LoggerDatabase;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.user.User;
-import com.beyondbell.bugisoft.TextFormatters.InputFormatter;
+import com.beyondbell.bugisoft.Utilities.TextFormatters.InputFormatter;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
 import java.util.ArrayList;
-
-import com.beyondbell.bugisoft.Logger.LoggerDatabase.*;
 
 
 public class Report implements MessageCreateListener {
