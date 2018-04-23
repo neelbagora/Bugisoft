@@ -39,10 +39,11 @@ public class Report implements MessageCreateListener {
 
             for(int i = 0; i < messages.length; i++) {
                 if(amount != storage.size()) {
-                    if(messages[i].getAuthor().getId() == id) {
-                        storage.add(messages[i]);
-                    } else if(messages[i] == null) {
+                    if(messages[i] == null) {
                         break;
+                    }
+                    else if(messages[i].getAuthor().getId() == id) {
+                        storage.add(messages[i]);
                     }
                     if(i == count) {
                         count += 100;
@@ -58,7 +59,7 @@ public class Report implements MessageCreateListener {
                 embed.setTitle("Messages from: " + display);
 
                 //for loop to add fields to embed
-                for(int i = amount; i > 0; i--) {
+                for(int i = amount - 1; i > -1; i--) {
                     embed.addField("", storage.get(i).getCreationTimestamp().toString() + ": " + storage.get(i).getContent());
                 }
                 embed.setAuthor(event.getMessage().getAuthor().getName());
