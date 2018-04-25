@@ -3,20 +3,16 @@ package com.beyondbell.bugisoft.Tournament;
 import java.util.ArrayList;
 
 public class TournamentDatabase {
-	private ArrayList<Tournament> tournaments;
+	private static ArrayList<Tournament> tournaments = new ArrayList<>();
 
-	public enum TournamentType {
-		SingleElimination
+
+
+	static void createTournament(Tournament.TournamentType tournamentType, String name) {
+		tournaments.add(new Tournament(tournamentType, name));
 	}
 
-	public void createTournament(TournamentType tournamentType) {
-		switch (tournamentType) {
-			case SingleElimination:
-//				tournaments.add(new SingleEliminationTournament(matches));
-				break;
-			default:
-
-		}
+	static Tournament getTournament(int id) {
+		return tournaments.get(id);
 	}
 
 	public void startTournament(int id) {

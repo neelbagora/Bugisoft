@@ -3,6 +3,7 @@ package com.beyondbell.bugisoft;
 import com.beyondbell.bugisoft.AdminCommands.CopyAvatar;
 import com.beyondbell.bugisoft.Ping.Ping;
 import com.beyondbell.bugisoft.Ping.PingReceiver;
+import com.beyondbell.bugisoft.Tournament.TournamentTest;
 import com.beyondbell.bugisoft.UserInfo.UserInfoQuery;
 import com.beyondbell.bugisoft.UserInfo.UserInfoRegister;
 import org.javacord.api.DiscordApi;
@@ -21,6 +22,8 @@ class Bot {
 		initBot();
 		addListeners();
 		token = null;
+		// Anything Below This Line Should NOT Be Pushed
+		client.addMessageCreateListener(new TournamentTest());
 	}
 
 	private static void loadProperties() {
