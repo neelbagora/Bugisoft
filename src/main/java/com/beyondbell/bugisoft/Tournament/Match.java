@@ -119,6 +119,10 @@ class Match {
 
 	// Accessor Methods
 
+	boolean getBlueWon() {
+		return blueWon;
+	}
+
 	public Player[] getBlueTeam() {
 		return blueTeam;
 	}
@@ -150,6 +154,14 @@ class Match {
 			orangeTeamPrintable.append("\n");
 		}
 		return orangeTeamPrintable.toString();
+	}
+
+	String getMapsPlayedPrintable() {
+		StringBuilder mapsPlayed = new StringBuilder();
+		for (Map map : playedMaps) {
+			mapsPlayed.append(map).append("\t");
+		}
+		return mapsPlayed.toString();
 	}
 
 
