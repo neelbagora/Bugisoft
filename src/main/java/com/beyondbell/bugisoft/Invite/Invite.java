@@ -1,7 +1,6 @@
 package com.beyondbell.bugisoft.Invite;
 
 import com.beyondbell.bugisoft.Utilities.TextFormatters.InputFormatter;
-import org.javacord.api.entity.channel.ServerChannel;
 import org.javacord.api.entity.server.invite.InviteBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
@@ -9,70 +8,59 @@ import org.javacord.api.listener.message.MessageCreateListener;
 import java.util.concurrent.ExecutionException;
 
 public class Invite implements MessageCreateListener {
-
-
+	private String id;
+	private long timeout;
+	private MessageCreateEvent event;
 
 	@Override
 	public void onMessageCreate(MessageCreateEvent event) {
-		Thread thread = new Thread(this::deleteMessage);
-
-		thread.setDaemon(true);
 		final String[] parameters = InputFormatter.stringToParameters(event.getMessage().getReadableContent());
+		if (parameters.length >= 2 && parameters[0].equals("!") && parameters[1].equals("invite") && event.getServer().isPresent()) {
+			// Deletes the Original Message
+			event.getMessage().delete();
 
-		if (parameters.length == 2 && parameters[0].equals("!") && parameters[1].equals("invite")) {
-			InviteBuilder inviteBuilder = new InviteBuilder((ServerChannel) event.getChannel());
-			long id = event.getMessageId();
-			try {
-				event.getChannel().sendMessage(inviteBuilder.create().get().getUrl().toString());
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				e.printStackTrace();
-			}
+			// Starts Forming the Invite
+			InviteBuilder inviteBuilder = new InviteBuilder(event.getServer().get().getChannelById(event.getChannel().getId()).get())
+					.setMaxUses(1)
+					.setUnique(true)
+					.setAuditLogReason(event.getMessage().getAuthor().getDiscriminatedName() + " wanted an invite.");
+
 			if(parameters[3] != null) {
-				try {
-					id = event.getChannel().sendMessage(inviteBuilder.setMaxAgeInSeconds(Integer.parseInt(parameters[3]) * 60)
-							.create().toString()).get().getId();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-					e.printStackTrace();
-				}
-				try {
-					Thread.sleep(60000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				// Finishes Forming the Invite
+				inviteBuilder.setMaxAgeInSeconds(Integer.valueOf(parameters[3]) * 60);
 
+				// Sends the Message
+				try {
+					id = event.getChannel().sendMessage(inviteBuilder.create().toString()).get().getIdAsString();
+				} catch (InterruptedException | ExecutionException ignored) {}
 
+				// Sets Timeout
+				timeout = Integer.valueOf(parameters[3]) * 60;
 			} else {
-				try {
-					id = event.getChannel().sendMessage(inviteBuilder.setMaxAgeInSeconds(60)
-							.create().toString()).get().getId();
-				} catch(InterruptedException e) {
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-					e.printStackTrace();
-				}
+				// Finishes Forming the Invite
+				inviteBuilder.setMaxAgeInSeconds(60);
 
+				// Sends the Message
 				try {
-					Thread.sleep(60000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+					id = event.getChannel().sendMessage(inviteBuilder.create().toString()).get().getIdAsString();
+				} catch (InterruptedException | ExecutionException ignored) {}
 
+				// Sets Timeout
+				timeout = 60;
 			}
-			event.getChannel().deleteAll(id);
+			Thread thread = new Thread(this::deleteMessage);
+			thread.setDaemon(true);
+			this.event = event;
+			thread.start();
 		}
 	}
 
-	public void deleteMessage() {
-
+	private void deleteMessage() {
 		try {
-			thread.sleep(60000);
+			Thread.sleep(timeout);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
+		event.getChannel().deleteAll(id);
 	}
 }
