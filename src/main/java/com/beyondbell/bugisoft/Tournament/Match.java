@@ -81,7 +81,7 @@ class Match {
 		matchPhase = MatchPhase.BanningMaps;
 	}
 
-	public MatchPhase getMatchPhase() {
+	MatchPhase getMatchPhase() {
 		return matchPhase;
 	}
 
