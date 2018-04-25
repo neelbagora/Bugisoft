@@ -10,6 +10,7 @@ import java.util.ArrayList;
 abstract class Tournament {
 	private ArrayList<Player> players;
 	private ArrayList<Match> matches;
+	private int numberOfTeams;
 
 	public void OnMessageCreate(MessageCreateEvent event) {
 		final String[] parameters = InputFormatter.stringToParameters(event.getMessage().getReadableContent());
@@ -23,7 +24,8 @@ abstract class Tournament {
 			}
 		}
 		if(parameters[0].equals("!") && parameters[1].equals("setMatchSize") {
-			players.size() / 
+			numberOfTeams = players.size() / Integer.parseInt(parameters[3]);
+			
 		}
 	}
 
