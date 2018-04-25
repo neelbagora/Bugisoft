@@ -31,4 +31,8 @@ abstract class Tournament {
 		//TODO
 	}
 
+	public enum TournamentType {
+		SingleElimination
+	}
+
 }
