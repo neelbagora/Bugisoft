@@ -13,6 +13,7 @@ class Match {
 	private Map[] playedMaps;
 	private Operator[][] bannedOperators;
 
+	private boolean blueWon;
 	private boolean[] results;
 
 	public Match(Player[] blueTeam, Player[] orangeTeam, int numberOfMaps, boolean shouldBanOperators, int numberOfOperatorBans, boolean shouldBanOperatorsPerMap) {
