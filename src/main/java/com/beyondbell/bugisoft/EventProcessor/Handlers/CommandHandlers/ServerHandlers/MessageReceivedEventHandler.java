@@ -77,14 +77,12 @@ public class MessageReceivedEventHandler extends EventHandler {
 				switch (parameters[1]) {
 					case "join":
 						synchronized (event) {
-							System.out.println(10);
 							new JoinVoice(event);
 							event.getMessage().delete().queue();
 						}
 						break;
 					case "leave":
 						synchronized (event) {
-							System.out.println(11);
 							new LeaveVoice(event);
 							event.getMessage().delete().queue();
 						}
