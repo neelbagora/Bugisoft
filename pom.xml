@@ -6,7 +6,7 @@
 
     <groupId>com.beyondbell</groupId>
     <artifactId>bugisoft</artifactId>
-    <version>2018.4.18</version>
+    <version>0.1.0</version>
     <build>
         <plugins>
             <plugin>
@@ -22,16 +22,37 @@
 
     <repositories>
         <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
+            <id>jcenter</id>
+            <name>jcenter-bintray</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
+        <repository>
+            <id>central</id>
+            <name>bintray</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
+        <repository>
+            <id>central</id>
+            <name>bintray</name>
+            <url>http://jcenter.bintray.com</url>
         </repository>
     </repositories>
 
     <dependencies>
         <dependency>
-            <groupId>de.btobastian</groupId>
-            <artifactId>Javacord</artifactId>
-            <version>f306ace</version>
+            <groupId>net.dv8tion</groupId>
+            <artifactId>JDA</artifactId>
+            <version>3.6.0_359</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sedmelluq</groupId>
+            <artifactId>lavaplayer</artifactId>
+            <version>1.2.63</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sedmelluq</groupId>
+            <artifactId>jda-nas</artifactId>
+            <version>1.0.5</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

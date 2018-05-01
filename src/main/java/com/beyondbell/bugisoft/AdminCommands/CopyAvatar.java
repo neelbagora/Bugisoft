@@ -1,4 +1,6 @@
+/*
 package com.beyondbell.bugisoft.AdminCommands;
+
 
 import com.beyondbell.bugisoft.Utilities.TextFormatters.InputFormatter;
 import org.javacord.api.event.message.MessageCreateEvent;
@@ -24,3 +26,4 @@ public class CopyAvatar implements MessageCreateListener {
 		}
 	}
 }
+*/

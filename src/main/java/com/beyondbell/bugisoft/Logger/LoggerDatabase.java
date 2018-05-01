@@ -1,17 +1,20 @@
 package com.beyondbell.bugisoft.Logger;
 
 import com.beyondbell.bugisoft.Utilities.TextFormatters.LoggerFormatter;
-import org.javacord.api.entity.message.Message;
-import org.javacord.api.event.message.MessageCreateEvent;
+import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 public class LoggerDatabase {
-	public static Message[] getMessages(MessageCreateEvent event, int... messagesParameters) {
+	public static void logEvent() {
+
+	}
+
+	public static Message[] getMessages(MessageReceivedEvent event, int... messagesParameters) {
 		int numberOfMessages;
 		int startingMessage;
 		if (messagesParameters.length == 1) {
@@ -26,8 +29,8 @@ public class LoggerDatabase {
 		}
 
 		String path;
-		if (event.getServer().isPresent()) {
-			path = "Logs/" + event.getServer().get().getIdAsString() + "/" + event.getChannel().getIdAsString();
+		if (event.getGuild().checkVerification()) {
+			path = "Logs/" + event.getGuild().getId() + "/" + event.getChannel().getId();
 		} else {
 			// TODO Not a Server Catch!!!
 			return null; // Not Good
@@ -37,7 +40,6 @@ public class LoggerDatabase {
 		try {
 			BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
 			objects = bufferedReader.lines().toArray();
-
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -55,11 +57,7 @@ public class LoggerDatabase {
 
 		Message[] messages = new Message[numberOfMessages];
 		for (int i = 0; i < messages.length; i++) {
-			try {
-				messages[i] = event.getChannel().getMessageById(messageIDs.get(i)).get();
-			} catch (InterruptedException | ExecutionException e) {
-				e.printStackTrace();
-			}
+			messages[i] = event.getChannel().getMessageById(messageIDs.get(i)).complete();
 		}
 
 		return messages;

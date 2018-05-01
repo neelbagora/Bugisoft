@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class ArrayAndArrayListConverters {
-	public static Object[] arrayListToArrayConverter(ArrayList<Object> arrayList) {
-		Object[] array = new Object[arrayList.size()];
+	public static String[] arrayListToArrayConverter(ArrayList<String> arrayList) {
+		String[] array = new String[arrayList.size()];
 		for (int i = 0; i < arrayList.size(); i++) {
 			array[i] = arrayList.get(i);
 		}

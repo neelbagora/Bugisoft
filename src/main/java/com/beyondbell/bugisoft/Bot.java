@@ -1,32 +1,21 @@
 package com.beyondbell.bugisoft;
 
-import com.beyondbell.bugisoft.AdminCommands.CopyAvatar;
-import com.beyondbell.bugisoft.Ping.Ping;
-import com.beyondbell.bugisoft.Ping.PingReceiver;
-import com.beyondbell.bugisoft.Tournament.TournamentTest;
-import com.beyondbell.bugisoft.UserInfo.UserInfoQuery;
-import com.beyondbell.bugisoft.UserInfo.UserInfoRegister;
-import org.javacord.api.DiscordApi;
-import org.javacord.api.DiscordApiBuilder;
+import com.beyondbell.bugisoft.EventProcessor.EventCommandListener;
+import com.beyondbell.bugisoft.EventProcessor.EventLoggerListener;
+import com.beyondbell.bugisoft.EventProcessor.EventOtherListener;
+import com.beyondbell.bugisoft.Music.Music;
+import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
+import net.dv8tion.jda.core.AccountType;
+import net.dv8tion.jda.core.JDABuilder;
 
+import javax.security.auth.login.LoginException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
 class Bot {
-	private static DiscordApi client;
-	private static String token;
-
 	public static void main(String[] args) {
-		loadProperties();
-		initBot();
-		addListeners();
-		token = null;
-		// Anything Below This Line Should NOT Be Pushed
-		client.addMessageCreateListener(new TournamentTest());
-	}
-
-	private static void loadProperties() {
+		// Loads Bot Properties
 		Properties botProperties = new Properties();
 		FileInputStream botPropertiesFile;
 		try {
@@ -36,31 +25,23 @@ class Bot {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		token = String.valueOf(botProperties.get("token"));
-	}
 
-	private static void initBot() {
-		client = new DiscordApiBuilder().setToken(token).login().join();
-	}
+		// Initializes the Music Module
+		Music.init();
 
-	private static void addListeners() {
-		addAdminListeners();
-		addUserInfoListeners();
-		addPingListeners();
+		// Initializes the Bot
+		try {
+			new JDABuilder(AccountType.BOT)
+					.setToken(String.valueOf(botProperties.getProperty("token")))
+					.addEventListener(new EventCommandListener())
+					.addEventListener(new EventLoggerListener())
+					.addEventListener(new EventOtherListener())
+					.setAudioSendFactory(new NativeAudioSendFactory())
+					.buildBlocking();
+		} catch (LoginException e) {
+			System.out.println("Please Place the Correct Token Inside of the Bot Properties File");
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
-
-	private static void addAdminListeners() {
-		client.addMessageCreateListener(new CopyAvatar());
-	}
-
-	private static void addUserInfoListeners() {
-		client.addMessageCreateListener(new UserInfoRegister());
-		client.addMessageCreateListener(new UserInfoQuery());
-	}
-
-	private static void addPingListeners() {
-		client.addMessageCreateListener(new Ping());
-		client.addMessageCreateListener(new PingReceiver());
-	}
-
 }
