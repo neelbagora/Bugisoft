@@ -19,7 +19,7 @@ class UserInfo {
 		} catch (FileNotFoundException e) {
 			Properties defaultUserProperties = new Properties();
 			try {
-				FileInputStream defaultUserPropertiesFile = new FileInputStream("users/defaultUserProperties");
+				FileInputStream defaultUserPropertiesFile = new FileInputStream("defaultUserProperties");
 				defaultUserProperties.load(defaultUserPropertiesFile);
 				defaultUserPropertiesFile.close();
 			} catch (IOException e1) {
