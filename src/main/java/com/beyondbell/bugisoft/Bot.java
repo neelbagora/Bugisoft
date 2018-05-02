@@ -13,7 +13,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-class Bot {
+public class Bot {
 	public static void main(String[] args) {
 		// Loads Bot Properties
 		Properties botProperties = new Properties();
