@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 class UserInfo {
-	private Properties userProperties = new Properties();
+	private final Properties userProperties = new Properties();
 
 	UserInfo(User user) {
 		FileInputStream userPropertiesFileIn;
@@ -19,7 +19,7 @@ class UserInfo {
 		} catch (FileNotFoundException e) {
 			Properties defaultUserProperties = new Properties();
 			try {
-				FileInputStream defaultUserPropertiesFile = new FileInputStream("defaultUserProperties");
+				FileInputStream defaultUserPropertiesFile = new FileInputStream("users/defaultUserProperties");
 				defaultUserProperties.load(defaultUserPropertiesFile);
 				defaultUserPropertiesFile.close();
 			} catch (IOException e1) {

@@ -19,7 +19,7 @@ class Bot {
 		Properties botProperties = new Properties();
 		FileInputStream botPropertiesFile;
 		try {
-			botPropertiesFile = new FileInputStream("botProperties");
+			botPropertiesFile = new FileInputStream("token");
 			botProperties.load(botPropertiesFile);
 			botPropertiesFile.close();
 		} catch (IOException e) {

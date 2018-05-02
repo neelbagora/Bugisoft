@@ -5,7 +5,7 @@ import net.dv8tion.jda.core.entities.User;
 import java.util.ArrayList;
 
 class UserInfoDatabase {
-	private static ArrayList<UserInfo> users = new ArrayList<>();
+	private final static ArrayList<UserInfo> users = new ArrayList<>();
 
 	private static void registerUser(User user) {
 		users.add(new UserInfo(user));

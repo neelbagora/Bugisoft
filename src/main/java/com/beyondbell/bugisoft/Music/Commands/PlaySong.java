@@ -1,11 +1,13 @@
 package com.beyondbell.bugisoft.Music.Commands;
 
+import com.beyondbell.bugisoft.MessageDeleter.MessageDeleter;
 import com.beyondbell.bugisoft.Music.GuildMusicManager;
 import com.beyondbell.bugisoft.Music.Music;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -23,7 +25,9 @@ public class PlaySong {
 
 			@Override
 			public void trackLoaded(AudioTrack track) {
-				channel.sendMessage("Adding to queue " + track.getInfo().title).queue();
+				Message message;
+				message = channel.sendMessage("Adding to queue " + track.getInfo().title).complete();
+				new MessageDeleter(message, 5);
 
 				Music.play(channel.getGuild(), musicManager, track);
 			}
@@ -35,7 +39,8 @@ public class PlaySong {
 				Thread t = new Thread(this::queueSongs);
 				t.run();
 
-				channel.sendMessage("Added to Queue " + count + " songs of the playlist " + playlist.getName()).queue();
+				Message message = channel.sendMessage("Added to Queue " + count + " songs of the playlist " + playlist.getName()).complete();
+				new MessageDeleter(message, 5);
 			}
 
 			private void queueSongs() {
@@ -49,12 +54,14 @@ public class PlaySong {
 
 			@Override
 			public void noMatches() {
-				channel.sendMessage("Nothing found by " + trackUrl).queue();
+				Message message = channel.sendMessage("Nothing found by " + trackUrl).complete();
+				new MessageDeleter(message, 5);
 			}
 
 			@Override
 			public void loadFailed(FriendlyException exception) {
-				channel.sendMessage("Could not play: " + exception.getMessage()).queue();
+				Message message = channel.sendMessage("Could not play: " + exception.getMessage()).complete();
+				new MessageDeleter(message, 5);
 			}
 		});
 	}

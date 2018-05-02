@@ -42,7 +42,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>3.6.0_359</version>
+            <version>3.6.0_361</version>
         </dependency>
         <dependency>
             <groupId>com.sedmelluq</groupId>
@@ -57,7 +57,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.0.3</version>
+            <version>5.2.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
