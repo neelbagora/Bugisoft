@@ -12,14 +12,13 @@ import java.util.ArrayList;
 
 public class Report {
 
-    MessageReceivedEvent event;
-    int number;
-    public Report(MessageReceivedEvent event, int numberReports) {
+    private final MessageReceivedEvent event;
+    private final int number;
+
+
+    public Report (MessageReceivedEvent event, int numberReports) {
         this.event = event;
         number = numberReports;
-    }
-
-    public void onMessageCreate() {
         final String[] parameters = InputFormatter.stringToParameters(event.getMessage().getContentDisplay());
 
         if(parameters[0].equals("!") && parameters[1].equals("report")) {
@@ -38,17 +37,12 @@ public class Report {
             ArrayList<Message> storage = new ArrayList<Message>();
 
 
-            for(int i = 0; i < messages.length; i++) {
+            for(Message message : messages) {
                 if(number > storage.size()) {
-                    if(messages[i] == null) {
+                    try {
+                        storage.add(message);
+                    } catch(NullPointerException error) {
                         break;
-                    }
-                    else if(messages[i].getAuthor().getIdLong() == id) {
-                        storage.add(messages[i]);
-                    }
-                    if(i == count) {
-                        count += 100;
-                        messages = LoggerDatabase.getMessages(event, count);
                     }
                 } else {
                     break;
@@ -57,16 +51,16 @@ public class Report {
 
             EmbedBuilder embed = new EmbedBuilder();
 
-                embed.setTitle(storage.size() + " messages from: " + display);
+            embed.setTitle(storage.size() + " messages from: " + display);
 
-                //for loop to add fields to embed
-                for(int i = storage.size() - 1; i > -1; i--) {
-                    embed.addField("", storage.get(i).getCreationTime().toString() + ": " + storage.get(i).getContentDisplay(), true);
+            //for loop to add fields to embed
+            for(int i = storage.size() - 1; i > -1; i--) {
+                embed.addField("", storage.get(i).getCreationTime().toString() + ": " + storage.get(i).getContentDisplay(), true);
 
-                }
-                embed.setAuthor(event.getMessage().getAuthor().getName());
-            event.getChannel().sendMessage(embed.build());
-            event.getMessage().delete();
+            }
+            embed.setAuthor(event.getMessage().getAuthor().getName());
+            event.getChannel().sendMessage(embed.build()).queue();
+            event.getMessage().delete().queue();
         }
 
 
