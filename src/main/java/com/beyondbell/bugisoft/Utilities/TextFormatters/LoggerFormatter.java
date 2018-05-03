@@ -38,6 +38,10 @@ public class LoggerFormatter {
 		return components;
 	}
 
+	public String getCoorispondingLogMessage() {
+
+	}
+
 	public static String getIDFromLogMessage(String logMessage) {
 		StringBuilder id = new StringBuilder();
 		for (int i = 0; i < logMessage.length(); i++) {

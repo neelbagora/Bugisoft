@@ -2,7 +2,9 @@ package com.beyondbell.bugisoft.Logger;
 
 import com.beyondbell.bugisoft.Utilities.TextFormatters.LoggerFormatter;
 import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import sun.reflect.generics.scope.Scope;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -10,8 +12,16 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class LoggerDatabase {
+	enum LoggerScope {
+		ALL, NOT_DELETED, NOT_BOT, NOT_DELETED_NOT_BOT
+	}
+
 	public static void logEvent() {
 
+	}
+
+	public static Message[] getMessagesFromUser(User user, int count, Scope scope) {
+		return null;
 	}
 
 	public static Message[] getMessages(MessageReceivedEvent event, int... messagesParameters) {
