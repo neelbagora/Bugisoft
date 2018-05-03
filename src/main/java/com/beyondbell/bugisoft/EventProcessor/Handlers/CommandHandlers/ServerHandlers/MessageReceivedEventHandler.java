@@ -2,6 +2,7 @@ package com.beyondbell.bugisoft.EventProcessor.Handlers.CommandHandlers.ServerHa
 
 import com.beyondbell.bugisoft.AdminCommands.Update;
 import com.beyondbell.bugisoft.Commands.Invite.CreateInvite;
+import com.beyondbell.bugisoft.Commands.Lobby.MovePeople;
 import com.beyondbell.bugisoft.Commands.Ping.Ping;
 import com.beyondbell.bugisoft.Commands.Report.Report;
 import com.beyondbell.bugisoft.Databases.UserInfo.UserInfoQuery;
@@ -83,6 +84,38 @@ public class MessageReceivedEventHandler extends EventHandler {
 						}
 					case "setLobby":
 						synchronized (event) {
+							if(parameters.length == 3) {
+								for(int i = 0; i < event.getGuild().getVoiceChannels().size(); i++) {
+									if(parameters[3].equals(event.getGuild().getVoiceChannels().get(i).getId())) {
+										new MovePeople(event, parameters[3]);
+										break;
+									}
+								}
+							} else {
+								event.getTextChannel().sendMessage("Please set default lobby: !report lobbyID");
+							}
+
+						}
+						break;
+					case "move off":
+						synchronized (event) {
+							if(parameters.length == 3) {
+								new MovePeople(false);
+								event.getTextChannel().sendMessage("Automatic moving off");
+							} else {
+								event.getTextChannel().sendMessage("To turn off: !move off");
+							}
+
+						}
+						break;
+					case "move on":
+						synchronized (event) {
+							if(parameters.length == 3) {
+								new MovePeople(true);
+								event.getTextChannel().sendMessage("Automatic moving on");
+							} else {
+								event.getTextChannel().sendMessage("To turn on: !move on");
+							}
 
 						}
 						break;
