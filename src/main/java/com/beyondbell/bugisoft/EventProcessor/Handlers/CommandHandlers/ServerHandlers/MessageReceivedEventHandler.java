@@ -67,10 +67,11 @@ public class MessageReceivedEventHandler extends EventHandler {
 								} catch (NumberFormatException error) {
 									number = 1;
 								}
-								new Report(event, number);
+								new Report(event, number, parameters[2]);
 							} else {
 								event.getTextChannel().sendMessage("Follow format: !report nickname numberOfMessages").queue();
 							}
+							event.getMessage().delete().queue();
 						}
 					default:    // Not a Guild Related Command
 						break;
