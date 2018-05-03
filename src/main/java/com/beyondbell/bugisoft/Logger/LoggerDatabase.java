@@ -5,18 +5,20 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import sun.reflect.generics.scope.Scope;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 
 public class LoggerDatabase {
-	enum LoggerScope {
+	public enum LoggerScope {
 		ALL, NOT_DELETED, NOT_BOT, NOT_DELETED_NOT_BOT
 	}
 
-	public static void logEvent() {
-
+	public static void logEvent(MessageReceivedEvent event) {
+		try {
+			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream("logs/" + event.getGuild().getId() + "/" + event.getTextChannel().getId()));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static Message[] getMessagesFromUser(String id, int count, Scope scope) {
