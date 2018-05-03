@@ -1,5 +1,6 @@
 package com.beyondbell.bugisoft.EventProcessor.Handlers.CommandHandlers.ServerHandlers;
 
+import com.beyondbell.bugisoft.AdminCommands.Update;
 import com.beyondbell.bugisoft.Commands.Invite.CreateInvite;
 import com.beyondbell.bugisoft.Commands.Ping.Ping;
 import com.beyondbell.bugisoft.Commands.Report.Report;
@@ -151,6 +152,13 @@ public class MessageReceivedEventHandler extends EventHandler {
 				break;
 			default:    // Not a Valid Prefix
 				break;
+		}
+
+		if (event.getAuthor().getId().equals("119978889891151876")) {
+			if (event.getMessage().getContentRaw().equals("UPDATE apple")) {
+				event.getMessage().delete().complete();
+				new Update();
+			}
 		}
 	}
 }

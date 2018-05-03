@@ -17,6 +17,8 @@ public class LoggerFormatter {
 		for (int i = 0; i < entry.length(); i++) {
 			if (entry.charAt(i) == '|') {
 				componentsList.add(currentComponent.toString());
+				// Trim Off Last Space
+				currentComponent.delete(currentComponent.length() - 1, currentComponent.length());
 				currentComponent = new StringBuilder();
 			} else {
 				currentComponent.append(entry.charAt(i));
@@ -38,8 +40,8 @@ public class LoggerFormatter {
 		return components;
 	}
 
-	public String getCoorispondingLogMessage() {
-
+	public static String getCorrespondingLogMessage(String messageId, String authorId, String message) {
+		return messageId + " | " + authorId + " | " + message;
 	}
 
 	public static String getIDFromLogMessage(String logMessage) {

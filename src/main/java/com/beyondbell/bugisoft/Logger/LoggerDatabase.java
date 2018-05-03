@@ -3,7 +3,6 @@ package com.beyondbell.bugisoft.Logger;
 import com.beyondbell.bugisoft.Utilities.TextFormatters.LoggerFormatter;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import sun.reflect.generics.scope.Scope;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -15,8 +14,12 @@ public class LoggerDatabase {
 
 	public static void logEvent(MessageReceivedEvent event) {
 		try {
-			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream("logs/" + event.getGuild().getId() + "/" + event.getTextChannel().getId()));
+			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("logs/" + event.getGuild().getId() + "/" + event.getTextChannel().getId()));
+			bufferedWriter.write(LoggerFormatter.getCorrespondingLogMessage(event.getMessageId(), event.getAuthor().getId(), event.getMessage().getContentRaw()));
+			bufferedWriter.close();
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

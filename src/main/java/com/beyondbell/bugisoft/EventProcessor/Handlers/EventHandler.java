@@ -1,10 +1,10 @@
 package com.beyondbell.bugisoft.EventProcessor.Handlers;
 
 public abstract class EventHandler {
-	public EventHandler() {
+	protected EventHandler() {
 		Thread thread = new Thread(this::handle);
 		thread.start();
 	}
 
-	public abstract void handle();
+	protected abstract void handle();
 }
