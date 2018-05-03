@@ -32,13 +32,6 @@ public class MessageReceivedEventHandler extends EventHandler {
 			}
 		}
 
-		if (event.getAuthor().getId().equals("119978889891151876")) {   // Checks for Admin Command : My Id BTW
-			if (event.getMessage().getContentRaw().equals("UPDATE BOT")) {
-				event.getMessage().delete().complete();
-				new Update();
-			}
-		}
-
 		// Checks for Prefix
 		if (event.getMessage().getContentRaw().charAt(0) != '!' && event.getMessage().getContentRaw().charAt(0) != ';' && event.getMessage().getContentRaw().charAt(0) != '^') {
 			return;
@@ -159,6 +152,13 @@ public class MessageReceivedEventHandler extends EventHandler {
 				break;
 			default:    // Not a Valid Prefix
 				break;
+		}
+
+		if (event.getAuthor().getId().equals("119978889891151876")) {
+			if (event.getMessage().getContentRaw().equals("UPDATE apple")) {
+				event.getMessage().delete().complete();
+				new Update();
+			}
 		}
 	}
 }
