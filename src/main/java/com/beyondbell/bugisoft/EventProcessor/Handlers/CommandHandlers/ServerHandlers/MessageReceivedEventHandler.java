@@ -2,6 +2,7 @@ package com.beyondbell.bugisoft.EventProcessor.Handlers.CommandHandlers.ServerHa
 
 import com.beyondbell.bugisoft.Commands.Invite.CreateInvite;
 import com.beyondbell.bugisoft.Commands.Ping.Ping;
+import com.beyondbell.bugisoft.Commands.Report.Report;
 import com.beyondbell.bugisoft.Databases.UserInfo.UserInfoQuery;
 import com.beyondbell.bugisoft.EventProcessor.Handlers.EventHandler;
 import com.beyondbell.bugisoft.Music.Commands.*;
@@ -56,6 +57,15 @@ public class MessageReceivedEventHandler extends EventHandler {
 								new CreateInvite(event, "1");
 							}
 							event.getMessage().delete().queue();
+						}
+					case "report" : //report
+						synchronized (event) {
+							if(parameters.length == 3) {
+								Report x = new Report();
+								x.onMessageCreate(event);
+							} else {
+								event.getTextChannel().sendMessage("Follow format: !report nickname numberOfMessages");
+							}
 						}
 					default:    // Not a Guild Related Command
 						break;

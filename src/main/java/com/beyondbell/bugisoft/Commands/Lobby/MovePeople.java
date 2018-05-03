@@ -1,30 +1,33 @@
-/*
+
 package com.beyondbell.bugisoft.Commands.Lobby;
 import com.beyondbell.bugisoft.Utilities.TextFormatters.InputFormatter;
+import net.dv8tion.jda.core.entities.VoiceChannel;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.javacord.api.entity.channel.ServerVoiceChannel;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.channel.server.voice.ServerVoiceChannelMemberJoinListener;
 
+import java.lang.reflect.Member;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovePeople {
-    public void onMessageCreate(MessageCreateEvent event) {
+    public void onMessageCreate(MessageReceivedEvent event) {
         final String[] parameters = InputFormatter.stringToParameters(event.getMessage().getReadableContent());
-        ServerVoiceChannel lobby = null;
-        ArrayList<User> gameNames = new ArrayList<User>();
+        VoiceChannel lobby = null;
+        ArrayList<Member> gameNames = new ArrayList<Member>();
 
         //Assign Lobby to be used
         if(parameters[0].equals("!") && parameters[1].equals("setLobby")) {
-            lobby = event.getServer().get().getVoiceChannelsByName(parameters[3]).get(0);
+            lobby = event.getGuild().getVoiceChannelsByName();
             if(event.getServer().get().getVoiceChannelsByName(lobby.getName()) == null) {
                 event.getChannel().sendMessage("Please enter valid voice channel name :)");
 
             }
         }
 
-        User[] users = new User[event.getServer().get().getMemberCount()];
-        users = event.getServer().get().getMembers().toArray(users);
+        List<net.dv8tion.jda.core.entities.Member> users = event.getGuild().getMembers();
 
         for(User member : users) {
             if(member.isConnected(lobby)) {
@@ -45,7 +48,7 @@ public class MovePeople {
                     }
                 } else {
                     //TODO put user in found channel
-                    event.getApi();
+
                     count = 0;
                 }
             }
@@ -54,4 +57,3 @@ public class MovePeople {
 
     }
 }
-*/

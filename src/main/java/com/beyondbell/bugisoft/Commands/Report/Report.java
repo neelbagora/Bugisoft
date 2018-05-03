@@ -1,32 +1,39 @@
-/*
+
 package com.beyondbell.bugisoft.Commands.Report;
 
 
 import com.beyondbell.bugisoft.Logger.LoggerDatabase;
-import org.javacord.api.entity.message.Message;
-import org.javacord.api.entity.message.MessageSet;
-import org.javacord.api.entity.user.User;
+import net.dv8tion.jda.core.entities.Message;
 import com.beyondbell.bugisoft.Utilities.TextFormatters.InputFormatter;
-import org.javacord.api.entity.channel.TextChannel;
-import org.javacord.api.entity.message.embed.EmbedBuilder;
-import org.javacord.api.event.message.MessageCreateEvent;
-import org.javacord.api.listener.message.MessageCreateListener;
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.util.ArrayList;
 
 
-public class Report implements MessageCreateListener {
+public class Report {
 
-    public void onMessageCreate(MessageCreateEvent event) {
-        final String[] parameters = InputFormatter.stringToParameters(event.getMessage().getReadableContent());
+    public void onMessageCreate(MessageReceivedEvent event) {
+        final String[] parameters = InputFormatter.stringToParameters(event.getMessage().getContentDisplay());
 
         if(parameters[0].equals("!") && parameters[1].equals("report")) {
+            long id;
+            String display;
+            if(parameters[2] != null) {
+                id = Long.parseLong(parameters[2]);
+                display = event.getGuild().getMemberById(id).getNickname();
+                if(parameters[3] != null) {
 
+                } else {
+                    event.getTextChannel().sendMessage("Follow format: !report nickname numberOfMessages");
+                }
+            } else {
+                event.getTextChannel().sendMessage("Follow format: !report nickname numberOfMessages");
+            }
             //planning on using command to get amount user messages and sending them to chat
-            long id = Long.parseLong(parameters[2]);
 
-            //identifies User
-            User member = event.getServer().get().getMemberById(id).get();
-            String display = event.getServer().get().getDisplayName(member);
+
+            //identifies Member
+
 
             //number of messages
             int amount = Integer.parseInt(parameters[3]);
@@ -43,7 +50,7 @@ public class Report implements MessageCreateListener {
                     if(messages[i] == null) {
                         break;
                     }
-                    else if(messages[i].getAuthor().getId() == id) {
+                    else if(messages[i].getAuthor().getIdLong() == id) {
                         storage.add(messages[i]);
                     }
                     if(i == count) {
@@ -61,11 +68,12 @@ public class Report implements MessageCreateListener {
 
                 //for loop to add fields to embed
                 for(int i = storage.size() - 1; i > -1; i--) {
-                    embed.addField("", storage.get(i).getCreationTimestamp().toString() + ": " + storage.get(i).getContent());
+                    embed.addField("", storage.get(i).getCreationTime().toString() + ": " + storage.get(i).getContentDisplay(), true);
+
                 }
                 embed.setAuthor(event.getMessage().getAuthor().getName());
-            event.getChannel().sendMessage(embed);
-            event.getMessage().delete(event.getMessage().getIdAsString());
+            event.getChannel().sendMessage(embed.build());
+            event.getMessage().delete();
         }
 
 
@@ -75,4 +83,4 @@ public class Report implements MessageCreateListener {
 
 
 }
-*/
+
