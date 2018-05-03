@@ -76,7 +76,7 @@ public class MessageReceivedEventHandler extends EventHandler {
 								} catch (NumberFormatException error) {
 									number = 1;
 								}
-								new Report(event, number, parameters[2]);
+								new Report(event, parameters[2], number);
 							} else {
 								event.getTextChannel().sendMessage("Follow format: !report nickname numberOfMessages").queue();
 							}

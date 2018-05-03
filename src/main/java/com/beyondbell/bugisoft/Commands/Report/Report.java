@@ -7,7 +7,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.util.ArrayList;
 
 public class Report {
-	public Report(MessageReceivedEvent event, int numberReports, String id) {
+	public Report(MessageReceivedEvent event, String id, int numberReports) {
 		//identifies Member
 		String display = event.getGuild().getMemberById(id).getNickname();
 
