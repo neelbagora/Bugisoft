@@ -73,6 +73,11 @@ public class MessageReceivedEventHandler extends EventHandler {
 							}
 							event.getMessage().delete().queue();
 						}
+					case "setLobby" {
+							synchronized (event) {
+								
+							}
+					}
 					default:    // Not a Guild Related Command
 						break;
 				}

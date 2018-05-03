@@ -21,7 +21,7 @@ public class LoggerDatabase {
 		}
 	}
 
-	public static Message[] getMessagesFromUser(String id, int count, Scope scope) {
+	public static Message[] getMessagesFromUser(String id, int count, LoggerScope scope) {
 		return null;
 	}
 

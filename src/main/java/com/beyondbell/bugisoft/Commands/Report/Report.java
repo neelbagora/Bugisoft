@@ -6,7 +6,6 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import java.util.ArrayList;
 
-
 public class Report {
 	public Report(MessageReceivedEvent event, int numberReports, String id) {
 		//identifies Member
@@ -16,9 +15,9 @@ public class Report {
 
 		//arranges messages into messages Array
 		int count = 100;
-		Message[] messages = LoggerDatabase.getMessages(event, count);
+		Message[] messages = LoggerDatabase.getMessagesFromUser(id,numberReports, LoggerDatabase.LoggerScope.ALL);
 		if (messages == null) {
-			// TODO Catch
+			//TODO Catch
 			return;
 		}
 
@@ -26,7 +25,9 @@ public class Report {
 
 		for (Message message : messages) {
 			if (numberReports > storage.size()) {
-				storage.add(message);
+			    if(message.getAuthor().getId() == id) {
+                    storage.add(message);
+                }
 			} else {
 				break;
 			}
