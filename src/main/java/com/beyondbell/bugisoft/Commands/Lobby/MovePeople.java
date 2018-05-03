@@ -1,23 +1,21 @@
-
 package com.beyondbell.bugisoft.Commands.Lobby;
-import com.beyondbell.bugisoft.Utilities.TextFormatters.InputFormatter;
-import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
-
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MovePeople {
-    public MovePeople(MessageReceivedEvent event, VoiceChannel lobbyParam) {
-        final String[] parameters = InputFormatter.stringToParameters(event.getMessage().getContentDisplay());
-        VoiceChannel lobby = lobbyParam;
-        ArrayList<Member> gameNames = new ArrayList<Member>();
-        ArrayList<Member> members = new ArrayList<Member>();
-
-        for(int i = 0; i < event.getGuild().getMembers().size(); i++) {
-
+    public MovePeople(MessageReceivedEvent event, String lobbyParam) {
+        String defaultLobby;
+        for(int i = 0; i < event.getGuild().getVoiceChannels().size(); i++) {
+            if(event.getGuild().getVoiceChannels().get(i).getName().equals(lobbyParam)) {
+                defaultLobby = lobbyParam;
+                break;
+            }
+        }
+        ArrayList<String> gameNames = new ArrayList<String>();
+        List<net.dv8tion.jda.core.entities.Member> members = event.getGuild().getMembers();
+        for (int i = 0; i < event.getGuild().getMembers().size(); i++) {
+            gameNames.set(i,members.get(i).getGame().toString());
         }
     }
 }

@@ -68,7 +68,7 @@ public class MessageReceivedEventHandler extends EventHandler {
 						}
 					case "report" : //report
 						synchronized (event) {
-							if(parameters.length == 3) {
+							if(parameters.length == 4) {
 								int number;
 								try {
 									number = Integer.parseInt(parameters[3]);
