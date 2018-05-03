@@ -12,31 +12,24 @@ import java.util.ArrayList;
 
 public class Report {
 
-    public void onMessageCreate(MessageReceivedEvent event) {
+    MessageReceivedEvent event;
+    int number;
+    public Report(MessageReceivedEvent event, int numberReports) {
+        this.event = event;
+        number = numberReports;
+    }
+
+    public void onMessageCreate() {
         final String[] parameters = InputFormatter.stringToParameters(event.getMessage().getContentDisplay());
 
         if(parameters[0].equals("!") && parameters[1].equals("report")) {
-            long id;
-            String display;
-            if(parameters[2] != null) {
-                id = Long.parseLong(parameters[2]);
-                display = event.getGuild().getMemberById(id).getNickname();
-                if(parameters[3] != null) {
-
-                } else {
-                    event.getTextChannel().sendMessage("Follow format: !report nickname numberOfMessages");
-                }
-            } else {
-                event.getTextChannel().sendMessage("Follow format: !report nickname numberOfMessages");
-            }
-            //planning on using command to get amount user messages and sending them to chat
-
+            //gets id
+            long id = Long.parseLong(parameters[2]);
 
             //identifies Member
+            String display = event.getGuild().getMemberById(id).getNickname();
 
-
-            //number of messages
-            int amount = Integer.parseInt(parameters[3]);
+            //planning on using command to get amount user messages and sending them to chat
 
             //arranges messages into messages Array
             int count = 100;
@@ -46,7 +39,7 @@ public class Report {
 
 
             for(int i = 0; i < messages.length; i++) {
-                if(amount != storage.size()) {
+                if(number > storage.size()) {
                     if(messages[i] == null) {
                         break;
                     }
@@ -64,7 +57,7 @@ public class Report {
 
             EmbedBuilder embed = new EmbedBuilder();
 
-                embed.setTitle("Messages from: " + display);
+                embed.setTitle(storage.size() + " messages from: " + display);
 
                 //for loop to add fields to embed
                 for(int i = storage.size() - 1; i > -1; i--) {

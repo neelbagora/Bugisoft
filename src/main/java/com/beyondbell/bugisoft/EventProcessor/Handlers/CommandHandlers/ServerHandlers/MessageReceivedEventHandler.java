@@ -61,8 +61,13 @@ public class MessageReceivedEventHandler extends EventHandler {
 					case "report" : //report
 						synchronized (event) {
 							if(parameters.length == 3) {
-								Report x = new Report();
-								x.onMessageCreate(event);
+								int number;
+								try {
+									number = Integer.parseInt(parameters[3]);
+								} catch (NumberFormatException error) {
+									number = 1;
+								}
+								new Report(event, number);
 							} else {
 								event.getTextChannel().sendMessage("Follow format: !report nickname numberOfMessages");
 							}
