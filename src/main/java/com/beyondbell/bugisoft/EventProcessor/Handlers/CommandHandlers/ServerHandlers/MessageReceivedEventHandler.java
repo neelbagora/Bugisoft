@@ -69,7 +69,7 @@ public class MessageReceivedEventHandler extends EventHandler {
 								}
 								new Report(event, number);
 							} else {
-								event.getTextChannel().sendMessage("Follow format: !report nickname numberOfMessages");
+								event.getTextChannel().sendMessage("Follow format: !report nickname numberOfMessages").queue();
 							}
 						}
 					default:    // Not a Guild Related Command
