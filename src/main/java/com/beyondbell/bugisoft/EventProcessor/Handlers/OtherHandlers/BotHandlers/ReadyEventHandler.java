@@ -12,7 +12,7 @@ public class ReadyEventHandler extends EventHandler {
 	}
 
 	@Override
-	public void handle() {
+	protected void handle() {
 		System.out.println(event.getJDA().getStatus());
 	}
 }
