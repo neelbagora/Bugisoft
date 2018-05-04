@@ -9,10 +9,12 @@ import com.beyondbell.bugisoft.Databases.UserInfo.UserInfoQuery;
 import com.beyondbell.bugisoft.EventProcessor.Handlers.EventHandler;
 import com.beyondbell.bugisoft.Music.Commands.*;
 import com.beyondbell.bugisoft.Utilities.TextFormatters.InputFormatter;
+import net.dv8tion.jda.core.events.channel.voice.VoiceChannelCreateEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class MessageReceivedEventHandler extends EventHandler {
 	private final MessageReceivedEvent event;
+
 
 	public MessageReceivedEventHandler(final MessageReceivedEvent event) {
 		super();
@@ -87,7 +89,7 @@ public class MessageReceivedEventHandler extends EventHandler {
 							if(parameters.length == 3) {
 								for(int i = 0; i < event.getGuild().getVoiceChannels().size(); i++) {
 									if(parameters[3].equals(event.getGuild().getVoiceChannels().get(i).getId())) {
-										new MovePeople(event, parameters[3]);
+										new MovePeople(parameters[3]);
 										break;
 									}
 								}
