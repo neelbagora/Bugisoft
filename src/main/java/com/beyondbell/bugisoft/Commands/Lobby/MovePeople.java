@@ -1,12 +1,9 @@
 package com.beyondbell.bugisoft.Commands.Lobby;
-import net.dv8tion.jda.core.entities.Member;
-
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceJoinEvent;
-import java.util.ArrayList;
 import net.dv8tion.jda.core.managers.GuildController;
 
 public class MovePeople {
-    
+
     private boolean state = true;
     private GuildVoiceJoinEvent message = null;
     private String lobby = null;
@@ -30,12 +27,12 @@ public class MovePeople {
         message = event;
         if(state) {
             server = new GuildController(message.getGuild());
-                String defaultLobby = lobby;
-                for(int i = 0; i < server.getGuild().getVoiceChannels().size(); i++) {
-                    if(!server.getGuild().getVoiceChannels().get(i).getName().equals(message.getMember().getGame().toString())) {
-                        server.createVoiceChannel(message.getMember().getGame().toString());
-                    }
+            String defaultLobby = lobby;
+            for(int i = 0; i < server.getGuild().getVoiceChannels().size(); i++) {
+                if(!server.getGuild().getVoiceChannels().get(i).getName().equals(message.getMember().getGame().toString())) {
+                    server.createVoiceChannel(message.getMember().getGame().toString());
                 }
+            }
         }
     }
 
