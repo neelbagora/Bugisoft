@@ -1,9 +1,9 @@
 package com.beyondbell.bugisoft.Commands.Lobby;
 import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import java.util.ArrayList;
 import net.dv8tion.jda.core.managers.GuildController;
+
+import java.util.ArrayList;
 
 public class MovePeople {
     boolean state = true;
@@ -58,6 +58,5 @@ public class MovePeople {
             }
         }
 
-    }
     }
 }
