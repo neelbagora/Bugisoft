@@ -57,15 +57,17 @@ public class MovePeople {
             }
         }
 
-        if(check) {
+        if(check && !message.getMember().getGame().toString().equals(null)) {
 	        server.createVoiceChannel(message.getMember().getGame().toString());
 	        server.moveVoiceMember(message.getMember(), (VoiceChannel) server.getGuild().getVoiceChannelsByName(message.getMember().getGame().toString(),false));
-        } else {
+        } else if(message.getMember().getGame().toString().equals(null) || message.getMember().getGame().toString().toLowerCase().equals("Spotify")) {
+	        server.createVoiceChannel("Spotify");
+        }
+        else {
 	        server.moveVoiceMember(message.getMember(), (VoiceChannel) server.getGuild().getVoiceChannelsByName(message.getMember().getGame().toString(),false));
-
         }
 
-
+		server = null;
     }
 
     //used for setting default lobby, syntax found in 'MessageReceivedHandler'
