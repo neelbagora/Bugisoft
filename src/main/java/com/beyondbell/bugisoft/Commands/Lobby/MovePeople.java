@@ -61,7 +61,6 @@ public class MovePeople {
 	        server.createVoiceChannel(message.getMember().getGame().toString());
 	        server.moveVoiceMember(message.getMember(), (VoiceChannel) server.getGuild().getVoiceChannelsByName(message.getMember().getGame().toString(),false));
         } else {
-        	//safety measure
 	        server.moveVoiceMember(message.getMember(), (VoiceChannel) server.getGuild().getVoiceChannelsByName(message.getMember().getGame().toString(),false));
 
         }
