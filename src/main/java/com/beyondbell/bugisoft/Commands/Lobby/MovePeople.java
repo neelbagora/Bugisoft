@@ -4,32 +4,48 @@ import net.dv8tion.jda.core.managers.GuildController;
 
 public class MovePeople {
 
-    private boolean state = true;
+    private MoveState state;
     private GuildVoiceJoinEvent message;
     private String lobby = null;
     private GuildController server;
 
+    //on-off and boolean representation of code
+    private enum MoveState {
+        ON(true),
+        OFF(false);
+
+        boolean value;
+        MoveState(boolean action) {
+        	this.value = action;
+        }
+    }
+
+
+
     //returns lobby, utilized in voiceChannelVoiceEvent
     public String getLobby() {
-        return lobby;
+        return lobby; //null case covered in VoiceChannelJoinEvent
     }
 
+    //returns boolean representation of code state
     public boolean getStatus() {
-        return state;
+        return state.value;
     }
 
-    //default constructor used for checking instance variables
-    public MovePeople() {
+    //default constructor used for checking instance variables, used only in 'VoiceChannelJoinEvent'
+    public MovePeople() {}
 
+    //Used for setting if movePeople should be on or off, syntax found in 'MessageReceivedHandler'
+    public MovePeople(final boolean action) {
+        if(action) {
+        	state = MoveState.ON;
+        } else {
+        	state = MoveState.OFF;
+        }
     }
 
-    //Used for setting if movePeople should be on or off
-    public MovePeople(boolean action) {
-        state = action;
-    }
-
-    //Used when VoiceChannelJoinEvent pushes event to this class
-    public MovePeople(GuildVoiceJoinEvent event) {
+    //Used when 'VoiceChannelJoinEvent' pushes event to this class
+    public MovePeople(final GuildVoiceJoinEvent event) {
         message = event;
         server = new GuildController(message.getGuild());
         for(int i = 0; i < server.getGuild().getVoiceChannels().size(); i++) {
@@ -39,7 +55,7 @@ public class MovePeople {
         }
     }
 
-    //used for setting default lobby
+    //used for setting default lobby, syntax found in 'MessageReceivedHandler'
     public MovePeople(String lobbyParam) {
         this.lobby = lobbyParam;
     }
