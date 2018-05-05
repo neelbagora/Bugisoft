@@ -6,7 +6,7 @@
 
     <groupId>com.beyondbell</groupId>
     <artifactId>bugisoft</artifactId>
-    <version>0.1.0</version>
+    <version>1.1.0</version>
     <build>
         <plugins>
             <plugin>
@@ -59,7 +59,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>3.6.0_361</version>
+            <version>3.6.0_362</version>
         </dependency>
         <dependency>
             <groupId>com.sedmelluq</groupId>
@@ -69,7 +69,7 @@
         <dependency>
             <groupId>com.sedmelluq</groupId>
             <artifactId>jda-nas</artifactId>
-            <version>1.0.5</version>
+            <version>1.0.6</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

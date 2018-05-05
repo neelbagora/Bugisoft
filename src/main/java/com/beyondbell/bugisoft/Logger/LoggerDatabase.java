@@ -1,6 +1,5 @@
 package com.beyondbell.bugisoft.Logger;
 
-import com.beyondbell.bugisoft.Utilities.TextFormatters.LoggerFormatter;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 

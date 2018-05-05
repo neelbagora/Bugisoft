@@ -1,6 +1,6 @@
 package com.beyondbell.bugisoft.Music.Commands;
 
-import com.beyondbell.bugisoft.MessageDeleter.MessageDeleter;
+import com.beyondbell.bugisoft.Utilities.MessageUtilities.MessageDeleter;
 import com.beyondbell.bugisoft.Music.GuildMusicManager;
 import com.beyondbell.bugisoft.Music.Music;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
