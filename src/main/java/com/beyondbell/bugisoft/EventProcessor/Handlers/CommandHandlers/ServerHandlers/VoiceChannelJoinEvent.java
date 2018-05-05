@@ -13,15 +13,18 @@ public class VoiceChannelJoinEvent  extends EventHandler {
 		event = voice;
 	}
 
-	MovePeople check = new MovePeople(true);
+	MovePeople check = new MovePeople();
 	protected void handle() {
-		String id = check.getLOBBY();
-		if(id == null) {
-			event.getGuild().getTextChannels().get(0).sendMessage("Set lobby using !setLobby lobbyID first");
-		} else {
-			if(event.getMember().getVoiceState().getAudioChannel().getId().equals(id)) {
-				new MovePeople(event);
+		if(check.getStatus()) {
+			String id = check.getLobby();
+			if(id == null) {
+				event.getGuild().getDefaultChannel().sendMessage("Set lobby using !setLobby lobbyID first");
+			} else {
+				if(event.getMember().getVoiceState().getAudioChannel().getId().equals(id)) {
+					new MovePeople(event);
+				}
 			}
 		}
+		check = null;
 	}
 }
