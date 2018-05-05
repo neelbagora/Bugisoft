@@ -1,4 +1,5 @@
 package com.beyondbell.bugisoft.Commands.Lobby;
+import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.core.managers.GuildController;
 
@@ -48,11 +49,24 @@ public class MovePeople {
     public MovePeople(final GuildVoiceJoinEvent event) {
         message = event;
         server = new GuildController(message.getGuild());
+        boolean check = true;
         for(int i = 0; i < server.getGuild().getVoiceChannels().size(); i++) {
-            if(!server.getGuild().getVoiceChannels().get(i).getName().equals(message.getMember().getGame().toString())) {
-                    server.createVoiceChannel(message.getMember().getGame().toString());
+            if(server.getGuild().getVoiceChannels().get(i).getName().equals(message.getMember().getGame().toString())) {
+                    check = false;
+                    break;
             }
         }
+
+        if(check) {
+	        server.createVoiceChannel(message.getMember().getGame().toString());
+	        server.moveVoiceMember(message.getMember(), (VoiceChannel) server.getGuild().getVoiceChannelsByName(message.getMember().getGame().toString(),false));
+        } else {
+        	//safety measure
+	        server.moveVoiceMember(message.getMember(), (VoiceChannel) server.getGuild().getVoiceChannelsByName(message.getMember().getGame().toString(),false));
+
+        }
+
+
     }
 
     //used for setting default lobby, syntax found in 'MessageReceivedHandler'
