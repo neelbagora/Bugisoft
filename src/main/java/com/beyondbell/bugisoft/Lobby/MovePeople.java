@@ -5,13 +5,12 @@ import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.core.managers.GuildController;
 
-import java.util.List;
-
-
 public class MovePeople {
 
 	public MovePeople(final GuildVoiceJoinEvent event) {
-		if(UserInfoDatabase.findUser(event.getMember().getUser()).
+		if (UserInfoDatabase.findUser(event.getMember().getUser()).getGameShouldMove()){
+			
+		}
 		VoiceChannel lobby = event.getGuild().getVoiceChannelsByName("lobby", true).get(0);
 		GuildController server = new GuildController(event.getGuild());
 

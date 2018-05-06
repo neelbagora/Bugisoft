@@ -8,7 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-class UserInfo {
+public class UserInfo {
 	private final Properties userProperties = new Properties();
 
 	UserInfo(User user) {
