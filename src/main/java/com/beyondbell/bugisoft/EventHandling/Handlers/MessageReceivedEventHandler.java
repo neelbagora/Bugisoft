@@ -1,6 +1,5 @@
 package com.beyondbell.bugisoft.EventHandling.Handlers;
 
-import com.beyondbell.bugisoft.Lobby.MovePeople;
 import com.beyondbell.bugisoft.Logger.Commands.Report;
 import com.beyondbell.bugisoft.Music.Commands.*;
 import com.beyondbell.bugisoft.Standalone.AdminCommands.Update;
@@ -84,14 +83,15 @@ public class MessageReceivedEventHandler extends EventHandler {
 							}
 							event.getMessage().delete().queue();
 						}
+						/*
 					case "setLobby":
 						synchronized (event) {
 							if(parameters.length == 3) {
-								for(int i = 0; i < event.getGuild().getVoiceChannels().size(); i++) {
-									if(parameters[3].equals(event.getGuild().getVoiceChannels().get(i).getId())) {
-										new MovePeople(parameters[3]);
-										break;
-									}
+								try {
+									event.getGuild().getVoiceChannelById(parameters[3]);
+
+								} catch (NullPointerException notFound) {
+									event.getTextChannel().sendMessage("Invalid Voice channel ID");
 								}
 							} else {
 								event.getTextChannel().sendMessage("Please set default lobby: !report lobbyID");
@@ -99,10 +99,11 @@ public class MessageReceivedEventHandler extends EventHandler {
 
 						}
 						break;
-					case "move off":
+					*/
+					case "off":
 						synchronized (event) {
 							if(parameters.length == 3) {
-								new MovePeople(false);
+
 								event.getTextChannel().sendMessage("Automatic moving off");
 							} else {
 								event.getTextChannel().sendMessage("To turn off: !move off");
@@ -110,10 +111,9 @@ public class MessageReceivedEventHandler extends EventHandler {
 
 						}
 						break;
-					case "move on":
+					case "on":
 						synchronized (event) {
 							if(parameters.length == 3) {
-								new MovePeople(true);
 								event.getTextChannel().sendMessage("Automatic moving on");
 							} else {
 								event.getTextChannel().sendMessage("To turn on: !move on");
@@ -195,5 +195,7 @@ public class MessageReceivedEventHandler extends EventHandler {
 			default:    // Not a Valid Prefix
 				break;
 		}
+
+
 	}
 }

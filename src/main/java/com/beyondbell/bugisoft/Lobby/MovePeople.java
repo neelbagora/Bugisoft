@@ -1,35 +1,27 @@
 package com.beyondbell.bugisoft.Lobby;
 
 import com.beyondbell.bugisoft.UserInfo.UserInfoDatabase;
+import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.core.managers.GuildController;
+import net.dv8tion.jda.core.requests.restaction.GuildAction;
 
 public class MovePeople {
-
 	public MovePeople(final GuildVoiceJoinEvent event) {
-		if (UserInfoDatabase.findUser(event.getMember().getUser()).getGameShouldMove()){
-			
-		}
-		VoiceChannel lobby = event.getGuild().getVoiceChannelsByName("lobby", true).get(0);
-		GuildController server = new GuildController(event.getGuild());
-
-		boolean check = true;
-		for (int i = 0; i < server.getGuild().getVoiceChannels().size(); i++) {
-			if (server.getGuild().getVoiceChannels().get(i).getName().equals(event.getMember().getGame().toString())) {
-				check = false;
-				break;
-			}
+		if (!UserInfoDatabase.findUser(event.getMember().getUser()).getGameShouldMove() || event.getMember().getGame() == null) {
+			return;
 		}
 
-		if (check && !event.getMember().getGame().toString().equals("null")) {
-			server.createVoiceChannel(event.getMember().getGame().toString());
-			server.moveVoiceMember(event.getMember(), (VoiceChannel) server.getGuild().getVoiceChannelsByName(event.getMember().getGame().toString(), false));
-		} else if (event.getMember().getGame().toString().equals("null") || event.getMember().getGame().toString().toLowerCase().equals("Spotify")) {
-			server.createVoiceChannel("Spotify");
+		VoiceChannel target = event.getGuild().getVoiceChannelsByName(event.getMember().getGame().getName(),true).get(0);
+		if(target == null) {
+			new GuildAction(event.getJDA(), "channelCreator")
+					.addChannel(new GuildAction.ChannelData(ChannelType.VOICE, event.getMember().getGame().getName()))
+					.complete();
+			new GuildController(event.getGuild()).moveVoiceMember(event.getMember(), event.getGuild()
+					.getVoiceChannelsByName(event.getMember().getGame().getName(),true).get(0)).queue();
 		} else {
-			server.moveVoiceMember(event.getMember(), (VoiceChannel) server.getGuild().getVoiceChannelsByName(event.getMember().getGame().toString(), false));
+			new GuildController(event.getGuild()).moveVoiceMember(event.getMember(), target).queue();
 		}
-		
 	}
 }

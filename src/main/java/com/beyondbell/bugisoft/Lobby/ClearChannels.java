@@ -6,10 +6,6 @@ public class ClearChannels {
 
 	//event pushed from 'VoiceChannelLeaveEvent', conditions are met in the class
 	public ClearChannels(GuildVoiceLeaveEvent event) {
-		if(!event.getChannelLeft().getName().toLowerCase().equals("spotify")
-				|| !event.getChannelLeft().getName().toLowerCase().equals("no game lobby")
-				&& event.getChannelLeft().getMembers().size() == 0) {
-			event.getChannelLeft().delete();
-		}
+		event.getChannelLeft().delete();
 	}
 }
