@@ -72,4 +72,8 @@ class UserInfo {
 	String getID() {
 		return userProperties.getProperty("id");
 	}
+
+	public boolean getGameShouldMove() {
+		return userProperties.getProperty("gameShouldMove").equals("true");
+	}
 }

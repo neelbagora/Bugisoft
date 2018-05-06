@@ -6,3 +6,4 @@ id=null
 losses=0
 cash=0
 username=null
+gameMoveEnabled=false
