@@ -9,64 +9,31 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class UserInfo {
-	private final Properties userProperties = new Properties();
+	private final Properties userProperties;
 
 	UserInfo(User user) {
+		userProperties = new Properties();
+
 		FileInputStream userPropertiesFileIn;
 		try { // Attempts to Reach the File
 			userPropertiesFileIn = new FileInputStream("users/" + user.getId());
 			userProperties.load(userPropertiesFileIn);
 		} catch (FileNotFoundException e) {
-			Properties defaultUserProperties = new Properties();
-			try {
-				FileInputStream defaultUserPropertiesFile = new FileInputStream("defaultUserProperties");
-				defaultUserProperties.load(defaultUserPropertiesFile);
-				defaultUserPropertiesFile.close();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			userProperties.setProperty("id", user.getId());
+			userProperties.setProperty("username", user.getName() + user.getDiscriminator());
 
-			defaultUserProperties.setProperty("id", user.getId());
-			defaultUserProperties.setProperty("username", user.getName() + user.getDiscriminator());
-
-			try {
-				FileOutputStream userPropertiesFileOut = new FileOutputStream("users/" + user.getId());
-				defaultUserProperties.store(userPropertiesFileOut, user.getName());
-				userPropertiesFileOut.close();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-
-			try {
-				userPropertiesFileIn = new FileInputStream("users/" + user.getId());
-				userProperties.load(userPropertiesFileIn);
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-
+			saveProperties();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	Properties getUserProperties() {
+		return userProperties;
+	}
+
 	String getUsername() {
 		return userProperties.getProperty("username");
-	}
-
-	String getLevel() {
-		return userProperties.getProperty("level");
-	}
-
-	String getCash() {
-		return userProperties.getProperty("cash");
-	}
-
-	String getWins() {
-		return userProperties.getProperty("wins");
-	}
-
-	String getLosses() {
-		return userProperties.getProperty("losses");
 	}
 
 	String getID() {
@@ -74,6 +41,37 @@ public class UserInfo {
 	}
 
 	public boolean getGameShouldMove() {
-		return userProperties.getProperty("gameShouldMove").equals("true");
+		if (userProperties.getProperty("gameShouldMove") != null) {
+			return userProperties.getProperty("gameShouldMove").equals("true");
+		} else {
+			copyProperty("gameShouldMove");
+			saveProperties();
+			return userProperties.getProperty("gameShouldMove").equals("true");
+		}
+	}
+
+	void copyProperty(String property) {
+		Properties defaultUserProperties = new Properties();
+		try {
+			FileInputStream defaultUserPropertiesFile = new FileInputStream("defaultUserProperties");
+			defaultUserProperties.load(defaultUserPropertiesFile);
+			defaultUserPropertiesFile.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
+		userProperties.setProperty(property, defaultUserProperties.getProperty(property));
+
+		saveProperties();
+	}
+
+	private void saveProperties() {
+		try {
+			FileOutputStream userPropertiesFileOut = new FileOutputStream("users/" + userProperties.getProperty("id"));
+			userProperties.store(userPropertiesFileOut, userProperties.getProperty("username"));
+			userPropertiesFileOut.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 	}
 }
