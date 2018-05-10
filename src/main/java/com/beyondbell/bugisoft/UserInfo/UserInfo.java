@@ -9,19 +9,16 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class UserInfo {
-	private final Properties userProperties;
+	private volatile Properties userProperties;
 
 	UserInfo(User user) {
 		userProperties = new Properties();
-
-		FileInputStream userPropertiesFileIn;
-		try { // Attempts to Reach the File
-			userPropertiesFileIn = new FileInputStream("users/" + user.getId());
+		try {
+			final FileInputStream userPropertiesFileIn = new FileInputStream("users/" + user.getId());
 			userProperties.load(userPropertiesFileIn);
 		} catch (FileNotFoundException e) {
 			userProperties.setProperty("id", user.getId());
 			userProperties.setProperty("username", user.getName() + user.getDiscriminator());
-
 			saveProperties();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -50,8 +47,8 @@ public class UserInfo {
 		}
 	}
 
-	void copyProperty(String property) {
-		Properties defaultUserProperties = new Properties();
+	private void copyProperty(final String property) {
+		final Properties defaultUserProperties = new Properties();
 		try {
 			FileInputStream defaultUserPropertiesFile = new FileInputStream("defaultUserProperties");
 			defaultUserProperties.load(defaultUserPropertiesFile);

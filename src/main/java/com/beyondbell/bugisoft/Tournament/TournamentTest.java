@@ -1,4 +1,3 @@
-/*
 package com.beyondbell.bugisoft.Tournament;
 
 import org.javacord.api.event.message.MessageCreateEvent;
@@ -13,4 +12,3 @@ public class TournamentTest implements MessageCreateListener {
 		}
 	}
 }
-*/
