@@ -1,5 +1,7 @@
-package com.beyondbell.bugisoft.Tournament;
+package com.beyondbell.bugisoft.Tournament.Tournaments;
 
+import com.beyondbell.bugisoft.Tournament.Match;
+import com.beyondbell.bugisoft.Tournament.Player;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
@@ -7,7 +9,7 @@ import org.javacord.api.event.message.MessageCreateEvent;
 import java.awt.*;
 import java.util.ArrayList;
 
-abstract class Tournament {
+public abstract class Tournament {
 	private final String name;
 
 	private ArrayList<Player> players;
