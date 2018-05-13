@@ -39,7 +39,7 @@ public class SortBadWords {
 
         for(int i = 0; i < words.size(); i++) {
             try {
-                writer.write("\n" + words.get(i));
+                writer.write(words.get(i) + "\n");
             } catch (IOException e) {
                 e.printStackTrace();
             }
