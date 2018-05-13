@@ -3,10 +3,10 @@ package com.beyondbell.bugisoft.EventHandling.Handlers;
 import com.beyondbell.bugisoft.Lobby.MovePeople;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceJoinEvent;
 
-public class GuildVoiceJoinEventHandler extends EventHandler {
+public class VoiceChannelJoinEvent  extends EventHandler {
 	private final GuildVoiceJoinEvent event;
 
-	public GuildVoiceJoinEventHandler(final GuildVoiceJoinEvent event) {
+	public VoiceChannelJoinEvent(final GuildVoiceJoinEvent event) {
 		super();
 		this.event = event;
 	}
