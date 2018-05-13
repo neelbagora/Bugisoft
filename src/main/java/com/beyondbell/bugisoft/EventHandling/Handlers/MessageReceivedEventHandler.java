@@ -6,6 +6,7 @@ import com.beyondbell.bugisoft.Standalone.AdminCommands.Update;
 import com.beyondbell.bugisoft.Standalone.Commands.Invite.CreateInvite;
 import com.beyondbell.bugisoft.Standalone.Commands.Ping.Ping;
 import com.beyondbell.bugisoft.UserInfo.UserInfoQuery;
+import com.beyondbell.bugisoft.Utilities.MessageUtilities.AddProfanityWords;
 import com.beyondbell.bugisoft.Utilities.TextFormatters.ParametersFormatter;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -121,6 +122,12 @@ public class MessageReceivedEventHandler extends EventHandler {
 
 						}
 						break;
+					case "add" :
+						synchronized (event) {
+							if(parameters.length == 3) {
+								new AddProfanityWords(parameters[2]);
+							}
+						}
 					default:    // Not a Guild Related Command
 						break;
 				}
