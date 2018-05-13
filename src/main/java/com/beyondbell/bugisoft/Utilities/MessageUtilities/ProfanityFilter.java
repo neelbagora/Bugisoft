@@ -7,7 +7,7 @@ public class ProfanityFilter {
     private final String message;
 
 
-    public ProfanityFilter(MessageReceivedEvent event)  {
+    public ProfanityFilter(final MessageReceivedEvent event)  {
         message = event.getMessage().toString().toLowerCase();
 
         FileInputStream BadWords = null;

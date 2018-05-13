@@ -6,12 +6,12 @@ import java.nio.Buffer;
 public class AddProfanityWords {
 
     public AddProfanityWords(String word) {
-        BufferedWriter bis;
+        BufferedWriter bufferedWriter;
         {
             try {
-                bis = new BufferedWriter(new FileWriter("BadWords"));
-                bis.write("\n" + word);
-                bis.close();
+                bufferedWriter = new BufferedWriter(new FileWriter("BadWords"));
+                bufferedWriter.write("\n" + word);
+                bufferedWriter.close();
 
             } catch (IOException e) {
                 e.printStackTrace();

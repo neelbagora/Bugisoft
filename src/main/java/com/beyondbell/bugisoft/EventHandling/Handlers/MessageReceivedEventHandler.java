@@ -101,7 +101,7 @@ public class MessageReceivedEventHandler extends EventHandler {
 						}
 						break;
 					*/
-					case "off":
+					/*case "off":
 						synchronized (event) {
 							if(parameters.length == 3) {
 
@@ -121,7 +121,7 @@ public class MessageReceivedEventHandler extends EventHandler {
 							}
 
 						}
-						break;
+						break; */
 					case "add" :
 						synchronized (event) {
 							if(parameters.length == 3) {
