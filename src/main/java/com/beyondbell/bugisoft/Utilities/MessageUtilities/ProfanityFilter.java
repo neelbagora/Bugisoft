@@ -8,7 +8,7 @@ public class ProfanityFilter {
 
 
     public ProfanityFilter(final MessageReceivedEvent event)  {
-        message = event.getMessage().toString().toLowerCase();
+        message = event.getMessage().getContentRaw().toLowerCase();
 
         FileInputStream BadWords = null;
         try {
@@ -20,8 +20,17 @@ public class ProfanityFilter {
 
         try {
             for (String line = reader.readLine(); line != null; line = reader.readLine()) {
-                if(message.contains(line)) {
+                if(message.indexOf(line) != -1) {
+                    int index = message.indexOf(line);
+                    String badWord = message.substring(0,index + 1);
+                    for(int i = 0; i < line.length() - 2; i++) {
+                        badWord += "*";
+                    }
+                    badWord += message.substring(index + line.length() - 1, message.length());
                     event.getMessage().delete().queue();
+                    event.getTextChannel().sendMessage("Flagged for profanity\nThe original message was \"" +
+                            badWord + "\"").queue();
+
                     break;
                 }
             }

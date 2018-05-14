@@ -13,12 +13,13 @@ public class VoiceChannelLeaveEvent extends EventHandler {
 
 	@Override
 	void handle() {
-		if(!event.getChannelLeft().getId().equals(event.getGuild().getAfkChannel().getId())
+		/*if(!event.getChannelLeft().getId().equals(event.getGuild().getAfkChannel().getId())
 				&& (!event.getChannelLeft().getName().toLowerCase().contains("esl"))
 				&& (!event.getChannelLeft().getName().toLowerCase().contains("strats"))
 				&& !event.getChannelLeft().getId().equals(event.getGuild().getVoiceChannels().get(0).getId())
-				&& (event.getChannelLeft().getMembers().size() == 0)) {
-			new ClearChannels(event);
+				&& (event.getChannelLeft().getMembers().size() == 0))*/ {
+					event.getGuild().getDefaultChannel().sendMessage("left").queue();
+					new ClearChannels(event);
 		}
 	}
 

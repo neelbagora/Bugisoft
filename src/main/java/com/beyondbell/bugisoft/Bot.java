@@ -3,6 +3,7 @@ package com.beyondbell.bugisoft;
 import com.beyondbell.bugisoft.EventHandling.BotEventListener;
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 import net.dv8tion.jda.core.AccountType;
+import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 
 import javax.security.auth.login.LoginException;
@@ -34,6 +35,7 @@ public class Bot {
 					.setAutoReconnect(true)
 					.setCompressionEnabled(false)
 					.buildAsync();
+
 		} catch (LoginException e) {
 			System.out.println("Please Place the Correct Token Inside of the Bot Properties File");
 		}

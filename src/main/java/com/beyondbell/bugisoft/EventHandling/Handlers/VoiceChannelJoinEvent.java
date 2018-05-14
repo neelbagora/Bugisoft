@@ -13,8 +13,20 @@ public class VoiceChannelJoinEvent  extends EventHandler {
 
 	@Override
 	void handle() {
-		if(!event.getChannelJoined().equals(event.getGuild().getAfkChannel()) && event.getChannelJoined().getId().equals(event.getGuild().getVoiceChannels().get(0).getId())) {
-			new MovePeople(event);
+		try {
+			event.getChannelJoined().getId().equals(event.getGuild().getAfkChannel().getId());
+			if(!event.getChannelJoined().getId().equals(event.getGuild().getAfkChannel().getId())
+					&& event.getChannelJoined().getName().substring(0, 5).toLowerCase().equals("lobby")) {
+				event.getGuild().getDefaultChannel().sendMessage("going").queue();
+				new MovePeople(event);
+			}
+		} catch(NullPointerException e) {
+			if(event.getChannelJoined().getName().toLowerCase().contains("lobby")) {
+				event.getGuild().getDefaultChannel().sendMessage("going").queue();
+				new MovePeople(event);
+			}
 		}
+
+
 	}
 }

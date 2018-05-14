@@ -1,6 +1,7 @@
 package com.beyondbell.bugisoft.Logger.Commands;
 
 import com.beyondbell.bugisoft.Logger.LoggerDatabase;
+import com.beyondbell.bugisoft.Utilities.TextFormatters.IdFormatter;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 
 public class Report {
 	public Report(MessageReceivedEvent event, String id, int numberReports) {
+		id = IdFormatter.fixId(id);
 		//identifies Member
 		String display = event.getGuild().getMemberById(id).getNickname();
 
@@ -44,6 +46,6 @@ public class Report {
 		}
 		embed.setAuthor(event.getMessage().getAuthor().getName());
 		event.getChannel().sendMessage(embed.build()).queue();
-		event.getMessage().delete().queue();
+
 	}
 }

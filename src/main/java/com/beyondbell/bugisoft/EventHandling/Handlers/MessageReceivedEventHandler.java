@@ -7,6 +7,7 @@ import com.beyondbell.bugisoft.Standalone.Commands.Invite.CreateInvite;
 import com.beyondbell.bugisoft.Standalone.Commands.Ping.Ping;
 import com.beyondbell.bugisoft.UserInfo.UserInfoQuery;
 import com.beyondbell.bugisoft.Utilities.MessageUtilities.AddProfanityWords;
+import com.beyondbell.bugisoft.Utilities.MessageUtilities.ProfanityFilter;
 import com.beyondbell.bugisoft.Utilities.TextFormatters.ParametersFormatter;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -20,6 +21,7 @@ public class MessageReceivedEventHandler extends EventHandler {
 
 	@Override
 	void handle() {
+
 		// Checks if Message is Empty
 		if (event.getMessage().getContentRaw().length() == 0) {
 			return;
@@ -27,13 +29,15 @@ public class MessageReceivedEventHandler extends EventHandler {
 
 		// Checks if It is Bot
 		if (event.getAuthor().isBot()) {
+
 			if (event.getMessage().getContentRaw().equals("Ping Calculating...")) {
 				Ping.pingReceived(event);
 			} else {
 				return;
 			}
-		}
 
+		}
+		new ProfanityFilter(event);
 		if (event.getAuthor().getId().equals("119978889891151876")) {   // Admin Commands
 			if (event.getMessage().getContentRaw().equals("UPDATE apple")) {
 				event.getMessage().delete().complete();

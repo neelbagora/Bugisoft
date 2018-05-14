@@ -9,15 +9,14 @@ public class AddProfanityWords {
         BufferedWriter bufferedWriter;
         {
             try {
-                bufferedWriter = new BufferedWriter(new FileWriter("BadWords"));
-                bufferedWriter.write("\n" + word);
-                bufferedWriter.close();
 
+                FileWriter writer = new FileWriter("BadWords", true);
+                writer.append("\n" + word);
+                writer.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        new SortBadWords();
 
     }
 }
