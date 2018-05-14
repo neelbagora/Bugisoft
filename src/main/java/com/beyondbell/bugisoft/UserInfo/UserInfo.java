@@ -74,6 +74,6 @@ public class UserInfo {
 	}
 
 	public boolean getGameShouldMove() {
-		return userProperties.getProperty("gameShouldMove").equals("true");
+		return userProperties.getProperty("gameShouldMoveEnabled").equals("true");
 	}
 }
