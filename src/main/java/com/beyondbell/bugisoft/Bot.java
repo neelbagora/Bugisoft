@@ -3,7 +3,6 @@ package com.beyondbell.bugisoft;
 import com.beyondbell.bugisoft.EventHandling.BotEventListener;
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 import net.dv8tion.jda.core.AccountType;
-import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 
 import javax.security.auth.login.LoginException;
@@ -22,6 +21,7 @@ public class Bot {
 			botSettingsFile.close();
 		} catch (IOException e) {
 			System.out.println("Cannot Find Settings File!");
+			return;
 		}
 
 		// Loads Bot
@@ -39,32 +39,14 @@ public class Bot {
 						.setAudioSendFactory(new NativeAudioSendFactory())
 						.setAutoReconnect(true)
 						.setCompressionEnabled(false)
-						.buildAsync();
+						.buildBlocking();
 			} catch (LoginException e) {
 				System.out.println("Please Place the Correct Token Inside of the Bot Properties File");
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		} catch (IOException e) {
 			System.out.println("Cannot Find Token File!");
-<<<<<<< HEAD
-			return;
-		}
-
-		// Initializes the Bot
-		try {
-			new JDABuilder(AccountType.BOT)
-					.setToken(String.valueOf(botProperties.getProperty("token")))
-					.setAutoReconnect(true)
-					.addEventListener(new BotEventListener())
-					.setAudioEnabled(true)
-					.setAudioSendFactory(new NativeAudioSendFactory())
-					.setAutoReconnect(true)
-					.setCompressionEnabled(false)
-					.buildAsync();
-
-		} catch (LoginException e) {
-			System.out.println("Please Place the Correct Token Inside of the Bot Properties File");
-=======
->>>>>>> parent of 86aa9cf... Revert "Merge branch 'master' of https://github.com/LookLotsOfPeople/BugisoftJava"
 		}
 	}
 }

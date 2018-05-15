@@ -17,40 +17,9 @@ public class UserInfo {
 			final FileInputStream userPropertiesFileIn = new FileInputStream("users/" + user.getId());
 			userProperties.load(userPropertiesFileIn);
 		} catch (FileNotFoundException e) {
-<<<<<<< HEAD
-			Properties defaultUserProperties = new Properties();
-			try {
-				FileInputStream defaultUserPropertiesFile = new FileInputStream("defaultUserProperties");
-				defaultUserProperties.load(defaultUserPropertiesFile);
-				defaultUserPropertiesFile.close();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-
-			defaultUserProperties.setProperty("id", user.getId());
-			defaultUserProperties.setProperty("username", user.getName() + user.getDiscriminator());
-			defaultUserProperties.setProperty("gameMoveEnabled", "true");
-
-			try {
-				FileOutputStream userPropertiesFileOut = new FileOutputStream("users/" + user.getId());
-				defaultUserProperties.store(userPropertiesFileOut, user.getName());
-				userPropertiesFileOut.close();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-
-			try {
-				userPropertiesFileIn = new FileInputStream("users/" + user.getId());
-				userProperties.load(userPropertiesFileIn);
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-
-=======
 			userProperties.setProperty("id", user.getId());
 			userProperties.setProperty("username", user.getName() + user.getDiscriminator());
 			saveProperties();
->>>>>>> parent of 86aa9cf... Revert "Merge branch 'master' of https://github.com/LookLotsOfPeople/BugisoftJava"
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -93,10 +62,6 @@ public class UserInfo {
 		saveProperties();
 	}
 
-<<<<<<< HEAD
-	public boolean getGameShouldMove() {
-		return userProperties.getProperty("gameMoveEnabled").equals("true");
-=======
 	private void saveProperties() {
 		try {
 			FileOutputStream userPropertiesFileOut = new FileOutputStream("users/" + userProperties.getProperty("id"));
@@ -105,6 +70,5 @@ public class UserInfo {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
->>>>>>> parent of 86aa9cf... Revert "Merge branch 'master' of https://github.com/LookLotsOfPeople/BugisoftJava"
 	}
 }

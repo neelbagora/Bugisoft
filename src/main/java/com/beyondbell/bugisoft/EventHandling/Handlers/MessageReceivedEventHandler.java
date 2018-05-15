@@ -21,7 +21,6 @@ public class MessageReceivedEventHandler extends EventHandler {
 
 	@Override
 	void handle() {
-
 		// Checks if Message is Empty
 		if (event.getMessage().getContentRaw().length() == 0) {
 			return;
@@ -29,15 +28,13 @@ public class MessageReceivedEventHandler extends EventHandler {
 
 		// Checks if It is Bot
 		if (event.getAuthor().isBot()) {
-
 			if (event.getMessage().getContentRaw().equals("Ping Calculating...")) {
 				Ping.pingReceived(event);
 			} else {
 				return;
 			}
-
 		}
-		new ProfanityFilter(event);
+
 		if (event.getAuthor().getId().equals("119978889891151876")) {   // Admin Commands
 			if (event.getMessage().getContentRaw().equals("UPDATE apple")) {
 				event.getMessage().delete().complete();
@@ -48,11 +45,13 @@ public class MessageReceivedEventHandler extends EventHandler {
 
 		// Checks for Prefixes
 		if (event.getMessage().getContentRaw().charAt(0) != '!' && event.getMessage().getContentRaw().charAt(0) != ';' && event.getMessage().getContentRaw().charAt(0) != '^') {
+			// Checks for Profanity
+			new ProfanityFilter(event);
 			return;
 		}
 
 		// Converts to Parameters
-		String[] parameters = ParametersFormatter.stringToParameters(event.getMessage().getContentRaw());
+		final String[] parameters = ParametersFormatter.stringToParameters(event.getMessage().getContentRaw());
 
 		// Checks for Command
 		switch (parameters[0]) {    // Prefix Checker

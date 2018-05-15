@@ -14,7 +14,6 @@ public class GuildVoiceJoinEventHandler extends EventHandler {
 	@Override
 	void handle() {
 		try {
-			event.getChannelJoined().getId().equals(event.getGuild().getAfkChannel().getId());
 			if(!event.getChannelJoined().getId().equals(event.getGuild().getAfkChannel().getId())
 					&& event.getChannelJoined().getName().substring(0, 5).toLowerCase().equals("lobby")) {
 				new MovePeople(event);
