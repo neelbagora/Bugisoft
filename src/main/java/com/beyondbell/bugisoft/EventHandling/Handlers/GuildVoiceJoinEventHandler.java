@@ -3,7 +3,7 @@ package com.beyondbell.bugisoft.EventHandling.Handlers;
 import com.beyondbell.bugisoft.Lobby.MovePeople;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceJoinEvent;
 
-public class GuildVoiceJoinEventHandler extends EventHandler {
+public final class GuildVoiceJoinEventHandler extends EventHandler {
 	private final GuildVoiceJoinEvent event;
 
 	public GuildVoiceJoinEventHandler(final GuildVoiceJoinEvent event) {
@@ -12,7 +12,7 @@ public class GuildVoiceJoinEventHandler extends EventHandler {
 	}
 
 	@Override
-	void handle() {
+	final void handle() {
 		try {
 			if(!event.getChannelJoined().getId().equals(event.getGuild().getAfkChannel().getId())
 					&& event.getChannelJoined().getName().substring(0, 5).toLowerCase().equals("lobby")) {
@@ -23,7 +23,5 @@ public class GuildVoiceJoinEventHandler extends EventHandler {
 				new MovePeople(event);
 			}
 		}
-
-
 	}
 }

@@ -11,7 +11,7 @@ import com.beyondbell.bugisoft.Utilities.MessageUtilities.ProfanityFilter;
 import com.beyondbell.bugisoft.Utilities.TextFormatters.ParametersFormatter;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class MessageReceivedEventHandler extends EventHandler {
+public final class MessageReceivedEventHandler extends EventHandler {
 	private final MessageReceivedEvent event;
 
 	public MessageReceivedEventHandler(final MessageReceivedEvent event) {
@@ -20,7 +20,7 @@ public class MessageReceivedEventHandler extends EventHandler {
 	}
 
 	@Override
-	void handle() {
+	final void handle() {
 		// Checks if Message is Empty
 		if (event.getMessage().getContentRaw().length() == 0) {
 			return;

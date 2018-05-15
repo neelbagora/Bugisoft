@@ -11,9 +11,9 @@ import net.dv8tion.jda.core.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.EventListener;
 
-public class BotEventListener implements EventListener {
+public final class BotEventListener implements EventListener {
 	@Override
-	public void onEvent(final Event event) {
+	public final void onEvent(final Event event) {
 		if (event instanceof MessageReceivedEvent) {
 			new MessageReceivedEventHandler((MessageReceivedEvent) event);
 		} else if (event instanceof GuildVoiceJoinEvent) {

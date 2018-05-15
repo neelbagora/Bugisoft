@@ -2,7 +2,7 @@ package com.beyondbell.bugisoft.EventHandling.Handlers;
 
 import net.dv8tion.jda.core.events.ReadyEvent;
 
-public class ReadyEventHandler extends EventHandler {
+public final class ReadyEventHandler extends EventHandler {
 	private final ReadyEvent event;
 
 	public ReadyEventHandler(final ReadyEvent event) {
@@ -11,7 +11,7 @@ public class ReadyEventHandler extends EventHandler {
 	}
 
 	@Override
-	void handle() {
+	final void handle() {
 		System.out.println(event.getJDA().getStatus());
 	}
 }
