@@ -13,15 +13,6 @@ public final class GuildVoiceJoinEventHandler extends EventHandler {
 
 	@Override
 	final void handle() {
-		try {
-			if(!event.getChannelJoined().getId().equals(event.getGuild().getAfkChannel().getId())
-					&& event.getChannelJoined().getName().substring(0, 5).toLowerCase().equals("lobby")) {
-				new MovePeople(event);
-			}
-		} catch(NullPointerException e) {
-			if(event.getChannelJoined().getName().toLowerCase().contains("lobby")) {
-				new MovePeople(event);
-			}
-		}
+		new MovePeople(event);
 	}
 }

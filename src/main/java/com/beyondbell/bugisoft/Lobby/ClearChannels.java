@@ -6,10 +6,11 @@ import net.dv8tion.jda.core.entities.Category;
 public class ClearChannels {
 	public ClearChannels(GuildVoiceLeaveEvent event) {
 		for(Category category : event.getGuild().getCategories()) {
-		    if(category.getName().toLowerCase().equals("temporary channels") && category.getVoiceChannels().contains(event.getChannelLeft())) {
+		    if(category.getName().toLowerCase().equals("temporary channels") && category.getVoiceChannels().contains(event.getChannelLeft())
+                    && !event.getChannelLeft().getName().toLowerCase().equals("lobby")) {
 		        event.getChannelLeft().delete().queue();
             }
         }
-		event.getChannelLeft().delete().queue();
+
 	}
 }
