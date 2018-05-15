@@ -12,7 +12,6 @@ import java.util.List;
 
 public class MovePeople {
 	public MovePeople(final GuildVoiceJoinEvent event) {
-		event.getGuild().getDefaultChannel().sendMessage("MovePeople Accessed").queue();
 
 		GuildController guildController = new GuildController(event.getGuild());
 
@@ -21,7 +20,7 @@ public class MovePeople {
 		}*/
 
 		//target VoiceChannel that is checked to see if it exists.
-		List<VoiceChannel> target = null;
+		List<VoiceChannel> target;
 		String game;
 		try {
             game = event.getMember().getGame().getName();
@@ -30,18 +29,19 @@ public class MovePeople {
 		    return;
         }
 
-
-
+        //checks to see if there exists a voice channel with game name
 		target = event.getGuild().getVoiceChannelsByName(game,true);
-		if(target != null) {
+
+		//found channel
+		if(target.size() == 0) {
 		    for(VoiceChannel channel : target) {
 		        if(channel.getName().equals(game)) {
-		            guildController.moveVoiceMember(event.getMember(), channel);
+		            guildController.moveVoiceMember(event.getMember(), channel).queue();
 		            break;
 		        }
 		    }
-		    System.out.println("GameFOund");
-                //target channel not found
+		    System.out.println("GameFound");
+		    //target channel not found
         } else {
 		    Category category = event.getChannelJoined().getParent();
 		    //create new voice channel if game not found
@@ -50,7 +50,7 @@ public class MovePeople {
             //find created voice channel and move to that
             for(VoiceChannel channel : event.getGuild().getVoiceChannels()) {
                 if(channel.getName().equals(game)) {
-                    guildController.moveVoiceMember(event.getMember(), channel);
+                    guildController.moveVoiceMember(event.getMember(), channel).queue();
                     break;
                 }
 

@@ -18,8 +18,7 @@ public class VoiceChannelLeaveEvent extends EventHandler {
 				&& (!event.getChannelLeft().getName().toLowerCase().contains("strats"))
 				&& !event.getChannelLeft().getId().equals(event.getGuild().getVoiceChannels().get(0).getId())
 				&& (event.getChannelLeft().getMembers().size() == 0))*/ {
-
-					new ClearChannels(event);
+				    new ClearChannels(event);
 		}
 	}
 

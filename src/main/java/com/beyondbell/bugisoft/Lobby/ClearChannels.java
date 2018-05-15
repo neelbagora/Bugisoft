@@ -1,12 +1,16 @@
 package com.beyondbell.bugisoft.Lobby;
 
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceLeaveEvent;
-import net.dv8tion.jda.core.managers.GuildController;
+import net.dv8tion.jda.core.entities.Category;
 
 public class ClearChannels {
 
 	//event pushed from 'VoiceChannelLeaveEvent', conditions are met in the class
 	public ClearChannels(GuildVoiceLeaveEvent event) {
-		event.getChannelLeft().delete();
+		for(Category category : event.getGuild().getCategories()) {
+		    if(category.getName().toLowerCase().equals("temporary channels") && category.getVoiceChannels().contains(event.getChannelLeft())) {
+		        event.getChannelLeft().delete().queue();
+            }
+        }
 	}
 }
