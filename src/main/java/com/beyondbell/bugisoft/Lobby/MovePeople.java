@@ -17,8 +17,10 @@ public class MovePeople {
 
 	public MovePeople(final GuildVoiceJoinEvent event) {
         GuildController guildController = new GuildController(event.getGuild());
-        String category = Bot.settings.getProperty("gameChannelsCategory");
-        Category category1 = event.getChannelJoined().getParent();
+
+        String category = Bot.settings.getProperty("gameChannelsCategory").toLowerCase();
+
+        Category category1 = null;
 
         for(Category list : event.getGuild().getCategories()) {
             if(list.getName().equals(category)) {
