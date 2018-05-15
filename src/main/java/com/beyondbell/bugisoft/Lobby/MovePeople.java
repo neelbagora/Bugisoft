@@ -14,28 +14,47 @@ public class MovePeople {
 	public MovePeople(final GuildVoiceJoinEvent event) {
 		event.getGuild().getDefaultChannel().sendMessage("MovePeople Accessed").queue();
 
-		GuildController x = new GuildController(event.getGuild());
-
-
-
+		GuildController guildController = new GuildController(event.getGuild());
 
 		/*if (!UserInfoDatabase.findUser(event.getMember().getUser()).getGameShouldMove() || event.getMember().getGame() == null) {
 			return;
 		}*/
 
-		List<VoiceChannel> target = event.getGuild().getVoiceChannelsByName(event.getMember().getGame().getName(),true);
+		//target VoiceChannel that is checked to see if it exists.
+		List<VoiceChannel> target = null;
+		String game;
+		try {
+            game = event.getMember().getGame().getName();
+            System.out.println(game);
+        } catch (NullPointerException e) {
+		    return;
+        }
 
-		if(target == null) {
-			Category y = event.getChannelJoined().getParent();
-			x.createVoiceChannel(event.getMember().getGame().getName()).setParent(y).queue();
 
-		} else if(target.size() > 0){
-			for(int i = 0; i < event.getGuild().getVoiceChannels().size(); i++) {
-				if(event.getGuild().getVoiceChannels().get(i).getName().equals(event.getMember().getGame().getName())) {
-					x.moveVoiceMember(event.getMember(),event.getGuild().getVoiceChannels().get(i));
-					break;
-				}
-			}
+
+		target = event.getGuild().getVoiceChannelsByName(game,true);
+		if(target != null) {
+		    for(VoiceChannel channel : target) {
+		        if(channel.getName().equals(game)) {
+		            guildController.moveVoiceMember(event.getMember(), channel);
+		            break;
+		        }
+		    }
+		    System.out.println("GameFOund");
+                //target channel not found
+        } else {
+		    Category category = event.getChannelJoined().getParent();
+		    //create new voice channel if game not found
+            guildController.createVoiceChannel(game).setParent(category).queue();
+            System.out.println("gameCreated");
+            //find created voice channel and move to that
+            for(VoiceChannel channel : event.getGuild().getVoiceChannels()) {
+                if(channel.getName().equals(game)) {
+                    guildController.moveVoiceMember(event.getMember(), channel);
+                    break;
+                }
+
+            }
 		}
 	}
 }

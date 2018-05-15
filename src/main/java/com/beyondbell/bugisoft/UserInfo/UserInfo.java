@@ -28,7 +28,7 @@ public class UserInfo {
 
 			defaultUserProperties.setProperty("id", user.getId());
 			defaultUserProperties.setProperty("username", user.getName() + user.getDiscriminator());
-			defaultUserProperties.setProperty("gameMoveEnabled", true);
+			defaultUserProperties.setProperty("gameMoveEnabled", "true");
 
 			try {
 				FileOutputStream userPropertiesFileOut = new FileOutputStream("users/" + user.getId());
