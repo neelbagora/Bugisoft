@@ -1,6 +1,7 @@
 package com.beyondbell.bugisoft.EventHandling.Handlers;
 
 import com.beyondbell.bugisoft.Lobby.ClearChannels;
+import com.beyondbell.bugisoft.Lobby.MovePeople;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceLeaveEvent;
 
 public final class GuildVoiceLeaveEventHandler extends EventHandler {
@@ -14,5 +15,6 @@ public final class GuildVoiceLeaveEventHandler extends EventHandler {
 	@Override
 	final void handle() {
 		new ClearChannels(event);
+		new ClearChannels(event).clearEmpty();
 	}
 }

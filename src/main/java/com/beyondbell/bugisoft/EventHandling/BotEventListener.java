@@ -1,14 +1,12 @@
 package com.beyondbell.bugisoft.EventHandling;
 
-import com.beyondbell.bugisoft.EventHandling.Handlers.GuildMessageReceivedEventHandler;
-import com.beyondbell.bugisoft.EventHandling.Handlers.GuildVoiceJoinEventHandler;
-import com.beyondbell.bugisoft.EventHandling.Handlers.GuildVoiceLeaveEventHandler;
-import com.beyondbell.bugisoft.EventHandling.Handlers.ReadyEventHandler;
+import com.beyondbell.bugisoft.EventHandling.Handlers.*;
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.ReadyEvent;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.core.events.user.update.UserUpdateGameEvent;
 import net.dv8tion.jda.core.hooks.EventListener;
 
 public final class BotEventListener implements EventListener {
@@ -22,6 +20,8 @@ public final class BotEventListener implements EventListener {
 			new GuildVoiceLeaveEventHandler((GuildVoiceLeaveEvent) event);
 		} else if (event instanceof ReadyEvent) {
 			new ReadyEventHandler((ReadyEvent) event);
+		} else if(event instanceof UserUpdateGameEvent) {
+			new GameUpdateHandler((UserUpdateGameEvent) event);
 		}
 	}
 }
