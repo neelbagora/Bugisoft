@@ -9,14 +9,15 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class UserInfo {
-	private final Properties userProperties = new Properties();
+	private volatile Properties userProperties;
 
 	UserInfo(User user) {
-		FileInputStream userPropertiesFileIn;
-		try { // Attempts to Reach the File
-			userPropertiesFileIn = new FileInputStream("users/" + user.getId());
+		userProperties = new Properties();
+		try {
+			final FileInputStream userPropertiesFileIn = new FileInputStream("users/" + user.getId());
 			userProperties.load(userPropertiesFileIn);
 		} catch (FileNotFoundException e) {
+<<<<<<< HEAD
 			Properties defaultUserProperties = new Properties();
 			try {
 				FileInputStream defaultUserPropertiesFile = new FileInputStream("defaultUserProperties");
@@ -45,29 +46,22 @@ public class UserInfo {
 				e1.printStackTrace();
 			}
 
+=======
+			userProperties.setProperty("id", user.getId());
+			userProperties.setProperty("username", user.getName() + user.getDiscriminator());
+			saveProperties();
+>>>>>>> parent of 86aa9cf... Revert "Merge branch 'master' of https://github.com/LookLotsOfPeople/BugisoftJava"
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	Properties getUserProperties() {
+		return userProperties;
+	}
+
 	String getUsername() {
 		return userProperties.getProperty("username");
-	}
-
-	String getLevel() {
-		return userProperties.getProperty("level");
-	}
-
-	String getCash() {
-		return userProperties.getProperty("cash");
-	}
-
-	String getWins() {
-		return userProperties.getProperty("wins");
-	}
-
-	String getLosses() {
-		return userProperties.getProperty("losses");
 	}
 
 	String getID() {
@@ -75,6 +69,42 @@ public class UserInfo {
 	}
 
 	public boolean getGameShouldMove() {
+		if (userProperties.getProperty("gameShouldMove") != null) {
+			return userProperties.getProperty("gameShouldMove").equals("true");
+		} else {
+			copyProperty("gameShouldMove");
+			saveProperties();
+			return userProperties.getProperty("gameShouldMove").equals("true");
+		}
+	}
+
+	private void copyProperty(final String property) {
+		final Properties defaultUserProperties = new Properties();
+		try {
+			FileInputStream defaultUserPropertiesFile = new FileInputStream("defaultUserProperties");
+			defaultUserProperties.load(defaultUserPropertiesFile);
+			defaultUserPropertiesFile.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
+		userProperties.setProperty(property, defaultUserProperties.getProperty(property));
+
+		saveProperties();
+	}
+
+<<<<<<< HEAD
+	public boolean getGameShouldMove() {
 		return userProperties.getProperty("gameMoveEnabled").equals("true");
+=======
+	private void saveProperties() {
+		try {
+			FileOutputStream userPropertiesFileOut = new FileOutputStream("users/" + userProperties.getProperty("id"));
+			userProperties.store(userPropertiesFileOut, userProperties.getProperty("username"));
+			userPropertiesFileOut.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+>>>>>>> parent of 86aa9cf... Revert "Merge branch 'master' of https://github.com/LookLotsOfPeople/BugisoftJava"
 	}
 }

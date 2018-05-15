@@ -1,4 +1,3 @@
-/*
 package com.beyondbell.bugisoft.Tournament;
 
 class Player {
@@ -22,4 +21,3 @@ class Player {
         return losses;
     }
 }
-*/

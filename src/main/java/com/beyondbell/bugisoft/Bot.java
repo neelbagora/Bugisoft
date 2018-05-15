@@ -12,15 +12,40 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class Bot {
-	public static void main(String[] args) {
-		// Loads Bot Properties
-		final Properties botProperties = new Properties();
+	public final static Properties settings = new Properties();
+
+	public static void main(final String... args) {
+		// Loads Settings
 		try {
+			final FileInputStream botSettingsFile = new FileInputStream("settings");
+			settings.load(botSettingsFile);
+			botSettingsFile.close();
+		} catch (IOException e) {
+			System.out.println("Cannot Find Settings File!");
+		}
+
+		// Loads Bot
+		try {
+			final Properties botProperties = new Properties();
 			final FileInputStream botPropertiesFile = new FileInputStream("token");
 			botProperties.load(botPropertiesFile);
 			botPropertiesFile.close();
+			try {
+				new JDABuilder(AccountType.BOT)
+						.setToken(String.valueOf(botProperties.getProperty("token")))
+						.setAutoReconnect(true)
+						.addEventListener(new BotEventListener())
+						.setAudioEnabled(true)
+						.setAudioSendFactory(new NativeAudioSendFactory())
+						.setAutoReconnect(true)
+						.setCompressionEnabled(false)
+						.buildAsync();
+			} catch (LoginException e) {
+				System.out.println("Please Place the Correct Token Inside of the Bot Properties File");
+			}
 		} catch (IOException e) {
 			System.out.println("Cannot Find Token File!");
+<<<<<<< HEAD
 			return;
 		}
 
@@ -38,6 +63,8 @@ public class Bot {
 
 		} catch (LoginException e) {
 			System.out.println("Please Place the Correct Token Inside of the Bot Properties File");
+=======
+>>>>>>> parent of 86aa9cf... Revert "Merge branch 'master' of https://github.com/LookLotsOfPeople/BugisoftJava"
 		}
 	}
 }
