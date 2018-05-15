@@ -4,13 +4,13 @@ import com.beyondbell.bugisoft.Music.GuildMusicManager;
 import com.beyondbell.bugisoft.Music.Music;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 public class ListQueue {
 	private final Message message;
 
-	public ListQueue(MessageReceivedEvent event) {
-		GuildMusicManager musicManager = Music.getGuildAudioPlayer(event.getTextChannel().getGuild());
+	public ListQueue(GuildMessageReceivedEvent event) {
+		GuildMusicManager musicManager = Music.getGuildAudioPlayer(event.getChannel().getGuild());
 
 		EmbedBuilder embedBuilder = new EmbedBuilder();
 

@@ -4,11 +4,12 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 public class LeaveVoice {
 	private final Message message;
 
-	public LeaveVoice(MessageReceivedEvent event) {
+	public LeaveVoice(GuildMessageReceivedEvent event) {
 		TextChannel channel = (TextChannel) event.getChannel();
 		// Gets the channel in which the bot is currently connected.
 		VoiceChannel connectedChannel = event.getGuild().getSelfMember().getVoiceState().getChannel();

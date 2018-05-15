@@ -3,6 +3,7 @@ package com.beyondbell.bugisoft.Standalone.Commands.Invite;
 import net.dv8tion.jda.core.entities.Invite;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.requests.restaction.InviteAction;
 
 import java.util.concurrent.TimeUnit;
@@ -11,7 +12,7 @@ public class CreateInvite {
 	private long timeout;
 	private final Message message;
 
-	public CreateInvite(MessageReceivedEvent event, String timeInput) {
+	public CreateInvite(GuildMessageReceivedEvent event, String timeInput) {
 		// Finds the Invite Timeout
 		try {
 			this.timeout = Integer.valueOf(timeInput);

@@ -1,19 +1,19 @@
 package com.beyondbell.bugisoft.Music.Commands;
 
-import com.beyondbell.bugisoft.Utilities.MessageUtilities.MessageDeleter;
 import com.beyondbell.bugisoft.Music.GuildMusicManager;
 import com.beyondbell.bugisoft.Music.Music;
+import com.beyondbell.bugisoft.Utilities.MessageUtilities.MessageDeleter;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 public class PlaySong {
-	public PlaySong(final MessageReceivedEvent event, final String trackUrl) {
-		TextChannel channel = event.getTextChannel();
+	public PlaySong(final GuildMessageReceivedEvent event, final String trackUrl) {
+		TextChannel channel = event.getChannel();
 
 		new JoinVoice(event);
 

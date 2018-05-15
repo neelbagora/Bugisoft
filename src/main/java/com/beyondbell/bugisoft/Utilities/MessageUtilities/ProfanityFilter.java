@@ -1,13 +1,14 @@
 package com.beyondbell.bugisoft.Utilities.MessageUtilities;
 
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+
 import java.io.*;
 
 public class ProfanityFilter {
     private final String message;
 
 
-    public ProfanityFilter(final MessageReceivedEvent event)  {
+    public ProfanityFilter(final GuildMessageReceivedEvent event)  {
         message = event.getMessage().getContentRaw().toLowerCase();
 
         FileInputStream BadWords = null;
@@ -28,7 +29,7 @@ public class ProfanityFilter {
                     }
                     badWord += message.substring(index + line.length() - 1, message.length());
                     event.getMessage().delete().queue();
-                    event.getTextChannel().sendMessage("Flagged for profanity\nThe original message was \"" +
+                    event.getChannel().sendMessage("Flagged for profanity\nThe original message was \"" +
                             badWord + "\"").queue();
 
                     break;

@@ -9,12 +9,12 @@ import com.beyondbell.bugisoft.UserInfo.UserInfoQuery;
 import com.beyondbell.bugisoft.Utilities.MessageUtilities.AddProfanityWords;
 import com.beyondbell.bugisoft.Utilities.MessageUtilities.ProfanityFilter;
 import com.beyondbell.bugisoft.Utilities.TextFormatters.ParametersFormatter;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
-public final class MessageReceivedEventHandler extends EventHandler {
-	private final MessageReceivedEvent event;
+public final class GuildMessageReceivedEventHandler extends EventHandler {
+	private final GuildMessageReceivedEvent event;
 
-	public MessageReceivedEventHandler(final MessageReceivedEvent event) {
+	public GuildMessageReceivedEventHandler(final GuildMessageReceivedEvent event) {
 		super();
 		this.event = event;
 	}
@@ -83,7 +83,7 @@ public final class MessageReceivedEventHandler extends EventHandler {
 								}
 								new Report(event, parameters[2], number);
 							} else {
-								event.getTextChannel().sendMessage("Follow format: !report nickname numberOfMessages").queue();
+								event.getChannel().sendMessage("Follow format: !report nickname numberOfMessages").queue();
 							}
 							event.getMessage().delete().queue();
 						}
@@ -205,7 +205,5 @@ public final class MessageReceivedEventHandler extends EventHandler {
 			default:    // Not a Valid Prefix
 				break;
 		}
-
-
 	}
 }

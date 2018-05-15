@@ -2,16 +2,16 @@ package com.beyondbell.bugisoft.Music.Commands;
 
 import com.beyondbell.bugisoft.Music.Music;
 import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 public class PausePlayer {
 	private final Message message;
 
-	public PausePlayer(MessageReceivedEvent event, boolean shouldPause) {
+	public PausePlayer(GuildMessageReceivedEvent event, boolean shouldPause) {
 		String messageText = "Player ";
 
-		if (Music.getGuildAudioPlayer(event.getTextChannel().getGuild()).player.isPaused() != shouldPause) {
-			Music.getGuildAudioPlayer(event.getTextChannel().getGuild()).player.setPaused(shouldPause);
+		if (Music.getGuildAudioPlayer(event.getChannel().getGuild()).player.isPaused() != shouldPause) {
+			Music.getGuildAudioPlayer(event.getChannel().getGuild()).player.setPaused(shouldPause);
 			messageText += "is now ";
 			if (shouldPause) {
 				messageText += "paused!";
@@ -27,7 +27,7 @@ public class PausePlayer {
 			}
 		}
 
-		message = event.getTextChannel().sendMessage(messageText).complete();
+		message = event.getChannel().sendMessage(messageText).complete();
 
 		Thread thread = new Thread(this::deleteMessage);
 		thread.setDaemon(true);

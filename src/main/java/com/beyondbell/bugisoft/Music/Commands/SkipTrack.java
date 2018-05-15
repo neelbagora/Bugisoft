@@ -4,13 +4,13 @@ import com.beyondbell.bugisoft.Music.GuildMusicManager;
 import com.beyondbell.bugisoft.Music.Music;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 public class SkipTrack {
 	private final Message message;
 
-	public SkipTrack(MessageReceivedEvent event) {
-		TextChannel channel = event.getTextChannel();
+	public SkipTrack(GuildMessageReceivedEvent event) {
+		TextChannel channel = event.getChannel();
 		GuildMusicManager musicManager = Music.getGuildAudioPlayer(channel.getGuild());
 		musicManager.scheduler.nextTrack();
 
@@ -21,7 +21,7 @@ public class SkipTrack {
 		thread.start();
 	}
 
-	public SkipTrack(MessageReceivedEvent event, String numberToSkipString) {
+	public SkipTrack(GuildMessageReceivedEvent event, String numberToSkipString) {
 		int numberToSkip = Integer.parseInt(numberToSkipString);
 
 		TextChannel channel = (TextChannel) event.getChannel();

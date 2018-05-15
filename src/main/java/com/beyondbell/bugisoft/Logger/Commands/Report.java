@@ -5,10 +5,12 @@ import com.beyondbell.bugisoft.Utilities.TextFormatters.IdFormatter;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+
 import java.util.ArrayList;
 
 public class Report {
-	public Report(MessageReceivedEvent event, String id, int numberReports) {
+	public Report(GuildMessageReceivedEvent event, String id, int numberReports) {
 		id = IdFormatter.fixId(id);
 		//identifies Member
 		String display = event.getGuild().getMemberById(id).getNickname();
