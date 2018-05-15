@@ -58,7 +58,11 @@ public class MovePeople {
 
 	    if(event.getNewGame() == null) {
 	        VoiceChannel x = event.getMember().getVoiceState().getChannel();
-	        new GuildController(event.getGuild()).moveVoiceMember(event.getMember(), event.getGuild().getVoiceChannelsByName("lobby",true).get(0)).queue();
+	        if(event.getMember().getVoiceState().inVoiceChannel()) {
+                new GuildController(event.getGuild()).moveVoiceMember(event.getMember(), event.getGuild().getVoiceChannelsByName("lobby",true).get(0)).queue();
+            } else {
+	            return;
+            }
 	        try {
 	            Thread.sleep(500);
             } catch (InterruptedException e) {
