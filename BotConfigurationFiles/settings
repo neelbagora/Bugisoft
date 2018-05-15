@@ -1,0 +1,4 @@
+#Settings
+profanityFilter=false
+badWordsFile=badwords
+gameChannelsCategory=Temporary Games
