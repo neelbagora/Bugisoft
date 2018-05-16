@@ -1,5 +1,6 @@
 package com.beyondbell.bugisoft.EventHandling.Handlers;
 
+import com.beyondbell.bugisoft.Bot;
 import com.beyondbell.bugisoft.Lobby.MovePeople;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceJoinEvent;
 
@@ -13,15 +14,10 @@ public final class GuildVoiceJoinEventHandler extends EventHandler {
 
 	@Override
 	final void handle() {
-		try {
-			if(!event.getChannelJoined().getId().equals(event.getGuild().getAfkChannel().getId())
-					&& event.getChannelJoined().getName().substring(0, 5).toLowerCase().equals("lobby")) {
-				new MovePeople(event);
-			}
-		} catch(NullPointerException e) {
-			if(event.getChannelJoined().getName().toLowerCase().contains("lobby")) {
-				new MovePeople(event);
-			}
+		if(Bot.settings.getProperty("defaultTempChannel") == null) {
+			event.getGuild().getDefaultChannel().sendMessage("Lobby not set");
+		} else {
+			new MovePeople(event);
 		}
 	}
 }

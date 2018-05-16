@@ -1,60 +1,111 @@
 package com.beyondbell.bugisoft.Lobby;
 
+import com.beyondbell.bugisoft.Bot;
 import com.beyondbell.bugisoft.UserInfo.UserInfoDatabase;
 import net.dv8tion.jda.core.entities.Category;
 import net.dv8tion.jda.core.entities.ChannelType;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceJoinEvent;
+import net.dv8tion.jda.core.events.user.update.UserUpdateGameEvent;
 import net.dv8tion.jda.core.managers.GuildController;
 import net.dv8tion.jda.core.requests.restaction.GuildAction;
 
 import java.util.List;
 
 public class MovePeople {
+
+    String category = Bot.settings.getProperty("gameChannelsCategory").toLowerCase();
+    Category category1;
+    VoiceChannel lobby;
+
 	public MovePeople(final GuildVoiceJoinEvent event) {
+        lobby = event.getGuild().getVoiceChannelsByName(Bot.settings.getProperty("defaultTempChannel").toLowerCase(),true).get(0);
 
-		GuildController guildController = new GuildController(event.getGuild());
+        GuildController guildController = new GuildController(event.getGuild());
+        category1 = event.getGuild().getCategoriesByName(category, true).get(0);
 
-		/*if (!UserInfoDatabase.findUser(event.getMember().getUser()).getGameShouldMove() || event.getMember().getGame() == null) {
-			return;
-		}*/
 
-		//target VoiceChannel that is checked to see if it exists.
-		List<VoiceChannel> target;
-		String game;
-		try {
-            game = event.getMember().getGame().getName();
-            System.out.println(game);
-        } catch (NullPointerException e) {
-		    return;
+
+        if(event.getMember().getGame() == null) {
+            return;
         }
 
-        //checks to see if there exists a voice channel with game name
-		target = event.getGuild().getVoiceChannelsByName(game,true);
-
-		//found channel
-		if(target.size() == 0) {
-		    for(VoiceChannel channel : target) {
-		        if(channel.getName().equals(game)) {
-		            guildController.moveVoiceMember(event.getMember(), channel).queue();
-		            break;
-		        }
-		    }
-		    System.out.println("GameFound");
-		    //target channel not found
-        } else {
-		    Category category = event.getChannelJoined().getParent();
-		    //create new voice channel if game not found
-            guildController.createVoiceChannel(game).setParent(category).queue();
-            System.out.println("gameCreated");
-            //find created voice channel and move to that
-            for(VoiceChannel channel : event.getGuild().getVoiceChannels()) {
-                if(channel.getName().equals(game)) {
-                    guildController.moveVoiceMember(event.getMember(), channel).queue();
-                    break;
-                }
-
+        for(VoiceChannel channel : event.getGuild().getVoiceChannels()) {
+            if(channel.getName().equals(event.getMember().getGame().getName())) {
+                guildController.moveVoiceMember(event.getMember(), channel).queue();
+                break;
             }
-		}
+        }
+
+        guildController.createVoiceChannel(event.getMember().getGame().getName()).setParent(category1).queue();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        for(VoiceChannel voiceChannel : event.getGuild().getVoiceChannels()) {
+            if(voiceChannel.getName().equals(event.getMember().getGame().getName())) {
+                guildController.moveVoiceMember(event.getMember(), voiceChannel).queue();
+                break;
+            }
+        }
 	}
+
+	public MovePeople(UserUpdateGameEvent event) {
+	    GuildController controller = new GuildController(event.getGuild());
+	    //category under where the channel must be created
+	    category1 = event.getGuild().getCategoriesByName(category, true).get(0);;
+
+	    if(event.getNewGame() == null) {
+	        VoiceChannel x = event.getMember().getVoiceState().getChannel();
+	        if(event.getMember().getVoiceState().inVoiceChannel()) {
+                controller.moveVoiceMember(event.getMember(), event.getGuild().getVoiceChannelsByName("lobby",true).get(0)).queue();
+            } else {
+	            return;
+            }
+	        try {
+	            Thread.sleep(500);
+            } catch (InterruptedException e) {
+	            e.printStackTrace();
+            }
+
+	        x.delete().queue();
+	        return;
+        }
+
+	    //if user is connected
+	    if(event.getMember().getVoiceState().inVoiceChannel()) {
+	        //set category
+	        for(VoiceChannel voiceChannel : event.getGuild().getVoiceChannels()) {
+	            if(voiceChannel.getName().equals(event.getNewGame().getName())) {
+	                controller.moveVoiceMember(event.getMember(), voiceChannel).queue();
+	                break;
+	            }
+            }
+
+            try {
+                Thread.sleep(300);
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            new GuildController(event.getGuild()).createVoiceChannel(event.getNewGame().getName()).setParent(category1).queue();
+	        try {
+	            Thread.sleep(300);
+            } catch(InterruptedException e) {
+	            e.printStackTrace();
+            }
+            for(VoiceChannel voiceChannel : event.getGuild().getVoiceChannels()) {
+                if(voiceChannel.getName().equals(event.getNewGame().getName())) {
+                    controller.moveVoiceMember(event.getMember(), voiceChannel).queue();
+                    return;
+                }
+            }
+        }
+
+
+
+    }
+
 }
