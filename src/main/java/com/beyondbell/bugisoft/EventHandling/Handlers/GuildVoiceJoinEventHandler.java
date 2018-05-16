@@ -14,7 +14,7 @@ public final class GuildVoiceJoinEventHandler extends EventHandler {
 
 	@Override
 	final void handle() {
-		if(Bot.settings.getProperty("defaultTempChannel") == null) {
+		if(Bot.settings.getProperty("defaultTempChannel") == "") {
 			event.getGuild().getDefaultChannel().sendMessage("Lobby not set");
 		} else {
 			new MovePeople(event);
