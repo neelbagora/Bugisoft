@@ -1,6 +1,7 @@
-package com.beyondbell.bugisoft.EventHandling.Handlers;
+package com.beyondbell.bugisoft.EventHandling.GuildEventHandlers;
 
 import com.beyondbell.bugisoft.Bot;
+import com.beyondbell.bugisoft.EventHandling.EventHandler;
 import com.beyondbell.bugisoft.Logger.Commands.Report;
 import com.beyondbell.bugisoft.Logger.LoggerDatabase;
 import com.beyondbell.bugisoft.Music.Commands.*;
@@ -22,7 +23,7 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 	}
 
 	@Override
-	final void handle() {
+	protected final void handle() {
 		LoggerDatabase.logEvent(event);
 
 		// Checks if Message is Empty

@@ -1,8 +1,8 @@
-package com.beyondbell.bugisoft.EventHandling.Handlers;
+package com.beyondbell.bugisoft.EventHandling.GuildEventHandlers;
 
 import com.beyondbell.bugisoft.Bot;
+import com.beyondbell.bugisoft.EventHandling.EventHandler;
 import com.beyondbell.bugisoft.Lobby.ClearChannels;
-import com.beyondbell.bugisoft.Lobby.MovePeople;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceLeaveEvent;
 
 public final class GuildVoiceLeaveEventHandler extends EventHandler {
@@ -14,7 +14,7 @@ public final class GuildVoiceLeaveEventHandler extends EventHandler {
 	}
 
 	@Override
-	final void handle() {
+	protected final void handle() {
 		if(Bot.settings.getProperty("defaultTempChannel") == "") {
 			event.getGuild().getDefaultChannel().sendMessage("Lobby not set");
 		} else {
