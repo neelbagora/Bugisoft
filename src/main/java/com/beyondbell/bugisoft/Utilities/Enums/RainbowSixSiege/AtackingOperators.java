@@ -1,26 +1,26 @@
 package com.beyondbell.bugisoft.Utilities.Enums.RainbowSixSiege;
 
 public enum AtackingOperators {
-	// Year One
+	// ORIGINAL ATTACKERS
 	Ash, Thermite,
 	Twitch, Montagne,
 	IQ, Blitz,
 	Glaz, Fuze,
 	Sledge, Tatcher,
 
-	// Year One
+	// YEAR ONE
 	Buck,
 	Blackbeard,
 	Capitao,
 	Hibana,
 
-	// Year Two
+	// YEAR TWO
 	Jackal,
 	// Operation Health
 	Zofia,
 	Dokaebi,
 
 
-	// Year Three
+	// YEAR THREE
 	Lion, Finka,
 }
