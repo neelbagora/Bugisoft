@@ -1,6 +1,7 @@
 #Settings
 profanityFilter=false
 badWordsFile=badwords
-gameChannelsCategory=Temporary Games
-defaultTempChannel=Lobby
 log=false
+temporaryChannelsCategory=Other Games
+hub=Hub
+lobby=Lobby

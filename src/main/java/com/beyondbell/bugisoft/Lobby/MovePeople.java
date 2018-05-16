@@ -11,14 +11,19 @@ import net.dv8tion.jda.core.managers.GuildController;
 public class MovePeople {
 	public MovePeople(final GuildVoiceJoinEvent event) {
 		if (event.getMember().getGame() == null) {
+			if (Bot.SETTINGS.getProperty("lobby") != null && event.getGuild().getVoiceChannelsByName(Bot.SETTINGS.getProperty("lobby"), true).size() != 0) {
+				new GuildController(event.getGuild()).moveVoiceMember(event.getMember(), event.getGuild().getVoiceChannelsByName(Bot.SETTINGS.getProperty("lobby"), true).get(0)).queue();
+			} else {
+				new GuildController(event.getGuild()).moveVoiceMember(event.getMember(), event.getGuild().getAfkChannel()).queue();
+			}
 			return;
 		}
 
 		final Category category;
-		if (event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("gameChannelsCategory"), true).size() != 0) {
-			category = event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("gameChannelsCategory"), true).get(0);
+		if (event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("temporaryChannelsCategory"), true).size() != 0) {
+			category = event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("temporaryChannelsCategory"), true).get(0);
 		} else {
-			Bot.LOGGER.warn("Could Not Find Category With the Name of {" + Bot.SETTINGS.getProperty("gameChannelsCategory") + "}!");
+			Bot.LOGGER.warn("Could Not Find Category With the Name of {" + Bot.SETTINGS.getProperty("temporaryChannelsCategory") + "}!");
 			return;
 		}
 
@@ -42,14 +47,19 @@ public class MovePeople {
 
 	public MovePeople(final UserUpdateGameEvent event) {
 		if (event.getMember().getGame() == null) {
+			if (Bot.SETTINGS.getProperty("lobby") != null && event.getGuild().getVoiceChannelsByName(Bot.SETTINGS.getProperty("lobby"), true).size() != 0) {
+				new GuildController(event.getGuild()).moveVoiceMember(event.getMember(), event.getGuild().getVoiceChannelsByName(Bot.SETTINGS.getProperty("lobby"), true).get(0)).queue();
+			} else {
+				new GuildController(event.getGuild()).moveVoiceMember(event.getMember(), event.getGuild().getAfkChannel()).queue();
+			}
 			return;
 		}
 
 		final Category category;
-		if (event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("gameChannelsCategory"), true).size() != 0) {
-			category = event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("gameChannelsCategory"), true).get(0);
+		if (event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("temporaryChannelsCategory"), true).size() != 0) {
+			category = event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("temporaryChannelsCategory"), true).get(0);
 		} else {
-			Bot.LOGGER.warn("Could Not Find Category With the Name of {" + Bot.SETTINGS.getProperty("gameChannelsCategory") + "}!");
+			Bot.LOGGER.warn("Could Not Find Category With the Name of {" + Bot.SETTINGS.getProperty("temporaryChannelsCategory") + "}!");
 			return;
 		}
 

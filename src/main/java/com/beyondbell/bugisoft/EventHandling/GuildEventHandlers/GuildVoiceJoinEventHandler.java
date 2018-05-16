@@ -15,7 +15,7 @@ public final class GuildVoiceJoinEventHandler extends EventHandler {
 
 	@Override
 	protected final void handle() {
-		if(Bot.SETTINGS.getProperty("defaultTempChannel") != null) {
+		if(Bot.SETTINGS.getProperty("hub") != null) {
 			new MovePeople(event);
 		} else {
 			if (event.getGuild().getDefaultChannel() != null) {
