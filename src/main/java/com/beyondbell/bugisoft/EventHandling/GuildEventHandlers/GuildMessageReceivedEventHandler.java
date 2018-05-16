@@ -24,7 +24,9 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 
 	@Override
 	protected final void handle() {
-		LoggerDatabase.logEvent(event);
+		if (Bot.settings.getProperty("log").equalsIgnoreCase("true")) {
+			LoggerDatabase.logEvent(event);
+		}
 
 		// Checks if Message is Empty
 		if (event.getMessage().getContentRaw().length() == 0) {

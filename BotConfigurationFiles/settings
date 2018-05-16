@@ -2,3 +2,4 @@
 profanityFilter=false
 badWordsFile=badwords
 gameChannelsCategory=Temporary Games
+log=false
