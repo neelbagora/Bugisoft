@@ -3,6 +3,8 @@ package com.beyondbell.bugisoft.EventHandling.UserEventsHandler;
 import com.beyondbell.bugisoft.Bot;
 import com.beyondbell.bugisoft.EventHandling.EventHandler;
 import com.beyondbell.bugisoft.Lobby.MovePeople;
+import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.events.user.update.UserUpdateGameEvent;
 
 public class UserUpdateGameEventHandler extends EventHandler {
@@ -15,10 +17,17 @@ public class UserUpdateGameEventHandler extends EventHandler {
 
 	@Override
 	protected void handle() {
-		if (Bot.SETTINGS.getProperty("hub") == null) {
-			event.getGuild().getDefaultChannel().sendMessage("Lobby not set").queue();
+		if (Bot.SETTINGS.getProperty("temporaryChannelsCategory") != null && event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("temporaryChannelsCategory"), true).size() != 0) {
+			for (final VoiceChannel voiceChannel : event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("temporaryChannelsCategory"), true).get(0).getVoiceChannels()) {
+				for (Member member : voiceChannel.getMembers()) {
+					if (event.getMember() == member) {
+						new MovePeople(event);
+						break;
+					}
+				}
+			}
 		} else {
-			new MovePeople(event);
+			Bot.LOGGER.warn("No Temporary Channel Category!");
 		}
 	}
 }

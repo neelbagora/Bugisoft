@@ -1,6 +1,5 @@
 package com.beyondbell.bugisoft.EventHandling.GuildEventHandlers;
 
-import com.beyondbell.bugisoft.Lobby.ClearChannels;
 import net.dv8tion.jda.core.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceLeaveEvent;
@@ -16,7 +15,7 @@ public final class GuildEventDelegator {
 		} else if (event instanceof GuildVoiceLeaveEvent) {
 			new GuildVoiceLeaveEventHandler((GuildVoiceLeaveEvent) event);
 		} else if(event instanceof GuildVoiceMoveEvent) {
-			new ClearChannels((GuildVoiceMoveEvent) event);
+			new GuildVoiceMoveEventHandler((GuildVoiceMoveEvent) event);
 		}
 	}
 }
