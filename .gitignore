@@ -31,3 +31,5 @@ users/
 # Bot Token File
 token
 *.MF
+settings
+logs/
