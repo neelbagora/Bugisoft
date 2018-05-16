@@ -40,7 +40,7 @@ public class MovePeople {
 		new GuildController(event.getGuild()).moveVoiceMember(event.getMember(), (VoiceChannel) channel).queue();
 	}
 
-	public MovePeople(UserUpdateGameEvent event) {
+	public MovePeople(final UserUpdateGameEvent event) {
 		if (event.getMember().getGame() == null) {
 			return;
 		}
