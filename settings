@@ -1,0 +1,5 @@
+#Settings
+profanityFilter=false
+badWordsFile=badwords
+gameChannelsCategory=Temporary Channels
+defaultTempChannel=Lobby
