@@ -1,13 +1,15 @@
 package com.beyondbell.bugisoft.EventHandling.Handlers;
 
+import com.beyondbell.bugisoft.Bot;
 import com.beyondbell.bugisoft.Logger.Commands.Report;
+import com.beyondbell.bugisoft.Logger.LoggerDatabase;
 import com.beyondbell.bugisoft.Music.Commands.*;
+import com.beyondbell.bugisoft.ProfanityFilter.AddProfanityWords;
+import com.beyondbell.bugisoft.ProfanityFilter.ProfanityFilter;
 import com.beyondbell.bugisoft.Standalone.AdminCommands.Update;
 import com.beyondbell.bugisoft.Standalone.Commands.Invite.CreateInvite;
 import com.beyondbell.bugisoft.Standalone.Commands.Ping.Ping;
 import com.beyondbell.bugisoft.UserInfo.UserInfoQuery;
-import com.beyondbell.bugisoft.Utilities.MessageUtilities.AddProfanityWords;
-import com.beyondbell.bugisoft.Utilities.MessageUtilities.ProfanityFilter;
 import com.beyondbell.bugisoft.Utilities.TextFormatters.ParametersFormatter;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
@@ -21,6 +23,8 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 
 	@Override
 	final void handle() {
+		LoggerDatabase.logEvent(event);
+
 		// Checks if Message is Empty
 		if (event.getMessage().getContentRaw().length() == 0) {
 			return;
@@ -45,8 +49,14 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 
 		// Checks for Prefixes
 		if (event.getMessage().getContentRaw().charAt(0) != '!' && event.getMessage().getContentRaw().charAt(0) != ';' && event.getMessage().getContentRaw().charAt(0) != '^') {
-			// Checks for Profanity
-			new ProfanityFilter(event);
+			if (Bot.settings.getProperty("profanityFilter").equalsIgnoreCase("true")) {
+				// Checks for Profanity
+				new ProfanityFilter(event);
+			} else if (Bot.settings.getProperty("profanityFilter").equalsIgnoreCase("false")) {
+				// Nothing
+			} else {
+				System.out.println("Key: " + "profanityFilter" + "\tin Properties File: " + "settings" + "\tis not configured correctly!");
+			}
 			return;
 		}
 

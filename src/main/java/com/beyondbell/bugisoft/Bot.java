@@ -10,7 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-public class Bot {
+public final class Bot {
 	public final static Properties settings = new Properties();
 
 	public static void main(final String... args) {
@@ -39,11 +39,9 @@ public class Bot {
 						.setAudioSendFactory(new NativeAudioSendFactory())
 						.setAutoReconnect(true)
 						.setCompressionEnabled(false)
-						.buildBlocking();
+						.buildAsync();
 			} catch (LoginException e) {
 				System.out.println("Please Place the Correct Token Inside of the Bot Properties File");
-			} catch (InterruptedException e) {
-				e.printStackTrace();
 			}
 		} catch (IOException e) {
 			System.out.println("Cannot Find Token File!");
