@@ -26,7 +26,6 @@ public class LoggerFormatter {
 		}
 		componentsList.add(currentComponent.toString());
 
-
 		if (componentsList.size() != components.length) {
 			// TODO Cry
 		} else {
@@ -40,11 +39,17 @@ public class LoggerFormatter {
 		return components;
 	}
 
-	public static String getCorrespondingLogMessage(String messageId, String authorId, String message) {
-		return messageId + " | " + authorId + " | " + message;
+	static String getCorrespondingLogMessage(final String messageId, final String authorId, final String message) {
+		if (!message.contains("\n")) {
+			return messageId + " | " + authorId + " | " + message;
+		} else  {
+			String editedMessage = message;
+			editedMessage = editedMessage.replaceAll("\n", "{LineBreak}");
+			return messageId + " | " + authorId + " | " + editedMessage;
+		}
 	}
 
-	public static String getIDFromLogMessage(String logMessage) {
+	static String getIDFromLogMessage(String logMessage) {
 		StringBuilder id = new StringBuilder();
 		for (int i = 0; i < logMessage.length(); i++) {
 			if (logMessage.charAt(i) == '|') {

@@ -4,7 +4,6 @@ import com.beyondbell.bugisoft.Logger.LoggerDatabase;
 import com.beyondbell.bugisoft.Utilities.TextFormatters.IdFormatter;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class Report {
 
 		//arranges messages into messages Array
 		int count = 100;
-		Message[] messages = LoggerDatabase.getMessagesFromUser(id,numberReports, LoggerDatabase.LoggerScope.ALL);
+		Message[] messages = LoggerDatabase.getLastMessagesFromUser(event.getChannel(), id, numberReports);
 		if (messages == null) {
 			//TODO Catch
 			return;
