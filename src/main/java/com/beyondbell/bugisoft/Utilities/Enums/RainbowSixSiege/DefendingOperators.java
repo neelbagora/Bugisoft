@@ -1,26 +1,26 @@
 package com.beyondbell.bugisoft.Utilities.Enums.RainbowSixSiege;
 
 public enum DefendingOperators {
-	// Year One
+	// ORIGINAL DEFENDERS
 	Castle, Pulse,
 	Rook, Doc,
 	Jager, Bandit,
 	Tachanka, Kapkan,
 	Smoke, Mute,
 
-	// Year One
+	// YEAR ONE
 	Frost,
 	Valkyrie,
 	Caveria,
 	Echo,
 
-	// Year Two
+	// YEAR TWO
 	Mira,
 	// Operation Health
 	Ela,
 	Vigil,
 
 
-	// Year Three
+	// YEAR THREE
 	// No Season One Defending Operators
 }
