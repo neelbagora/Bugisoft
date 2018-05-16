@@ -23,6 +23,7 @@ public class LoggerDatabase {
 	}
 
 	public static Message[] getLastMessagesFromUser(final TextChannel textChannel, final String id, final int count) {
+		/*
 		final Message[] messages = new Message[count];
 
 		String path;
