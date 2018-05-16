@@ -1,59 +1,28 @@
 package com.beyondbell.bugisoft.Lobby;
 
-
 import com.beyondbell.bugisoft.Bot;
 import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceLeaveEvent;
-import net.dv8tion.jda.core.entities.Category;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceMoveEvent;
-import net.dv8tion.jda.core.managers.GuildController;
 
 public class ClearChannels {
-    GuildVoiceLeaveEvent event;
-    Category category;
-    VoiceChannel lobby;
-    String categoryString;
-
 	public ClearChannels(final GuildVoiceLeaveEvent event) {
-        try {
-            lobby = event.getGuild().getVoiceChannelsByName(Bot.SETTINGS.getProperty("hub").toLowerCase(),true).get(0);
-        } catch(NullPointerException e) {
-            event.getGuild().getDefaultChannel().sendMessage("Default Lobby not set").queue();
-            return;
-        }
-	    this.event = event;
-        categoryString = Bot.SETTINGS.getProperty("temporaryChannelsCategory").toLowerCase();
-        if(event.getGuild().getCategoriesByName(categoryString,true).size() > 0) {
-            category = event.getGuild().getCategoriesByName(categoryString, true).get(0);
-        }
+		if (Bot.SETTINGS.getProperty("temporaryChannelsCategory") != null && event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("temporaryChannelsCategory"), true).size() != 0 && Bot.SETTINGS.getProperty("hub") != null) {
+			for (final VoiceChannel voiceChannel : event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("temporaryChannelsCategory"), true).get(0).getVoiceChannels()) {
+				if (!voiceChannel.getName().equals(Bot.SETTINGS.getProperty("hub")) && voiceChannel.getMembers().size() == 0) {
+					voiceChannel.delete().queue();
+				}
+			}
+		}
 	}
 
-    public ClearChannels(GuildVoiceMoveEvent event) {
-        if(event.getChannelLeft().getParent().equals(event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("gameChannelsCategory"), true).get(0)) &&
-                !event.getChannelLeft().equals(event.getGuild().getVoiceChannelsByName(Bot.SETTINGS.getProperty("defaultTempChannel"),true).get(0))
-                && event.getChannelLeft().getMembers().size() == 0) {
-            event.getChannelLeft().delete().queue();
-            System.out.println("c;l");
-        }
-    }
-
-    public void clearEmpty() {
-            for(int i = 0; i < event.getGuild().getVoiceChannels().size(); i++) {
-                if(event.getGuild().getCategoriesByName(categoryString, true).size() > 0) {
-                    if (!lobby.equals(event.getGuild().getVoiceChannels().get(i))
-                            && event.getGuild().getVoiceChannels().get(i).getParent().equals(category)
-                            && event.getGuild().getVoiceChannels().get(i).getMembers().size() == 0) {
-                        new GuildController(event.getGuild()).getGuild().getVoiceChannels().get(i).delete().queue();
-                    }
-                } else {
-                    if (!lobby.equals(event.getGuild().getVoiceChannels().get(i))
-                            && event.getGuild().getVoiceChannels().get(i).getMembers().size() == 0) {
-                        new GuildController(event.getGuild()).getGuild().getVoiceChannels().get(i).delete().queue();
-                    }
-                }
-
-            }
-
-
-    }
+	public ClearChannels(GuildVoiceMoveEvent event) {
+		if (Bot.SETTINGS.getProperty("temporaryChannelsCategory") != null && event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("temporaryChannelsCategory"), true).size() != 0 && Bot.SETTINGS.getProperty("hub") != null) {
+			for (final VoiceChannel voiceChannel : event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("temporaryChannelsCategory"), true).get(0).getVoiceChannels()) {
+				if (!voiceChannel.getName().equals(Bot.SETTINGS.getProperty("hub")) && voiceChannel.getMembers().size() == 0) {
+					voiceChannel.delete().queue();
+				}
+			}
+		}
+	}
 }
