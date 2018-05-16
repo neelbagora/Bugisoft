@@ -2,7 +2,7 @@ package com.beyondbell.bugisoft.Utilities.MessageUtilities;
 
 import net.dv8tion.jda.core.entities.Message;
 
-public class MessageDeleter {   // TODO Migrate Everything to This
+public class MessageDeleter {
 	private final Message message;
 	private final double seconds;
 
