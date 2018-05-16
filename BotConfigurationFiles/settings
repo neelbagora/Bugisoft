@@ -2,4 +2,5 @@
 profanityFilter=false
 badWordsFile=badwords
 gameChannelsCategory=Temporary Games
+defaultTempChannel=Lobby
 log=false
