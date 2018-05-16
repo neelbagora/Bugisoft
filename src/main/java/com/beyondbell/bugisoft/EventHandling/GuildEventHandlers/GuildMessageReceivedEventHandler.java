@@ -24,7 +24,7 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 
 	@Override
 	protected final void handle() {
-		if (Bot.settings.getProperty("log").equalsIgnoreCase("true")) {
+		if (Bot.SETTINGS.getProperty("log").equalsIgnoreCase("true")) {
 			LoggerDatabase.logEvent(event);
 		}
 
@@ -52,13 +52,13 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 
 		// Checks for Prefixes
 		if (event.getMessage().getContentRaw().charAt(0) != '!' && event.getMessage().getContentRaw().charAt(0) != ';' && event.getMessage().getContentRaw().charAt(0) != '^') {
-			if (Bot.settings.getProperty("profanityFilter").equalsIgnoreCase("true")) {
+			if (Bot.SETTINGS.getProperty("profanityFilter").equalsIgnoreCase("true")) {
 				// Checks for Profanity
 				new ProfanityFilter(event);
-			} else if (Bot.settings.getProperty("profanityFilter").equalsIgnoreCase("false")) {
+			} else if (Bot.SETTINGS.getProperty("profanityFilter").equalsIgnoreCase("false")) {
 				// Nothing
 			} else {
-				System.out.println("Key: " + "profanityFilter" + "\tin Properties File: " + "settings" + "\tis not configured correctly!");
+				System.out.println("Key: " + "profanityFilter" + "\tin Properties File: " + "SETTINGS" + "\tis not configured correctly!");
 			}
 			return;
 		}

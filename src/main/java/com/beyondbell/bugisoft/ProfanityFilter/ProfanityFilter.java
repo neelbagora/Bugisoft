@@ -10,7 +10,7 @@ public class ProfanityFilter {
         final String message = event.getMessage().getContentRaw().toLowerCase();
 
 	    try {
-		    final BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(Bot.settings.getProperty("badWordsFile"))));
+		    final BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(Bot.SETTINGS.getProperty("badWordsFile"))));
 		    try {
 			    for (String line = reader.readLine(); line != null; line = reader.readLine()) {
 				    if(message.indexOf(line) != -1) {
@@ -32,7 +32,7 @@ public class ProfanityFilter {
 			    e.printStackTrace();
 		    }
 	    } catch (FileNotFoundException e) {
-		    System.out.println("Please Verify Location/Permissions for the badWordsFile in the Settings File. " + Bot.settings.getProperty("badWordsFile") + " was Not Accessible.");
+		    System.out.println("Please Verify Location/Permissions for the badWordsFile in the Settings File. " + Bot.SETTINGS.getProperty("badWordsFile") + " was Not Accessible.");
 	    }
     }
 }

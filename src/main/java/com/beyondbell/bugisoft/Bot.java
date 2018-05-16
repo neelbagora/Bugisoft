@@ -4,6 +4,8 @@ import com.beyondbell.bugisoft.EventHandling.BotEventListener;
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.security.auth.login.LoginException;
 import java.io.FileInputStream;
@@ -11,16 +13,17 @@ import java.io.IOException;
 import java.util.Properties;
 
 public final class Bot {
-	public final static Properties settings = new Properties();
+	public final static Properties SETTINGS = new Properties();
+	public final static Logger LOGGER = LogManager.getRootLogger();
 
 	public static void main(final String... args) {
 		// Loads Settings
 		try {
-			final FileInputStream botSettingsFile = new FileInputStream("settings");
-			settings.load(botSettingsFile);
+			final FileInputStream botSettingsFile = new FileInputStream("SETTINGS");
+			SETTINGS.load(botSettingsFile);
 			botSettingsFile.close();
 		} catch (IOException e) {
-			System.out.println("Cannot Find Settings File!");
+			LOGGER.fatal("Cannot Find Settings File!");
 			return;
 		}
 
@@ -41,10 +44,10 @@ public final class Bot {
 						.setCompressionEnabled(false)
 						.buildAsync();
 			} catch (LoginException e) {
-				System.out.println("Please Place the Correct Token Inside of the Bot Properties File");
+				LOGGER.fatal("Please Place the Correct Token Inside of the Bot Properties File");
 			}
 		} catch (IOException e) {
-			System.out.println("Cannot Find Token File!");
+			LOGGER.fatal("Cannot Find Token File!");
 		}
 	}
 }

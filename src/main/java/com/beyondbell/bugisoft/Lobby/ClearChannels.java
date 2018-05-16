@@ -14,13 +14,13 @@ public class ClearChannels {
 
 	public ClearChannels(final GuildVoiceLeaveEvent event) {
         try {
-            lobby = event.getGuild().getVoiceChannelsByName(Bot.settings.getProperty("defaultTempChannel").toLowerCase(),true).get(0);
+            lobby = event.getGuild().getVoiceChannelsByName(Bot.SETTINGS.getProperty("defaultTempChannel").toLowerCase(),true).get(0);
         } catch(NullPointerException e) {
             event.getGuild().getDefaultChannel().sendMessage("Default Lobby not set").queue();
             return;
         }
 	    this.event = event;
-        String categoryString = Bot.settings.getProperty("gameChannelsCategory").toLowerCase();
+        String categoryString = Bot.SETTINGS.getProperty("gameChannelsCategory").toLowerCase();
         category = event.getGuild().getCategoriesByName(categoryString, true).get(0);
 
 	}

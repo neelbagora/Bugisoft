@@ -15,7 +15,7 @@ public class UserUpdateGameEventHandler extends EventHandler {
 
 	@Override
 	protected void handle() {
-		if (Bot.settings.getProperty("defaultTempChannel") == null) {
+		if (Bot.SETTINGS.getProperty("defaultTempChannel") == null) {
 			event.getGuild().getDefaultChannel().sendMessage("Lobby not set").queue();
 		} else {
 			new MovePeople(event);

@@ -1,26 +1,20 @@
 package com.beyondbell.bugisoft.Lobby;
 
 import com.beyondbell.bugisoft.Bot;
-import com.beyondbell.bugisoft.UserInfo.UserInfoDatabase;
 import net.dv8tion.jda.core.entities.Category;
-import net.dv8tion.jda.core.entities.ChannelType;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.core.events.user.update.UserUpdateGameEvent;
 import net.dv8tion.jda.core.managers.GuildController;
-import net.dv8tion.jda.core.requests.restaction.GuildAction;
-
-import java.util.List;
 
 public class MovePeople {
 
-    String category = Bot.settings.getProperty("gameChannelsCategory").toLowerCase();
+    String category = Bot.SETTINGS.getProperty("gameChannelsCategory").toLowerCase();
     Category category1;
     VoiceChannel lobby;
 
 	public MovePeople(final GuildVoiceJoinEvent event) {
-        lobby = event.getGuild().getVoiceChannelsByName(Bot.settings.getProperty("defaultTempChannel").toLowerCase(),true).get(0);
+        lobby = event.getGuild().getVoiceChannelsByName(Bot.SETTINGS.getProperty("defaultTempChannel").toLowerCase(),true).get(0);
 
         GuildController guildController = new GuildController(event.getGuild());
         category1 = event.getGuild().getCategoriesByName(category, true).get(0);

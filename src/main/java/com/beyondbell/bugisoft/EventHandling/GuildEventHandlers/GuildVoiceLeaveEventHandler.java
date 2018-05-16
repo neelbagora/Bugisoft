@@ -15,7 +15,7 @@ public final class GuildVoiceLeaveEventHandler extends EventHandler {
 
 	@Override
 	protected final void handle() {
-		if(Bot.settings.getProperty("defaultTempChannel") == "") {
+		if(Bot.SETTINGS.getProperty("defaultTempChannel") == "") {
 			event.getGuild().getDefaultChannel().sendMessage("Lobby not set");
 		} else {
 			new ClearChannels(event);

@@ -24,7 +24,7 @@ public class UserInfoDatabase {
 	}
 
 	private static void clearOldUsers() {
-		final int MAX_USER_CACHE = Integer.parseInt(Bot.settings.getProperty("USERS_MAX_LENGTH"));
+		final int MAX_USER_CACHE = Integer.parseInt(Bot.SETTINGS.getProperty("USERS_MAX_LENGTH"));
 		if (MAX_USER_CACHE == 0) {
 			while (users.size() > 1) {
 				users.remove(0);
