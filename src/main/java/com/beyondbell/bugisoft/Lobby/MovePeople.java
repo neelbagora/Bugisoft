@@ -17,9 +17,9 @@ public class MovePeople {
         lobby = event.getGuild().getVoiceChannelsByName(Bot.SETTINGS.getProperty("defaultTempChannel").toLowerCase(),true).get(0);
 
         GuildController guildController = new GuildController(event.getGuild());
-        category1 = event.getGuild().getCategoriesByName(category, true).get(0);
-
-
+        if(event.getGuild().getCategoriesByName(category, true).size() > 0) {
+            category1 = event.getGuild().getCategoriesByName(category, true).get(0);
+        }
 
         if(event.getMember().getGame() == null) {
             return;
@@ -31,8 +31,12 @@ public class MovePeople {
                 break;
             }
         }
+        if(event.getGuild().getCategoriesByName(category, true).size() > 0) {
+            guildController.createVoiceChannel(event.getMember().getGame().getName()).setParent(category1).queue();
+        } else {
+            guildController.createVoiceChannel(event.getMember().getGame().getName()).queue();
+        }
 
-        guildController.createVoiceChannel(event.getMember().getGame().getName()).setParent(category1).queue();
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -49,7 +53,12 @@ public class MovePeople {
 	public MovePeople(UserUpdateGameEvent event) {
 	    GuildController controller = new GuildController(event.getGuild());
 	    //category under where the channel must be created
-	    category1 = event.getGuild().getCategoriesByName(category, true).get(0);;
+	    if(event.getGuild().getCategoriesByName(category,true).size() > 0) {
+            category1 = event.getGuild().getCategoriesByName(category, true).get(0);
+        } else {
+	        category1 = null;
+        }
+
 
 	    if(event.getNewGame() == null) {
 	        VoiceChannel x = event.getMember().getVoiceState().getChannel();
