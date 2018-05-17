@@ -162,18 +162,6 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 				break;
 			case "^":
 				switch (parameters[1]) {
-					case "join":
-						synchronized (event) {
-							new JoinVoice(event);
-							event.getMessage().delete().queue();
-						}
-						break;
-					case "leave":
-						synchronized (event) {
-							new LeaveVoice(event);
-							event.getMessage().delete().queue();
-						}
-						break;
 					case "play":
 						synchronized (event) {
 							if (parameters.length == 3) {

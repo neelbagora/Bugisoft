@@ -15,7 +15,7 @@ public final class GuildEventDelegator {
 		} else if (event instanceof GuildVoiceLeaveEvent) {
 			new GuildVoiceLeaveEventHandler((GuildVoiceLeaveEvent) event);
 		} else if(event instanceof GuildVoiceMoveEvent) {
-			new GuildVoiceMoveEventHandler((GuildVoiceMoveEvent) event);
+//			new GuildVoiceMoveEventHandler((GuildVoiceMoveEvent) event);
 		}
 	}
 }

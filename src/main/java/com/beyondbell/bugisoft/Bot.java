@@ -1,6 +1,7 @@
 package com.beyondbell.bugisoft;
 
 import com.beyondbell.bugisoft.EventHandling.BotEventListener;
+import com.beyondbell.bugisoft.Music.Music;
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
@@ -19,7 +20,7 @@ public final class Bot {
 	public static void main(final String... args) {
 		// Loads Settings
 		try {
-			final FileInputStream botSettingsFile = new FileInputStream("SETTINGS");
+			final FileInputStream botSettingsFile = new FileInputStream("settings");
 			SETTINGS.load(botSettingsFile);
 			botSettingsFile.close();
 		} catch (IOException e) {
@@ -45,9 +46,13 @@ public final class Bot {
 						.buildAsync();
 			} catch (LoginException e) {
 				LOGGER.fatal("Please Place the Correct Token Inside of the Bot Properties File");
+				return;
 			}
 		} catch (IOException e) {
 			LOGGER.fatal("Cannot Find Token File!");
+			return;
 		}
+
+		Music.init();
 	}
 }

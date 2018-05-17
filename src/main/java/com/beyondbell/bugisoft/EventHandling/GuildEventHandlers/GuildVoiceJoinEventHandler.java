@@ -16,13 +16,14 @@ public final class GuildVoiceJoinEventHandler extends EventHandler {
 	@Override
 	protected final void handle() {
 		if(Bot.SETTINGS.getProperty("hub") != null) {
-			new MovePeople(event);
-		} else {
-			if (event.getGuild().getDefaultChannel() != null) {
-				event.getGuild().getDefaultChannel().sendMessage("Lobby not set").queue();
-			} else {
-				Bot.LOGGER.warn("Cannot Access Default Channel of Guild: " + event.getGuild().getId());
+			if (event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("temporaryChannelsCategory"), true).size() != 0
+					&& event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("temporaryChannelsCategory"), true).get(0).getVoiceChannels().size() != 0) {
+				if (event.getChannelJoined() == event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("temporaryChannelsCategory"), true).get(0).getVoiceChannels().get(0)) {
+					new MovePeople(event);
+				}
 			}
+		} else {
+			Bot.LOGGER.warn("Hub not set");
 		}
 	}
 }

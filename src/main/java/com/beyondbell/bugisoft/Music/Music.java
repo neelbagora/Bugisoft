@@ -6,44 +6,32 @@ import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.managers.AudioManager;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Music {
+public final class Music {
 	public final static AudioPlayerManager AUDIO_PLAYER_MANAGER = new DefaultAudioPlayerManager();
 	private static final Map<Long, GuildMusicManager> musicManagers = new HashMap<>();
 
 	public static void init() {
 		AUDIO_PLAYER_MANAGER.getConfiguration().setResamplingQuality(AudioConfiguration.ResamplingQuality.HIGH);
 		AudioSourceManagers.registerRemoteSources(AUDIO_PLAYER_MANAGER);
-		AudioSourceManagers.registerLocalSource(AUDIO_PLAYER_MANAGER);
 	}
 
-	public static GuildMusicManager getGuildAudioPlayer(Guild guild) {
-		long guildId = Long.parseLong(guild.getId());
-		GuildMusicManager musicManager = musicManagers.get(guildId);
-
-		if (musicManager == null) {
-			musicManager = new GuildMusicManager();
-			musicManagers.put(guildId, musicManager);
+	public static GuildMusicManager getGuildAudioPlayer(final Guild guild) {
+		if (musicManagers.get(guild.getIdLong()) == null) {
+			musicManagers.put(guild.getIdLong(), new GuildMusicManager());
 		}
+
+		final GuildMusicManager musicManager = musicManagers.get(guild.getIdLong());
 
 		guild.getAudioManager().setSendingHandler(musicManager.getSendHandler());
 
 		return musicManager;
 	}
 
-	public static void play(Guild guild, GuildMusicManager musicManager, AudioTrack track) {
-		connectToFirstVoiceChannel(guild.getAudioManager());
-
+	static void play(GuildMusicManager musicManager, AudioTrack track) {
 		musicManager.scheduler.queue(track);
-	}
-
-	private static void connectToFirstVoiceChannel(AudioManager audioManager) {
-		if (!audioManager.isConnected() && !audioManager.isAttemptingToConnect()) {
-			audioManager.openAudioConnection(audioManager.getGuild().getVoiceChannels().get(0));
-		}
 	}
 }

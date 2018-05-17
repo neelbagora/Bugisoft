@@ -2,11 +2,11 @@ package com.beyondbell.bugisoft.Utilities.MessageUtilities;
 
 import net.dv8tion.jda.core.entities.Message;
 
-public class MessageDeleter {
+public class MessageBroadcaster {
 	private final Message message;
 	private final double seconds;
 
-	public MessageDeleter(final Message message, double seconds) {
+	public MessageBroadcaster(final Message message, double seconds) {
 		this.message = message;
 		this.seconds = seconds;
 
