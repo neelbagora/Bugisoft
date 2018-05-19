@@ -7,6 +7,7 @@ import com.beyondbell.bugisoft.Logger.LoggerDatabase;
 import com.beyondbell.bugisoft.Music.Commands.*;
 import com.beyondbell.bugisoft.ProfanityFilter.AddProfanityWords;
 import com.beyondbell.bugisoft.ProfanityFilter.ProfanityFilter;
+import com.beyondbell.bugisoft.RockPaperScissors.RockPaperScissors;
 import com.beyondbell.bugisoft.Standalone.AdminCommands.Update;
 import com.beyondbell.bugisoft.Standalone.Commands.Invite.CreateInvite;
 import com.beyondbell.bugisoft.Standalone.Commands.Ping.Ping;
@@ -20,6 +21,7 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 	public GuildMessageReceivedEventHandler(final GuildMessageReceivedEvent event) {
 		super();
 		this.event = event;
+		new GameModeEventHandler(event);
 	}
 
 	@Override
@@ -51,7 +53,7 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 		}
 
 		// Checks for Prefixes
-		if (event.getMessage().getContentRaw().charAt(0) != '!' && event.getMessage().getContentRaw().charAt(0) != ';' && event.getMessage().getContentRaw().charAt(0) != '^') {
+		if (event.getMessage().getContentRaw().charAt(0) != '!' && event.getMessage().getContentRaw().charAt(0) != ';' && event.getMessage().getContentRaw().charAt(0) != '^' && event.getMessage().getContentRaw().charAt(0) != '$') {
 			if (Bot.SETTINGS.getProperty("profanityFilter").equalsIgnoreCase("true")) {
 				// Checks for Profanity
 				new ProfanityFilter(event);
@@ -69,7 +71,8 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 		// Checks for Command
 		switch (parameters[0]) {    // Prefix Checker
 			case "!":   // Guild Related Commands
-				switch (parameters[1]) {
+				switch (parameters[1].toLowerCase()) {
+
 					case "ping":    // Ping
 						synchronized (event) {
 							Ping.ping(event);
@@ -100,44 +103,7 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 							}
 							event.getMessage().delete().queue();
 						}
-						/*
-					case "setLobby":
-						synchronized (event) {
-							if(parameters.length == 3) {
-								try {
-									event.getGuild().getVoiceChannelById(parameters[3]);
 
-								} catch (NullPointerException notFound) {
-									event.getTextChannel().sendMessage("Invalid Voice channel ID");
-								}
-							} else {
-								event.getTextChannel().sendMessage("Please set default lobby: !report lobbyID");
-							}
-
-						}
-						break;
-					*/
-					/*case "off":
-						synchronized (event) {
-							if(parameters.length == 3) {
-
-								event.getTextChannel().sendMessage("Automatic moving off");
-							} else {
-								event.getTextChannel().sendMessage("To turn off: !move off");
-							}
-
-						}
-						break;
-					case "on":
-						synchronized (event) {
-							if(parameters.length == 3) {
-								event.getTextChannel().sendMessage("Automatic moving on");
-							} else {
-								event.getTextChannel().sendMessage("To turn on: !move on");
-							}
-
-						}
-						break; */
 					case "add" :
 						synchronized (event) {
 							if(parameters.length == 3) {
@@ -202,7 +168,21 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 					default:
 						break;
 				}
-				break;
+			case "$" :
+				switch(parameters[1].toLowerCase()) {
+					case "gamemode":
+						new GameModeEventHandler(event, true);
+						event.getChannel().sendMessage("Game mode is on for " + event.getAuthor().getName());
+						break;
+					case "gamemodeoff":
+						new GameModeEventHandler(event, false);
+						event.getChannel().sendMessage("Game mode is off for " + event.getAuthor().getName());
+						break;
+					default:
+						break;
+				}
+
+
 			default:    // Not a Valid Prefix
 				break;
 		}
