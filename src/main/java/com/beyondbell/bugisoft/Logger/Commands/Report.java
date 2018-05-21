@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Report {
 	public Report(GuildMessageReceivedEvent event, String id, int numberReports) {
-		id = IdFormatter.fixId(id);
+		id = IdFormatter.trimId(id);
 		//identifies Member
 		String display = event.getGuild().getMemberById(id).getNickname();
 

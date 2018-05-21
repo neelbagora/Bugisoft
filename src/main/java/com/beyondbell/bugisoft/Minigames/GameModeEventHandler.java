@@ -1,8 +1,7 @@
-package com.beyondbell.bugisoft.EventHandling.GuildEventHandlers;
+package com.beyondbell.bugisoft.Minigames;
 
 import com.beyondbell.bugisoft.RockPaperScissors.RockPaperScissors;
 import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 public class GameModeEventHandler {

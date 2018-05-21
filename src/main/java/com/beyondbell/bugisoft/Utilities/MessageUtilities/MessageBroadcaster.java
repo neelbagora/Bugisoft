@@ -2,16 +2,17 @@ package com.beyondbell.bugisoft.Utilities.MessageUtilities;
 
 import net.dv8tion.jda.core.entities.Message;
 
-public class MessageBroadcaster {
+public final class MessageBroadcaster {
 	private final Message message;
-	private final double seconds;
+	private final long millis;
 
-	public MessageBroadcaster(final Message message, double seconds) {
+	public MessageBroadcaster(final Message message, final long millis) {
 		this.message = message;
-		this.seconds = seconds;
+		this.millis = millis;
 
-		if (seconds != 0) {
-			Thread thread = new Thread(this::deleteMessage);
+		if (millis > 0) {
+			final Thread thread = new Thread(this::deleteMessage);
+			thread.setName("Message Broadcaster");
 			thread.setDaemon(true);
 			thread.start();
 		} else {
@@ -21,8 +22,8 @@ public class MessageBroadcaster {
 
 	private void deleteMessage() {
 		try {
-			Thread.sleep((long) (seconds * 1000));
-		} catch (InterruptedException e) {
+			Thread.sleep(millis);
+		} catch (final InterruptedException e) {
 			e.printStackTrace();
 		}
 		message.delete().queue();

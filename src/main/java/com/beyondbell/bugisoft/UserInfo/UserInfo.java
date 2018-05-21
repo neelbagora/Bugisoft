@@ -1,15 +1,18 @@
 package com.beyondbell.bugisoft.UserInfo;
 
+import com.beyondbell.bugisoft.UserInfo.Tags.Tag;
 import net.dv8tion.jda.core.entities.User;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Properties;
 
-public class UserInfo {
+final class UserInfo {
 	private volatile Properties userProperties;
+	private volatile ArrayList<Tag> tags;
 
 	UserInfo(User user) {
 		userProperties = new Properties();
@@ -25,41 +28,16 @@ public class UserInfo {
 		}
 	}
 
-	Properties getUserProperties() {
+	final Properties getUserProperties() {
 		return userProperties;
 	}
 
-	String getUsername() {
-		return userProperties.getProperty("username");
-	}
-
-	String getID() {
+	final String getID() {
 		return userProperties.getProperty("id");
 	}
 
-	public boolean getGameShouldMove() {
-		if (userProperties.getProperty("gameShouldMove") != null) {
-			return userProperties.getProperty("gameShouldMove").equals("true");
-		} else {
-			copyProperty("gameShouldMove");
-			saveProperties();
-			return userProperties.getProperty("gameShouldMove").equals("true");
-		}
-	}
-
-	private void copyProperty(final String property) {
-		final Properties defaultUserProperties = new Properties();
-		try {
-			FileInputStream defaultUserPropertiesFile = new FileInputStream("defaultUserProperties");
-			defaultUserProperties.load(defaultUserPropertiesFile);
-			defaultUserPropertiesFile.close();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-
-		userProperties.setProperty(property, defaultUserProperties.getProperty(property));
-
-		saveProperties();
+	final ArrayList<Tag> getTags() {
+		return tags;
 	}
 
 	private void saveProperties() {

@@ -1,7 +1,7 @@
 package com.beyondbell.bugisoft.Utilities.TextFormatters;
 
-public class IdFormatter {
-    public static String fixId(String input) {
-        return input.substring(2,input.length() - 1);
+public final class IdFormatter {
+    public static String trimId(final String mention) {
+        return mention.substring(2,mention.length() - 1);
     }
 }

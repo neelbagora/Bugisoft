@@ -4,10 +4,13 @@ import com.beyondbell.bugisoft.Bot;
 import com.beyondbell.bugisoft.EventHandling.EventHandler;
 import com.beyondbell.bugisoft.Logger.Commands.Report;
 import com.beyondbell.bugisoft.Logger.LoggerDatabase;
-import com.beyondbell.bugisoft.Music.Commands.*;
+import com.beyondbell.bugisoft.Minigames.GameModeEventHandler;
+import com.beyondbell.bugisoft.Music.Commands.ListQueue;
+import com.beyondbell.bugisoft.Music.Commands.PausePlayer;
+import com.beyondbell.bugisoft.Music.Commands.PlaySong;
+import com.beyondbell.bugisoft.Music.Commands.SkipTrack;
 import com.beyondbell.bugisoft.ProfanityFilter.AddProfanityWords;
 import com.beyondbell.bugisoft.ProfanityFilter.ProfanityFilter;
-import com.beyondbell.bugisoft.RockPaperScissors.RockPaperScissors;
 import com.beyondbell.bugisoft.Standalone.AdminCommands.Update;
 import com.beyondbell.bugisoft.Standalone.Commands.Invite.CreateInvite;
 import com.beyondbell.bugisoft.Standalone.Commands.Ping.Ping;
@@ -47,7 +50,7 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 		if (event.getAuthor().getId().equals("119978889891151876")) {   // Admin Commands
 			if (event.getMessage().getContentRaw().equals("UPDATE apple")) {
 				event.getMessage().delete().complete();
-				new Update();
+				new Update(event.getJDA());
 				return;
 			}
 		}

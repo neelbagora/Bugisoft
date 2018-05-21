@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TournamentDatabase {
-	private static volatile Map<String, Tournament> tournamentMap = new HashMap<>();
+	private static final Map<String, Tournament> tournamentMap = new HashMap<>();
 
 	static Tournament createTournament(String name, Game game) throws GameAlreadyExistsThrowable {
 		if (tournamentMap.containsKey(name)) {

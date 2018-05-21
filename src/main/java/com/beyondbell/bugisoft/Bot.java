@@ -28,10 +28,13 @@ public final class Bot {
 			return;
 		}
 
+		// Setups Music Modules
+		Music.init();
+
 		// Loads Bot
 		try {
-			final Properties botProperties = new Properties();
 			final FileInputStream botPropertiesFile = new FileInputStream("token");
+			final Properties botProperties = new Properties();
 			botProperties.load(botPropertiesFile);
 			botPropertiesFile.close();
 			try {
@@ -41,18 +44,13 @@ public final class Bot {
 						.addEventListener(new BotEventListener())
 						.setAudioEnabled(true)
 						.setAudioSendFactory(new NativeAudioSendFactory())
-						.setAutoReconnect(true)
 						.setCompressionEnabled(false)
 						.buildAsync();
 			} catch (LoginException e) {
 				LOGGER.fatal("Please Place the Correct Token Inside of the Bot Properties File");
-				return;
 			}
 		} catch (IOException e) {
 			LOGGER.fatal("Cannot Find Token File!");
-			return;
 		}
-
-		Music.init();
 	}
 }

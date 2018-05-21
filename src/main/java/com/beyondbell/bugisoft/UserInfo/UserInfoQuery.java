@@ -1,7 +1,6 @@
 package com.beyondbell.bugisoft.UserInfo;
 
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 public class UserInfoQuery {

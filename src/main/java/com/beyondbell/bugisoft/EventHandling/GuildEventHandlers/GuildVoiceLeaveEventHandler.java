@@ -19,8 +19,6 @@ public final class GuildVoiceLeaveEventHandler extends EventHandler {
 				&& event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("temporaryChannelsCategory"), true).size() != 0
 				&& event.getChannelLeft().getParent() == event.getGuild().getCategoriesByName(Bot.SETTINGS.getProperty("temporaryChannelsCategory"), true).get(0)) {
 			new ClearChannels(event);
-		} else {
-			Bot.LOGGER.error("Category Not Set");
 		}
 	}
 }

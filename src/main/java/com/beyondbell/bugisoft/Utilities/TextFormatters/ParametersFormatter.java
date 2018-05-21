@@ -2,10 +2,11 @@ package com.beyondbell.bugisoft.Utilities.TextFormatters;
 
 import java.util.ArrayList;
 
-public class ParametersFormatter {
-	public static String[] stringToParameters(String message) {
-		ArrayList<String> parameters = new ArrayList<>();
+public final class ParametersFormatter {
+	public static String[] stringToParameters(final String message) {
+		final ArrayList<String> parameters = new ArrayList<>();
 
+		// Adds the Prefix
 		parameters.add(String.valueOf(message.charAt(0)));
 
 		// Builds the Parameters
@@ -20,15 +21,13 @@ public class ParametersFormatter {
 		}
 		parameters.add(currentParameter.toString());
 
+		// Removes Whitespace at the End
 		if (parameters.size() > 1) {
-			// Removes Whitespace at the End
 			while (parameters.get(parameters.size() - 1).equals("")) {
 				parameters.remove(parameters.size() - 1);
 			}
-
 		}
 
-		String[] strings = new String[parameters.size()];
-		return parameters.toArray(strings);
+		return parameters.toArray(new String[0]);
 	}
 }

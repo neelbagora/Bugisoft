@@ -1,15 +1,7 @@
 package com.beyondbell.bugisoft.RockPaperScissors;
 
-import com.beyondbell.bugisoft.Bot;
-import net.dv8tion.jda.bot.JDABot;
-import net.dv8tion.jda.client.JDAClient;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
-
-import java.util.Random;
-import java.util.Scanner;
 
 public class RockPaperScissors {
 

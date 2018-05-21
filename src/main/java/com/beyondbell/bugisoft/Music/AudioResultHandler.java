@@ -9,13 +9,12 @@ import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.VoiceChannel;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
-public class AudioResultHandler implements AudioLoadResultHandler {
+public final class AudioResultHandler implements AudioLoadResultHandler {
 	private final GuildMessageReceivedEvent event;
 	private final GuildMusicManager guildMusicManager;
 	private final String trackUrl;
 
 	private AudioPlaylist playlist;
-	private int count = 0;
 
 	public AudioResultHandler(final GuildMessageReceivedEvent event, final String trackUrl) {
 		this.event = event;
@@ -25,13 +24,13 @@ public class AudioResultHandler implements AudioLoadResultHandler {
 	}
 
 	@Override
-	public void trackLoaded(AudioTrack track) {
+	public final void trackLoaded(AudioTrack track) {
 		JoinCurrentVoice();
 		if (Music.getGuildAudioPlayer(event.getChannel().getGuild()).player.isPaused()) {
 			Music.getGuildAudioPlayer(event.getChannel().getGuild()).player.setPaused(false);
 		}
 
-		new MessageBroadcaster(event.getChannel().sendMessage("Adding to queue " + track.getInfo().title).complete(), 5);
+		new MessageBroadcaster(event.getChannel().sendMessage("Adding to queue " + track.getInfo().title).complete(), 5000);
 
 		Music.play(guildMusicManager, track);
 	}
@@ -43,7 +42,7 @@ public class AudioResultHandler implements AudioLoadResultHandler {
 			Music.getGuildAudioPlayer(event.getChannel().getGuild()).player.setPaused(false);
 		}
 
-			this.playlist = playlist;
+		this.playlist = playlist;
 
 		final Thread t = new Thread(this::queueSongs);
 		t.run();
@@ -51,22 +50,24 @@ public class AudioResultHandler implements AudioLoadResultHandler {
 
 	@Override
 	public void noMatches() {
-		new MessageBroadcaster(event.getChannel().sendMessage("Nothing found by " + trackUrl).complete(), 5);
+		new MessageBroadcaster(event.getChannel().sendMessage("Nothing found by " + trackUrl).complete(), 5000);
 	}
 
 	@Override
 	public void loadFailed(FriendlyException exception) {
-		new MessageBroadcaster(event.getChannel().sendMessage("Could not play: " + exception.getMessage()).complete(), 5);
+		new MessageBroadcaster(event.getChannel().sendMessage("Could not play: " + exception.getMessage()).complete(), 5000);
 	}
 
 	private void queueSongs() {
-		for (AudioTrack audioTrack : playlist.getTracks()) {
+		int count = 0;
+		for (final AudioTrack audioTrack : playlist.getTracks()) {
 			if (audioTrack != null) {
 				Music.play(guildMusicManager, audioTrack);
 				count++;
 			}
 		}
-		new MessageBroadcaster(event.getChannel().sendMessage("Added to Queue " + count + " songs of the playlist " + playlist.getName()).complete(), 5);
+		playlist = null;
+		new MessageBroadcaster(event.getChannel().sendMessage("Added to Queue " + count + " songs of the playlist " + playlist.getName()).complete(), 5000);
 	}
 
 	private void JoinCurrentVoice() {
