@@ -24,7 +24,10 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 	public GuildMessageReceivedEventHandler(final GuildMessageReceivedEvent event) {
 		super();
 		this.event = event;
-		new GameModeEventHandler(event);
+		if(event.getMessage().getContentRaw().toLowerCase().contains("$rock") || event.getMessage().getContentRaw().toLowerCase().contains("$scissors") || event.getMessage().getContentRaw().contains("$paper")) {
+			new GameModeEventHandler(event);
+		}
+
 	}
 
 	@Override
@@ -173,21 +176,12 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 				}
 			case "$" :
 				switch(parameters[1].toLowerCase()) {
-					case "gamemodeon":
-						new GameModeEventHandler(event, true);
-						event.getChannel().sendMessage("Game mode is on for " + event.getAuthor().getName()).queue();
+					case "start":
+						new GameModeEventHandler(event, event.getAuthor().getId(),true);
+
 						break;
-					case "gamemodeoff":
-						new GameModeEventHandler(event, false);
-						event.getChannel().sendMessage("Game mode is off for " + event.getAuthor().getName());
-						break;
-					case "scissors" :
-						new GameModeEventHandler(event);
-						break;
-					case "rock" :
-						new GameModeEventHandler(event);
-						break;
-					case "paper" :
+					case "quit":
+						new GameModeEventHandler(event, event.getAuthor().getId(),false);
 						new GameModeEventHandler(event);
 						break;
 					default:
