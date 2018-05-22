@@ -173,13 +173,22 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 				}
 			case "$" :
 				switch(parameters[1].toLowerCase()) {
-					case "gamemode":
+					case "gamemodeon":
 						new GameModeEventHandler(event, true);
-						event.getChannel().sendMessage("Game mode is on for " + event.getAuthor().getName());
+						event.getChannel().sendMessage("Game mode is on for " + event.getAuthor().getName()).queue();
 						break;
 					case "gamemodeoff":
 						new GameModeEventHandler(event, false);
 						event.getChannel().sendMessage("Game mode is off for " + event.getAuthor().getName());
+						break;
+					case "scissors" :
+						new GameModeEventHandler(event);
+						break;
+					case "rock" :
+						new GameModeEventHandler(event);
+						break;
+					case "paper" :
+						new GameModeEventHandler(event);
 						break;
 					default:
 						break;

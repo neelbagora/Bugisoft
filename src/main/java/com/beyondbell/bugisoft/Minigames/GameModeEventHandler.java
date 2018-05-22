@@ -5,8 +5,8 @@ import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 public class GameModeEventHandler {
-	boolean value;
-	User author;
+	static boolean value;
+	static User author;
 
 	public GameModeEventHandler(GuildMessageReceivedEvent event, boolean change) {
 		value = change;
