@@ -5,7 +5,7 @@ import net.dv8tion.jda.core.entities.User;
 
 import java.util.ArrayList;
 
-class UserInfoDatabase {
+final class UserInfoDatabase {
 	private final static ArrayList<UserInfo> users = new ArrayList<>();
 
 	private static volatile boolean clearing = false;
@@ -28,7 +28,7 @@ class UserInfoDatabase {
 		}
 	}
 
-	private static void clearOldUsers() {
+	private static synchronized void clearOldUsers() {
 		if (Integer.parseInt(Bot.SETTINGS.getProperty("USERS_MAX_LENGTH")) >= 0) {
 			for (int i = users.size() - 1; i >= 0 && users.size() > Integer.parseInt(Bot.SETTINGS.getProperty("USERS_MAX_LENGTH")); i--) {
 				if (users.get(i).getTags().size() == 0) {

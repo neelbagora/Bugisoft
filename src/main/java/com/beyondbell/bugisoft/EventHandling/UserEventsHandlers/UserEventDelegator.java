@@ -1,4 +1,4 @@
-package com.beyondbell.bugisoft.EventHandling.UserEventsHandler;
+package com.beyondbell.bugisoft.EventHandling.UserEventsHandlers;
 
 import net.dv8tion.jda.core.events.user.GenericUserEvent;
 import net.dv8tion.jda.core.events.user.update.UserUpdateGameEvent;

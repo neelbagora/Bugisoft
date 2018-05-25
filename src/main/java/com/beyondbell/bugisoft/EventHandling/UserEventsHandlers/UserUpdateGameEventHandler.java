@@ -1,4 +1,4 @@
-package com.beyondbell.bugisoft.EventHandling.UserEventsHandler;
+package com.beyondbell.bugisoft.EventHandling.UserEventsHandlers;
 
 import com.beyondbell.bugisoft.Bot;
 import com.beyondbell.bugisoft.EventHandling.EventHandler;

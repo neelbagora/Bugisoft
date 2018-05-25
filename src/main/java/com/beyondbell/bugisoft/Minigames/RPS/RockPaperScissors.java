@@ -4,11 +4,9 @@ import com.beyondbell.bugisoft.Minigames.GameModeEventHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class RockPaperScissors implements Minigame {
-
 	private static String value;
 	private static String computerValue;
 	private static int userScore = 0;
@@ -72,9 +70,5 @@ public class RockPaperScissors implements Minigame {
 			new GameModeEventHandler(event, event.getAuthor().getId(),false);
 			new RockPaperScissors();
 		}
-
-
-
 	}
-
 }

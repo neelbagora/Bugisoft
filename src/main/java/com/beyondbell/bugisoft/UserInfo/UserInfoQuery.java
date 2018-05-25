@@ -9,13 +9,16 @@ public class UserInfoQuery {
 		EmbedBuilder embed = new EmbedBuilder()
 				.setTitle("User Info").setAuthor(event.getMessage().getAuthor().getName());
 
-		String[] properties = new String[user.getUserProperties().keySet().size()];
-		properties = user.getUserProperties().keySet().toArray(properties);
+		final String[] properties = user.getUserProperties().keySet().toArray(new String[0]);
 
 		for (String property : properties) {
 			embed.addField(property, user.getUserProperties().getProperty(property), true);
 		}
 
 		event.getChannel().sendMessage(embed.build()).queue();
+	}
+
+	public static boolean getGameModeEnabled(long idLong) {
+		return false;
 	}
 }
