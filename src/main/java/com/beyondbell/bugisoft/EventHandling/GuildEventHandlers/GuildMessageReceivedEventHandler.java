@@ -4,7 +4,9 @@ import com.beyondbell.bugisoft.Bot;
 import com.beyondbell.bugisoft.EventHandling.EventHandler;
 import com.beyondbell.bugisoft.Logger.Commands.Report;
 import com.beyondbell.bugisoft.Logger.LoggerDatabase;
-import com.beyondbell.bugisoft.Minigames.GameModeEventHandler;
+import com.beyondbell.bugisoft.Minigames.GameHandler;
+import com.beyondbell.bugisoft.Minigames.RPS.RPSGame;
+import com.beyondbell.bugisoft.Minigames.RPS.RockPaperScissors;
 import com.beyondbell.bugisoft.Music.Commands.ListQueue;
 import com.beyondbell.bugisoft.Music.Commands.PausePlayer;
 import com.beyondbell.bugisoft.Music.Commands.PlaySong;
@@ -25,9 +27,8 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 		super();
 		this.event = event;
 		if(event.getMessage().getContentRaw().toLowerCase().contains("$rock") || event.getMessage().getContentRaw().toLowerCase().contains("$scissors") || event.getMessage().getContentRaw().contains("$paper")) {
-			new GameModeEventHandler(event);
+			new GameHandler(event.getAuthor().getId(), event);
 		}
-
 	}
 
 	@Override
@@ -177,12 +178,12 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 			case "$" :
 				switch(parameters[1].toLowerCase()) {
 					case "start":
-						new GameModeEventHandler(event, event.getAuthor().getId(),true);
-
+						new GameHandler(event.getAuthor().getId(), true);
+						event.getChannel().sendMessage("Rock paper scissors started, enter $rock, $scissors, $paper").queue();
 						break;
-					case "quit":
-						new GameModeEventHandler(event, event.getAuthor().getId(),false);
-						new GameModeEventHandler(event);
+					case "quit" :
+						new GameHandler(event.getAuthor().getId(), event);
+						new GameHandler(event.getAuthor().getId(), false);
 						break;
 					default:
 						break;
