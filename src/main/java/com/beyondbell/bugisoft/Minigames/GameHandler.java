@@ -8,6 +8,8 @@ import java.util.Map;
 
 public class GameHandler {
 	private static Map<String, Boolean> gameMode = new HashMap<>();
+
+	//gamemode handler
 	public GameHandler(String id, boolean x) {
 		if(x) {
 			gameMode.put(id, x);
@@ -16,6 +18,7 @@ public class GameHandler {
 		}
 	}
 
+	//quit and rock paper scissors sign pusher
 	public GameHandler(String id, GuildMessageReceivedEvent event) {
 		if(event.getMessage().getContentRaw().substring(1).equals("quit")) {
 			new RPSGame(event.getAuthor().getId());

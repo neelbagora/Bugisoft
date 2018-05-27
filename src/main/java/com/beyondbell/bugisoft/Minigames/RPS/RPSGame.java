@@ -55,8 +55,12 @@ public class RPSGame {
 
 	public RPSGame(String user) {
 		if(userRoundWins.containsKey(user)) {
-			userRoundWins.remove(user);
-			computerRoundsWins.remove(user);
+
+			try {
+				computerRoundsWins.remove(user);
+				userRoundWins.remove(user);
+			} catch(NullPointerException error){}
+
 		}
 	}
 }
