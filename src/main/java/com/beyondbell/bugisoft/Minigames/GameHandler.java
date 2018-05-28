@@ -1,6 +1,7 @@
 package com.beyondbell.bugisoft.Minigames;
 
 import com.beyondbell.bugisoft.Minigames.RPS.RPSGame;
+import com.beyondbell.bugisoft.Minigames.RPS.UserNotInGameException;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.HashMap;
@@ -19,13 +20,13 @@ public class GameHandler {
 	}
 
 	//quit and rock paper scissors sign pusher
-	public GameHandler(String id, GuildMessageReceivedEvent event) {
+	public GameHandler(String id, GuildMessageReceivedEvent event) throws UserNotInGameException {
 		if(event.getMessage().getContentRaw().substring(1).equals("quit")) {
 			new RPSGame(event.getAuthor().getId());
-			if(gameMode.containsKey(event.getAuthor().getId())) {
-				event.getChannel().sendMessage("Game cancelled").queue();
+			if(!gameMode.containsKey(event.getAuthor().getId())) {
+				throw new UserNotInGameException();
 			} else {
-				event.getChannel().sendMessage(event.getAuthor().getName() + " is not in a game!").queue();
+				gameMode.remove(id);
 			}
 		} else {
 			if(gameMode.containsKey(id)) {

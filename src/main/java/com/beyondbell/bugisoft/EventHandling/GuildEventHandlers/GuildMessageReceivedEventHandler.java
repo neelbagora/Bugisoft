@@ -28,9 +28,12 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 	public GuildMessageReceivedEventHandler(final GuildMessageReceivedEvent event) {
 		super();
 		this.event = event;
-		
 		if(event.getMessage().getContentRaw().toLowerCase().contains("$rock") || event.getMessage().getContentRaw().toLowerCase().contains("$scissors") || event.getMessage().getContentRaw().contains("$paper")) {
-			new GameHandler(event.getAuthor().getId(), event);
+			try {
+				new GameHandler(event.getAuthor().getId(), event);
+			} catch (UserNotInGameException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -185,8 +188,12 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 						event.getChannel().sendMessage("Rock paper scissors started, enter $rock, $scissors, $paper").queue();
 						break;
 					case "quit" :
-						new GameHandler(event.getAuthor().getId(), event);
-						new GameHandler(event.getAuthor().getId(), false);
+						try {
+							new GameHandler(event.getAuthor().getId(), event);
+							event.getChannel().sendMessage("Game cancelled").queue();
+						} catch (UserNotInGameException e) {
+							event.getChannel().sendMessage("User is not in game!").queue();
+						}
 						break;
 					case "join" :
 						new PlayerVPlayer(event.getAuthor().getId(), event);
