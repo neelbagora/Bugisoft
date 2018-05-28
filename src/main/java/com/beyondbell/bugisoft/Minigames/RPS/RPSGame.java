@@ -24,7 +24,7 @@ public class RPSGame {
 			computerRoundsWins.put(event.getAuthor().getId(), 0);
 		}
 
-		if(new RockPaperScissors(event.getMessage().getContentRaw().substring(1)).calculateScores()) {
+		if(new RockPaperScissors(event.getMessage().getContentRaw().substring(1)).calculateComputer()) {
 			userRoundWins.put(event.getAuthor().getId(), userRoundWins.get(event.getAuthor().getId()) + 1);
 			event.getChannel().sendMessage("User won the round").queue();
 		} else {

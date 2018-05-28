@@ -5,8 +5,10 @@ import com.beyondbell.bugisoft.EventHandling.EventHandler;
 import com.beyondbell.bugisoft.Logger.Commands.Report;
 import com.beyondbell.bugisoft.Logger.LoggerDatabase;
 import com.beyondbell.bugisoft.Minigames.GameHandler;
+import com.beyondbell.bugisoft.Minigames.RPS.PlayerVPlayer;
 import com.beyondbell.bugisoft.Minigames.RPS.RPSGame;
 import com.beyondbell.bugisoft.Minigames.RPS.RockPaperScissors;
+import com.beyondbell.bugisoft.Minigames.RPS.UserNotInGameException;
 import com.beyondbell.bugisoft.Music.Commands.ListQueue;
 import com.beyondbell.bugisoft.Music.Commands.PausePlayer;
 import com.beyondbell.bugisoft.Music.Commands.PlaySong;
@@ -26,6 +28,7 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 	public GuildMessageReceivedEventHandler(final GuildMessageReceivedEvent event) {
 		super();
 		this.event = event;
+		
 		if(event.getMessage().getContentRaw().toLowerCase().contains("$rock") || event.getMessage().getContentRaw().toLowerCase().contains("$scissors") || event.getMessage().getContentRaw().contains("$paper")) {
 			new GameHandler(event.getAuthor().getId(), event);
 		}
@@ -184,6 +187,17 @@ public final class GuildMessageReceivedEventHandler extends EventHandler {
 					case "quit" :
 						new GameHandler(event.getAuthor().getId(), event);
 						new GameHandler(event.getAuthor().getId(), false);
+						break;
+					case "join" :
+						new PlayerVPlayer(event.getAuthor().getId(), event);
+						break;
+					case "leave" :
+						try {
+							new PlayerVPlayer(event.getAuthor().getId());
+							event.getChannel().sendMessage("User left game").queue();
+						} catch (UserNotInGameException e) {
+							event.getChannel().sendMessage("User is not in a game").queue();
+						}
 						break;
 					default:
 						break;
