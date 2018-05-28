@@ -1,5 +1,6 @@
 package com.beyondbell.bugisoft.Minigames.RPS;
 
+/*
 public class PlayerResponses {
 
 	private static 
@@ -7,3 +8,4 @@ public class PlayerResponses {
 
 	}
 }
+*/
