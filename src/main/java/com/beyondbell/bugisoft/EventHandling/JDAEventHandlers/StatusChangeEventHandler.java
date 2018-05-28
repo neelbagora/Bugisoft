@@ -14,6 +14,6 @@ final class StatusChangeEventHandler extends EventHandler {
 
 	@Override
 	protected final void handle() {
-		Bot.LOGGER.info(event.toString());
+		Bot.LOGGER.trace(event.toString());
 	}
 }
