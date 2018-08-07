@@ -1,6 +1,9 @@
 package com.beyondbell.bugisoft
 
 object Bot {
+    val SETTINGS = Properties()
+    val LOGGER: Logger = LogManager.getRootLogger()
+
     @JvmStatic
     fun main(args: Array<String>) {
         // Reads Tokens
