@@ -10,11 +10,25 @@ object Bot {
     @JvmStatic
     fun main(args: Array<String>) {
         // Reads Tokens
+        val tokenValues = try {
+            readTokens(args)
+        } catch (e: IllegalArgumentException) {
+            return
+        }
+
         // Checks if Help was Requested
         // Checks if Version was Requested
         // Checks for Update
         // Loads Settings
         // Loads Token
         // Loads Bot
+
+    private fun readTokens(args: Array<String>): HashMap<Token, String> {
+        val tokens = HashMap<Token, String>()
+
+        //throw IllegalArgumentException()
+
+        return tokens
+    }
     }
 }
