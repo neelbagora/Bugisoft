@@ -6,5 +6,12 @@ import net.dv8tion.jda.core.hooks.EventListener
 
 object EventHandler : EventListener {
     override fun onEvent(event: Event?) {
+        if (event != null) {
+            Thread(Runnable { handle(event) }).start()
+        }
+    }
+
+    private fun handle(event: Event) {
+        }
     }
 }
