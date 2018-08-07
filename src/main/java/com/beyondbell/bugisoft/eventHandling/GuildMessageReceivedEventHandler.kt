@@ -1,5 +1,6 @@
 package com.beyondbell.bugisoft.eventHandling
 
+import com.beyondbell.bugisoft.utilities.getParameters
 import net.dv8tion.jda.core.entities.Message
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent
 
@@ -18,4 +19,6 @@ fun handleGuildMessageReceivedEvent(event: GuildMessageReceivedEvent) {
     if (event.message.contentRaw[0] != '!') {
         return
     }
+
+    val parameters = getParameters(event.message.contentRaw)
 }
