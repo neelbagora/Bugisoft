@@ -46,6 +46,14 @@ object Bot {
         loadSettings(tokenValues.getOrDefault(Token.SettingsFileLocation, DEFAULT_SETTINGS_FILE_NAME))
 
         // Loads Token
+        val botProperties = try {
+            readToken(tokenValues.getOrDefault(Token.TokenFile, DEFAULT_TOKEN_FILE_NAME))
+        } catch (e: IOException) {
+            LOGGER.fatal("Cannot Find Token File! Creating Empty Token File. Please Populate It.")
+            createEmptyTokenFile()
+            return
+        }
+
         // Loads Bot
 
     private fun readTokens(args: Array<String>): HashMap<Token, String> {
@@ -87,6 +95,23 @@ object Bot {
     private fun createNewSettingsFile() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    private fun readToken(tokenFile: String): Properties {
+        val botProperties = Properties()
+        try {
+            val botPropertiesFile = FileInputStream(tokenFile)
+            botProperties.load(botPropertiesFile)
+            botPropertiesFile.close()
+        } catch (e: IOException) {
+            throw e
+        }
+        return botProperties
+    }
+
+    private fun createEmptyTokenFile() {
+        TODO("Create an Empty Token File")
+    }
+
     enum class Token {
         Help, Version, NoUpdate,
         TokenFile, SettingsFileLocation
