@@ -34,6 +34,12 @@ object Bot {
 
         // Checks for Update
         if (!tokenValues.containsKey(Token.NoUpdate)) {
+            if (hasUpdate()) {
+                update()
+                return
+            }
+        }
+
         // Loads Settings
         // Loads Token
         // Loads Bot
@@ -52,6 +58,10 @@ object Bot {
 
     private fun displayVersion() {
         TODO("Display the Bot's Version")
+    }
+
+    private fun hasUpdate(): Boolean {
+        return false
     }
     enum class Token {
         Help, Version, NoUpdate,
