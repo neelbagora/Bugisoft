@@ -5,7 +5,6 @@ import net.dv8tion.jda.core.requests.restaction.InviteAction
 import java.util.concurrent.TimeUnit
 
 object Invite {
-    @JvmStatic
     fun createInvite(event: GuildMessageReceivedEvent, timeout: Int) {
         // Sends invite
         val message = event.channel.sendMessage(
