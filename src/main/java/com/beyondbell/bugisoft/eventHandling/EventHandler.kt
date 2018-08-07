@@ -12,6 +12,8 @@ object EventHandler : EventListener {
     }
 
     private fun handle(event: Event) {
+        if (event is GuildMessageReceivedEvent) {
+            handleGuildMessageReceivedEvent(event)
         }
     }
 }
