@@ -27,7 +27,13 @@ object Bot {
         }
 
         // Checks if Version was Requested
+        if (tokenValues.containsKey(Token.Version)) {
+            displayVersion()
+            return
+        }
+
         // Checks for Update
+        if (!tokenValues.containsKey(Token.NoUpdate)) {
         // Loads Settings
         // Loads Token
         // Loads Bot
@@ -42,6 +48,10 @@ object Bot {
 
     private fun displayHelp() {
         TODO("Display Arguments Help")
+    }
+
+    private fun displayVersion() {
+        TODO("Display the Bot's Version")
     }
     enum class Token {
         Help, Version, NoUpdate,
