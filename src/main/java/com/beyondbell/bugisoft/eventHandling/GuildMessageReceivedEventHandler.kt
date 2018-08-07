@@ -2,8 +2,8 @@ package com.beyondbell.bugisoft.eventHandling
 
 import com.beyondbell.bugisoft.DEFAULT_INVITE_TIME
 import com.beyondbell.bugisoft.invite.Invite
+import com.beyondbell.bugisoft.utilities.deleteMessage
 import com.beyondbell.bugisoft.utilities.getParameters
-import net.dv8tion.jda.core.entities.Message
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent
 
 fun handleGuildMessageReceivedEvent(event: GuildMessageReceivedEvent) {
@@ -36,6 +36,7 @@ fun handleGuildMessageReceivedEvent(event: GuildMessageReceivedEvent) {
                 } else {
                     Invite.createInvite(event, DEFAULT_INVITE_TIME)
                 }
+                deleteMessage(event.message)
             }
         }
     }
