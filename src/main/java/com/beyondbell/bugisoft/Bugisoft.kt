@@ -15,10 +15,17 @@ object Bot {
         val tokenValues = try {
             readTokens(args)
         } catch (e: IllegalArgumentException) {
+            // Displays Help if Tokens are Wrong
+            displayHelp()
             return
         }
 
         // Checks if Help was Requested
+        if (tokenValues.containsKey(Token.Help)) {
+            displayHelp()
+            return
+        }
+
         // Checks if Version was Requested
         // Checks for Update
         // Loads Settings
@@ -31,6 +38,10 @@ object Bot {
         //throw IllegalArgumentException()
 
         return tokens
+    }
+
+    private fun displayHelp() {
+        TODO("Display Arguments Help")
     }
     enum class Token {
         Help, Version, NoUpdate,
