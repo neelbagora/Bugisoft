@@ -63,6 +63,10 @@ object Bot {
     private fun hasUpdate(): Boolean {
         return false
     }
+
+    private fun update() {
+        TODO("Update the Bot")
+    }
     enum class Token {
         Help, Version, NoUpdate,
         TokenFile, SettingsFileLocation
