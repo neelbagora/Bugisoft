@@ -1,10 +1,13 @@
 package com.beyondbell.bugisoft
 
+import net.dv8tion.jda.core.AccountType
+import net.dv8tion.jda.core.JDABuilder
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import java.io.FileInputStream
 import java.io.IOException
 import java.util.*
+import javax.security.auth.login.LoginException
 import kotlin.collections.HashMap
 
 object Bot {
@@ -55,6 +58,19 @@ object Bot {
         }
 
         // Loads Bot
+        try {
+            JDABuilder(AccountType.BOT)
+                    .setToken(botProperties.getProperty("token"))
+                    .setAutoReconnect(true)
+                    .setAudioEnabled(false)
+//                    .setAudioEnabled(true)
+//                    .setAudioSendFactory(NativeAudioSendFactory())
+                    .setCompressionEnabled(false)
+                    .build()
+        } catch (e: LoginException) {
+            LOGGER.fatal("Please Place the Correct Token Inside of the Bot Properties File")
+        }
+    }
 
     private fun readTokens(args: Array<String>): HashMap<Token, String> {
         val tokens = HashMap<Token, String>()
