@@ -1,5 +1,6 @@
 package com.beyondbell.bugisoft
 
+import com.beyondbell.bugisoft.eventHandling.EventHandler
 import net.dv8tion.jda.core.AccountType
 import net.dv8tion.jda.core.JDABuilder
 import org.apache.logging.log4j.LogManager
@@ -62,6 +63,7 @@ object Bot {
             JDABuilder(AccountType.BOT)
                     .setToken(botProperties.getProperty("token"))
                     .setAutoReconnect(true)
+                    .addEventListener(EventHandler)
                     .setAudioEnabled(false)
 //                    .setAudioEnabled(true)
 //                    .setAudioSendFactory(NativeAudioSendFactory())
