@@ -3,6 +3,8 @@ package com.beyondbell.bugisoft
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import java.util.*
+import kotlin.collections.HashMap
+
 object Bot {
     val SETTINGS = Properties()
     val LOGGER: Logger = LogManager.getRootLogger()
@@ -30,5 +32,8 @@ object Bot {
 
         return tokens
     }
+    enum class Token {
+        Help, Version, NoUpdate,
+        TokenFile, SettingsFileLocation
     }
 }
