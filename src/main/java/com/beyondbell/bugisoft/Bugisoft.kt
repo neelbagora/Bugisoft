@@ -2,6 +2,8 @@ package com.beyondbell.bugisoft
 
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
+import java.io.FileInputStream
+import java.io.IOException
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -41,6 +43,8 @@ object Bot {
         }
 
         // Loads Settings
+        loadSettings(tokenValues.getOrDefault(Token.SettingsFileLocation, DEFAULT_SETTINGS_FILE_NAME))
+
         // Loads Token
         // Loads Bot
 
@@ -66,6 +70,18 @@ object Bot {
 
     private fun update() {
         TODO("Update the Bot")
+    }
+
+    private fun loadSettings(file: String) {
+        try {
+            val botSettingsFile = FileInputStream(file)
+            SETTINGS.load(botSettingsFile)
+            botSettingsFile.close()
+        } catch (e: IOException) {
+            LOGGER.warn("Cannot Find Settings File! Creating a Blank One!")
+            createNewSettingsFile()
+            loadSettings(file)
+        }
     }
     enum class Token {
         Help, Version, NoUpdate,
