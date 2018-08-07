@@ -33,3 +33,4 @@ token
 *.MF
 settings
 logs/
+target/
