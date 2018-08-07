@@ -40,5 +40,3 @@ fun handleGuildMessageReceivedEvent(event: GuildMessageReceivedEvent) {
         }
     }
 }
-
-}
