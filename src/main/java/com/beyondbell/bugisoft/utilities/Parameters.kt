@@ -1,7 +1,5 @@
 package com.beyondbell.bugisoft.utilities
 
-import java.util.*
-
 fun getParameters(input: String) : Array<String> {
     val parameters = ArrayList<String>()
 
