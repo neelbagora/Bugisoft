@@ -110,7 +110,7 @@ object Bot {
         }
     }
 
-    private fun createNewSettingsFile() {
+    private fun createNewSettingsFile(file: String) {
         TODO("Create a New Settings File")
     }
 
@@ -126,7 +126,7 @@ object Bot {
         return botProperties
     }
 
-    private fun createEmptyTokenFile() {
+    private fun createEmptyTokenFile(file: String) {
         TODO("Create an Empty Token File")
     }
 
