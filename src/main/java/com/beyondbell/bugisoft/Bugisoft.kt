@@ -4,7 +4,6 @@ import com.beyondbell.bugisoft.eventHandling.EventHandler
 import net.dv8tion.jda.core.AccountType
 import net.dv8tion.jda.core.JDABuilder
 import org.apache.logging.log4j.LogManager
-import org.apache.logging.log4j.Logger
 import java.io.FileInputStream
 import java.io.IOException
 import java.util.Properties
@@ -12,7 +11,7 @@ import javax.security.auth.login.LoginException
 import kotlin.collections.HashMap
 
 object Bot {
-    val LOGGER: Logger = LogManager.getRootLogger()
+    val LOGGER = LogManager.getRootLogger()
     val SETTINGS = Properties()
 
     @JvmStatic
