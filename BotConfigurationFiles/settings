@@ -1,7 +1,1 @@
 #Bot Settings File
-profanityFilter=false
-badWordsFile=badwords
-log=false
-temporaryChannelsCategory=Other Games
-hub=Hub
-lobby=Lobby
