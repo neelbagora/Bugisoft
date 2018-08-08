@@ -54,7 +54,7 @@ object Bot {
             readToken(tokenValues.getOrDefault(Token.TokenFile, DEFAULT_TOKEN_FILE_NAME))
         } catch (e: IOException) {
             LOGGER.fatal("Cannot Find Token File! Creating Empty Token File. Please Populate It.")
-            createEmptyTokenFile()
+            createEmptyTokenFile(tokenValues.getOrDefault(Token.TokenFile, DEFAULT_TOKEN_FILE_NAME))
             return
         }
 
@@ -105,7 +105,7 @@ object Bot {
             botSettingsFile.close()
         } catch (e: IOException) {
             LOGGER.warn("Cannot Find Settings File! Creating a Blank One!")
-            createNewSettingsFile()
+            createNewSettingsFile(file)
             loadSettings(file)
         }
     }
