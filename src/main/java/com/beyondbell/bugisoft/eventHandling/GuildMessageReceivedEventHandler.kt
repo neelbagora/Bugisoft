@@ -40,7 +40,7 @@ fun handleGuildMessageReceivedEvent(event: GuildMessageReceivedEvent) {
                     event.message.delete().queue()
                 }
                 "ping" -> {
-                    Ping.ping()
+                    Ping.ping(event)
                     event.message.delete().queue()
                 }
             }
