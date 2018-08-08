@@ -1,4 +1,4 @@
-#Settings
+#Bot Settings File
 profanityFilter=false
 badWordsFile=badwords
 log=false
