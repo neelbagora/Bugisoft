@@ -1,36 +1,16 @@
-# Compiled class file
+# Build File
 *.class
-
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
+*.MF
+target/
 *.jar
-*.war
-*.ear
-*.zip
-*.tar.gz
-*.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
 
 # IntelliJ
 .idea
 *.iml
 
-# User Files
-users/
-
-# Bot Token File
+# Bot Configuration File
 token
-*.MF
 settings
+
+# Runtime Files
 logs/
-target/
