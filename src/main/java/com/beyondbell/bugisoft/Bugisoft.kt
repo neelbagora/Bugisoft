@@ -111,7 +111,7 @@ object Bot {
     }
 
     private fun createNewSettingsFile() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("Create a New Settings File")
     }
 
     private fun readToken(tokenFile: String): Properties {
