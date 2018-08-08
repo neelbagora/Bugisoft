@@ -12,8 +12,8 @@ import javax.security.auth.login.LoginException
 import kotlin.collections.HashMap
 
 object Bot {
-    val SETTINGS = Properties()
     val LOGGER: Logger = LogManager.getRootLogger()
+    val SETTINGS = Properties()
 
     @JvmStatic
     fun main(args: Array<String>) {
