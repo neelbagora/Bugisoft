@@ -1,9 +1,10 @@
 package com.beyondbell.bugisoft.ping
 
 import com.beyondbell.bugisoft.MAX_CONCURRENT_PING_REQUESTS
+import com.beyondbell.bugisoft.utilities.ErrorMessage
+import com.beyondbell.bugisoft.utilities.sendErrorMessage
 import net.dv8tion.jda.core.EmbedBuilder
 import net.dv8tion.jda.core.JDA
-import net.dv8tion.jda.core.entities.TextChannel
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent
 import net.dv8tion.jda.core.hooks.ListenerAdapter
 import java.util.concurrent.TimeUnit
@@ -19,7 +20,7 @@ object Ping : ListenerAdapter() {
             times[id] = System.currentTimeMillis()
             event.channel.sendMessage("Ping Request: $id").queue()
         } else {
-            printErrorMessage(event.channel)
+            sendErrorMessage(ErrorMessage.PingLimitReached, event.channel)
         }
     }
 
@@ -41,11 +42,6 @@ object Ping : ListenerAdapter() {
 
             changeListenerStatus(event.jda, false)
         }
-    }
-
-    private fun printErrorMessage(channel: TextChannel) {
-        val message = channel.sendMessage("Sorry, the Ping Limit has Been Reached. Please Wait Until Other Requests are Handled Before Trying Again.").complete()
-        message.delete().queueAfter(10, TimeUnit.SECONDS)
     }
 
     @Synchronized
