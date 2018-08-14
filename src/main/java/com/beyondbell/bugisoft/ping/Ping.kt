@@ -26,17 +26,15 @@ object Ping : ListenerAdapter() {
 
     override fun onGuildMessageReceived(event: GuildMessageReceivedEvent) {
         if (event.author.isBot && event.message.contentRaw.startsWith("Ping Request: ")) {
-            event.message.delete().queue()
-
             val totalPing = System.currentTimeMillis() - times[Integer.valueOf(event.message.contentRaw.removePrefix("Ping Request: "))] as Long
 
-            val message = event.channel.sendMessage(EmbedBuilder()
+            event.message.editMessage(EmbedBuilder()
                     .setTitle("Ping Request Receipt")
                     .addField("Current Total Ping", totalPing.toString(), true)
                     .addField("First Gateway Ping", event.jda.ping.toString(), true)
                     .addField("Estimated Server Ping", (totalPing - event.jda.ping).toString(), true)
-                    .build()).complete()
-            message.delete().queueAfter(1, TimeUnit.HOURS)
+                    .build()).queue()
+            event.message.delete().queueAfter(1, TimeUnit.HOURS)
 
             times.remove(Integer.valueOf(event.message.contentRaw.removePrefix("Ping Request: ")))
 
