@@ -1,7 +1,7 @@
 package com.beyondbell.bugisoft.eventHandling
 
 import com.beyondbell.bugisoft.DEFAULT_INVITE_TIME
-import com.beyondbell.bugisoft.invite.Invite
+import com.beyondbell.bugisoft.invite.createInvite
 import com.beyondbell.bugisoft.ping.Ping
 import com.beyondbell.bugisoft.utilities.getParameters
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent
@@ -30,12 +30,12 @@ fun handleGuildMessageReceivedEvent(event: GuildMessageReceivedEvent) {
                 "invite" -> {
                     if (parameters.size == 3) {
                         try {
-                            Invite.createInvite(event, Integer.parseInt(parameters[2]))
+                            createInvite(event, Integer.parseInt(parameters[2]))
                         } catch (e: NumberFormatException) {
-                            Invite.createInvite(event, DEFAULT_INVITE_TIME)
+                            createInvite(event, DEFAULT_INVITE_TIME)
                         }
                     } else {
-                        Invite.createInvite(event, DEFAULT_INVITE_TIME)
+                        createInvite(event, DEFAULT_INVITE_TIME)
                     }
                     event.message.delete().queue()
                 }
