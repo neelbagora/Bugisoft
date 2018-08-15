@@ -1,4 +1,3 @@
 package com.beyondbell.bugisoft.user
 
-class BugisoftUser {
-}
+class BugisoftUser(val id: Long)
