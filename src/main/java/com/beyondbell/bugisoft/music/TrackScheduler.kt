@@ -5,9 +5,14 @@ import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason
+import java.util.concurrent.BlockingQueue
+import java.util.concurrent.LinkedBlockingQueue
+import org.apache.logging.log4j.ThreadContext.peek
 
 
-class TrackScheduler : AudioEventAdapter() {
+class TrackScheduler(private val player: AudioPlayer) : AudioEventAdapter() {
+    private val queue: BlockingQueue<AudioTrack> = LinkedBlockingQueue()
+
     override fun onPlayerPause(player: AudioPlayer) {
         // Player was paused
     }
@@ -39,5 +44,25 @@ class TrackScheduler : AudioEventAdapter() {
 
     override fun onTrackStuck(player: AudioPlayer, track: AudioTrack, thresholdMs: Long) {
         // Audio track has been unable to provide us any audio, might want to just start a new track
+        
+    }
+
+    fun nextTrack() {
+        player.startTrack(queue.poll(), false)
+    }
+
+    fun queue(track: AudioTrack) {
+        if (!player.startTrack(track, true)) {
+            queue.offer(track)
+        }
+    }
+
+    fun skip(numberToSkip: Int) {
+        var i = 0
+        while (i < numberToSkip - 1 && i < queue.size() - 1) {
+            queue.remove(queue.peek())
+            i++
+        }
+        nextTrack()
     }
 }
