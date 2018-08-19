@@ -4,17 +4,18 @@ import com.beyondbell.bugisoft.utilities.ErrorMessage
 import com.beyondbell.bugisoft.utilities.sendErrorMessage
 import com.sedmelluq.discord.lavaplayer.format.StandardAudioDataFormats
 import com.sedmelluq.discord.lavaplayer.player.AudioConfiguration
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers
 import net.dv8tion.jda.core.entities.Guild
 import net.dv8tion.jda.core.entities.User
 import net.dv8tion.jda.core.entities.VoiceChannel
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent
-import net.dv8tion.jda.core.managers.AudioManager
+import java.util.HashMap
 
 object Music {
 	private val playerManager = DefaultAudioPlayerManager()
-	private val audioPlayers = HashMap<Long, AudioManager>()
+	private val audioPlayers = HashMap<Long, GuildMusicManager>()
 
 	init {
 		playerManager.configuration.opusEncodingQuality = AudioConfiguration.OPUS_QUALITY_MAX
@@ -25,6 +26,11 @@ object Music {
 	}
 
 	fun join(event: GuildMessageReceivedEvent) {
+		// Checks if Already Connected or Trying
+		if (event.guild.audioManager.isConnected || event.guild.audioManager.isAttemptingToConnect) {
+			return
+		}
+
 		// Finds User's Voice Channel
 		val voiceChannel = getVoiceChannel(event.guild, event.author)
 		if (voiceChannel == null) {
@@ -37,37 +43,51 @@ object Music {
 
 		// Joins User's Voice Channel
 		event.guild.audioManager.openAudioConnection(voiceChannel)
-
-		val player = audioPlayers.getOrPut(event.guild.idLong, )
-		event.guild.audioManager.sendingHandler = AudioPlayerSendHandler()
-
-
+		event.guild.audioManager.sendingHandler = getGuildMusicManager(event.guild.idLong).getSendHandler()
 	}
 
-	fun play(event: GuildMessageReceivedEvent) {
-
+	fun leave(event: GuildMessageReceivedEvent) {
+		event.guild.audioManager.closeAudioConnection()
 	}
 
-	fun skip(event: GuildMessageReceivedEvent) {
-
+	fun play(event: GuildMessageReceivedEvent, songContext: Array<String>) {
+		val guildMusicManager = getGuildMusicManager(event.guild.idLong)
+		playerManager.loadItemOrdered(guildMusicManager.audioPlayer, TrackFinder.getAudioTrackURLFromString(songContext), AudioResultHandler(guildMusicManager))
+		join(event)
 	}
 
-	fun stop(event: GuildMessageReceivedEvent) {
-
+	fun skip(guildId: Long, count: Int) {
+		val guildMusicManager = getGuildMusicManager(guildId)
+		guildMusicManager.trackScheduler.skip(count, guildMusicManager.audioPlayer)
 	}
 
-	fun shuffle(event: GuildMessageReceivedEvent) {
-
+	fun clear(guildId: Long) {
+		getGuildMusicManager(guildId).trackScheduler.clear()
 	}
 
-	fun toggleRepeatMode(event: GuildMessageReceivedEvent) {
+	fun shuffle(guildId: Long) {
+		getGuildMusicManager(guildId).trackScheduler.shuffle()
+	}
 
+	fun toggleRepeatMode(guildId: Long) {
+		getGuildMusicManager(guildId).trackScheduler.toggleRepeat()
+	}
+
+	fun getNewPlayer(): AudioPlayer {
+		return playerManager.createPlayer()
+	}
+
+	@Synchronized
+	fun getGuildMusicManager(guildId: Long): GuildMusicManager {
+		return audioPlayers.getOrPut(guildId) {
+			GuildMusicManager()
+		}
 	}
 
 	private fun getVoiceChannel(guild: Guild, user: User): VoiceChannel? {
 		for (voiceChannel in guild.voiceChannels) {
 			for (voiceUser in voiceChannel.members) {
-				if (user == voiceUser) {
+				if (user == voiceUser.user) {
 					return voiceChannel
 				}
 			}

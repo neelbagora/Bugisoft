@@ -14,3 +14,4 @@ settings
 
 # Runtime Files
 logs/
+client_secret.json

@@ -8,60 +8,76 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingQueue
 
-
-class TrackScheduler(private val player: AudioPlayer) : AudioEventAdapter() {
+class TrackScheduler : AudioEventAdapter() {
 	private val queue: BlockingQueue<AudioTrack> = LinkedBlockingQueue()
+	private lateinit var currentSong: AudioTrack
+
+	private var repeat: Boolean = false
 
 	override fun onPlayerPause(player: AudioPlayer) {
-		// Player was paused
+
 	}
 
 	override fun onPlayerResume(player: AudioPlayer) {
-		// Player was resumed
+
 	}
 
 	override fun onTrackStart(player: AudioPlayer, track: AudioTrack) {
-		// A track started playing
+
 	}
 
 	override fun onTrackEnd(player: AudioPlayer, track: AudioTrack, endReason: AudioTrackEndReason) {
 		if (endReason.mayStartNext) {
-			// Start next track
+			if (repeat) {
+				player.playTrack(currentSong)
+			} else {
+				currentSong = queue.take()
+				player.playTrack(currentSong)
+			}
 		}
-
-		// endReason == FINISHED: A track finished or died by an exception (mayStartNext = true).
-		// endReason == LOAD_FAILED: Loading of a track failed (mayStartNext = true).
-		// endReason == STOPPED: The player was stopped.
-		// endReason == REPLACED: Another track started playing while this had not finished
-		// endReason == CLEANUP: Player hasn't been queried for a while, if you want you can put a
-		//                       clone of this back to your queue
 	}
 
 	override fun onTrackException(player: AudioPlayer, track: AudioTrack, exception: FriendlyException) {
-		// An already playing track threw an exception (track end event will still be received separately)
+		exception.printStackTrace()
 	}
 
 	override fun onTrackStuck(player: AudioPlayer, track: AudioTrack, thresholdMs: Long) {
-		// Audio track has been unable to provide us any audio, might want to just start a new track
-
+		queue.take()
 	}
 
-	fun nextTrack() {
-		player.startTrack(queue.poll(), false)
-	}
-
-	fun queue(track: AudioTrack) {
-		if (!player.startTrack(track, true)) {
-			queue.offer(track)
+	fun queue(audioTrack: AudioTrack, audioPlayer: AudioPlayer) {
+		if (!audioPlayer.startTrack(audioTrack, true)) {
+			queue.put(audioTrack)
 		}
 	}
 
-	fun skip(numberToSkip: Int) {
-		var i = 0
-		while (i < numberToSkip - 1 && i < queue.size() - 1) {
-			queue.remove(queue.peek())
-			i++
+	fun skip(count: Int, audioPlayer: AudioPlayer) {
+		for (i in 1 until count) {
+			if (queue.size == 0) {
+				break
+			} else {
+				System.out.println("Skipped: " + queue.peek())
+				queue.remove()
+			}
 		}
-		nextTrack()
+		audioPlayer.stopTrack()
+		audioPlayer.startTrack(queue.take(), true)
+	}
+
+	fun clear() {
+		queue.clear()
+	}
+
+	fun toggleRepeat() {
+		repeat = !repeat
+	}
+
+	@Synchronized
+	fun shuffle() {
+		val shuffledQueue = queue.shuffled()
+		queue.clear()
+		shuffledQueue.iterator().forEach {
+			queue.put(it)
+		}
 	}
 }

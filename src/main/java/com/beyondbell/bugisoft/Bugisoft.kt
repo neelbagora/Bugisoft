@@ -1,6 +1,7 @@
 package com.beyondbell.bugisoft
 
 import com.beyondbell.bugisoft.eventHandling.EventHandler
+import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory
 import net.dv8tion.jda.core.AccountType
 import net.dv8tion.jda.core.JDABuilder
 import org.apache.logging.log4j.LogManager
@@ -63,8 +64,8 @@ object Bot {
 					.setAutoReconnect(true)
 					.addEventListener(EventHandler)
 					.setAudioEnabled(false)
-//                    .setAudioEnabled(true)
-//                    .setAudioSendFactory(NativeAudioSendFactory())
+					.setAudioEnabled(true)
+					.setAudioSendFactory(NativeAudioSendFactory())
 					.setCompressionEnabled(false)
 					.build()
 		} catch (e: LoginException) {
