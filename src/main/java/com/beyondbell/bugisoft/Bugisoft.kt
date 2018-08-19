@@ -10,7 +10,7 @@ import java.io.IOException
 import java.util.Properties
 import javax.security.auth.login.LoginException
 
-object Bot {
+object Bugisoft {
 	val LOGGER = LogManager.getRootLogger()
 	val SETTINGS = Properties()
 
