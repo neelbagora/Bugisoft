@@ -1,6 +1,9 @@
 package com.beyondbell.bugisoft.eventHandling
 
 import com.beyondbell.bugisoft.DEFAULT_INVITE_TIME
+import com.beyondbell.bugisoft.chatModeration.delete
+import com.beyondbell.bugisoft.chatModeration.preventSpam
+import com.beyondbell.bugisoft.chatModeration.temporaryMute
 import com.beyondbell.bugisoft.invite.createInvite
 import com.beyondbell.bugisoft.music.Music
 import com.beyondbell.bugisoft.ping.Ping
@@ -12,6 +15,9 @@ fun handleGuildMessageReceivedEvent(event: GuildMessageReceivedEvent) {
 	if (event.message.contentRaw.isEmpty()) {
 		return
 	}
+
+	// Checks for Spam
+	preventSpam(event)
 
 	// Checks if It is Bot
 	if (event.author.isBot) {
@@ -44,6 +50,21 @@ fun handleGuildMessageReceivedEvent(event: GuildMessageReceivedEvent) {
 					event.message.delete().queue()
 					Ping.ping(event)
 				}
+				"delete" -> {
+					event.message.delete().queue()
+					when {
+						parameters.size == 2 -> delete(event, 1, 1)
+						parameters.size == 3 -> delete(event, Integer.valueOf(parameters[2]), 1)
+						parameters.size == 4 -> delete(event, Integer.valueOf(parameters[2]), Integer.valueOf(parameters[3]))
+					}
+				}
+				"mute" -> {
+					event.message.delete().queue()
+					when (parameters[2]) {
+						"true" -> temporaryMute(event, true)
+						"false" -> temporaryMute(event, false)
+					}
+				}
 			}
 		}
 		";" -> {
@@ -64,23 +85,27 @@ fun handleGuildMessageReceivedEvent(event: GuildMessageReceivedEvent) {
 				}
 				"clear" -> {
 					event.message.delete().queue()
-					Music.clear(event.guild.idLong)
+					Music.clear(event)
 				}
 				"skip" -> {
 					event.message.delete().queue()
 					if (parameters.size > 2) {
-						Music.skip(event.guild.idLong, Integer.valueOf(parameters[2]))
+						Music.skip(event, Integer.valueOf(parameters[2]))
 					} else {
-						Music.skip(event.guild.idLong, 1)
+						Music.skip(event, 1)
 					}
 				}
 				"shuffle" -> {
 					event.message.delete().queue()
-					Music.shuffle(event.guild.idLong)
+					Music.shuffle(event)
 				}
 				"repeat" -> {
 					event.message.delete().queue()
-					Music.toggleRepeatMode(event.guild.idLong)
+					Music.toggleRepeatMode(event)
+				}
+				"list" -> {
+					event.message.delete().queue()
+					Music.list(event)
 				}
 			}
 		}

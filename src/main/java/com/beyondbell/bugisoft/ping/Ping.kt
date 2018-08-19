@@ -33,7 +33,7 @@ object Ping : ListenerAdapter() {
 					.addField("Current Total Ping", totalPing.toString(), true)
 					.addField("First Gateway Ping", event.jda.ping.toString(), true)
 					.addField("Estimated Server Ping", (totalPing - event.jda.ping).toString(), true)
-					.build()).queue()
+					.build()).complete()
 			event.message.delete().queueAfter(1, TimeUnit.HOURS)
 
 			times.remove(Integer.valueOf(event.message.contentRaw.removePrefix("Ping Request: ")))

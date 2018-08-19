@@ -52,25 +52,29 @@ object Music {
 
 	fun play(event: GuildMessageReceivedEvent, songContext: Array<String>) {
 		val guildMusicManager = getGuildMusicManager(event.guild.idLong)
-		playerManager.loadItemOrdered(guildMusicManager.audioPlayer, TrackFinder.getAudioTrackURLFromString(songContext), AudioResultHandler(guildMusicManager))
+		playerManager.loadItemOrdered(guildMusicManager.audioPlayer, TrackFinder.getAudioTrackURLFromString(songContext), AudioResultHandler(guildMusicManager, event.channel, songContext))
 		join(event)
 	}
 
-	fun skip(guildId: Long, count: Int) {
-		val guildMusicManager = getGuildMusicManager(guildId)
-		guildMusicManager.trackScheduler.skip(count, guildMusicManager.audioPlayer)
+	fun skip(event: GuildMessageReceivedEvent, count: Int) {
+		val guildMusicManager = getGuildMusicManager(event.guild.idLong)
+		guildMusicManager.trackScheduler.skip(count, guildMusicManager.audioPlayer, event.channel)
 	}
 
-	fun clear(guildId: Long) {
-		getGuildMusicManager(guildId).trackScheduler.clear()
+	fun clear(event: GuildMessageReceivedEvent) {
+		getGuildMusicManager(event.guild.idLong).trackScheduler.clear(event.channel)
 	}
 
-	fun shuffle(guildId: Long) {
-		getGuildMusicManager(guildId).trackScheduler.shuffle()
+	fun shuffle(event: GuildMessageReceivedEvent) {
+		getGuildMusicManager(event.guild.idLong).trackScheduler.shuffle(event.channel)
 	}
 
-	fun toggleRepeatMode(guildId: Long) {
-		getGuildMusicManager(guildId).trackScheduler.toggleRepeat()
+	fun toggleRepeatMode(event: GuildMessageReceivedEvent) {
+		getGuildMusicManager(event.guild.idLong).trackScheduler.toggleRepeat(event.channel)
+	}
+
+	fun list(event: GuildMessageReceivedEvent) {
+		getGuildMusicManager(event.guild.idLong).trackScheduler.list(event)
 	}
 
 	fun getNewPlayer(): AudioPlayer {

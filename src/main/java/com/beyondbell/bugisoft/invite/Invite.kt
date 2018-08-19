@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit
 
 fun createInvite(event: GuildMessageReceivedEvent, timeout: Int) {
 	// Sends invite
-	val message = event.channel.sendMessage(
+	event.channel.sendMessage(
 			event.author.name + " created the invite: "
 					+ InviteAction(event.jda, event.channel.id)
 					.setUnique(true)
@@ -15,7 +15,5 @@ fun createInvite(event: GuildMessageReceivedEvent, timeout: Int) {
 					.reason(event.author.name + " wanted an invite.")
 					.complete().url)
 			.complete()
-
-	// Deletes Message When it Expires
-	message.delete().queueAfter(timeout.toLong(), TimeUnit.MINUTES)
+			.delete().queueAfter(timeout.toLong(), TimeUnit.MINUTES)
 }
