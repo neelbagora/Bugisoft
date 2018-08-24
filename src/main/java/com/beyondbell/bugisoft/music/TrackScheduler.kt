@@ -13,6 +13,7 @@ import net.dv8tion.jda.core.entities.TextChannel
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingQueue
+import java.util.concurrent.TimeUnit
 
 class TrackScheduler : AudioEventAdapter() {
 	private val queue: BlockingQueue<AudioTrack> = LinkedBlockingQueue()
@@ -106,6 +107,7 @@ class TrackScheduler : AudioEventAdapter() {
 			}
 			max++
 		}
-		event.channel.sendMessage(embedBuilder.build()).queue()
+		event.channel.sendMessage(embedBuilder.build()).complete().delete()
+				.queueAfter(10, TimeUnit.SECONDS)
 	}
 }
