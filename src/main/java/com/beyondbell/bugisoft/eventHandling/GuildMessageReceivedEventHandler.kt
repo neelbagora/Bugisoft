@@ -83,6 +83,14 @@ fun handleGuildMessageReceivedEvent(event: GuildMessageReceivedEvent) {
 						Music.play(event, parameters.copyOfRange(2, parameters.size))
 					}
 				}
+				"pause" -> {
+					event.message.delete().queue()
+					Music.pause(event, true)
+				}
+				"unpause" -> {
+					event.message.delete().queue()
+					Music.pause(event, false)
+				}
 				"clear" -> {
 					event.message.delete().queue()
 					Music.clear(event)

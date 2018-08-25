@@ -1,5 +1,7 @@
 package com.beyondbell.bugisoft.music
 
+import com.beyondbell.bugisoft.DEFAULT_MESSAGE_TIMEOUT
+import com.beyondbell.bugisoft.DEFAULT_TIME_UNIT
 import com.beyondbell.bugisoft.utilities.ErrorMessage
 import com.beyondbell.bugisoft.utilities.sendErrorMessage
 import com.sedmelluq.discord.lavaplayer.format.StandardAudioDataFormats
@@ -54,6 +56,17 @@ object Music {
 		val guildMusicManager = getGuildMusicManager(event.guild.idLong)
 		playerManager.loadItemOrdered(guildMusicManager.audioPlayer, TrackFinder.getAudioTrackURLFromString(songContext), AudioResultHandler(guildMusicManager, event.channel, songContext))
 		join(event)
+	}
+
+	fun pause(event: GuildMessageReceivedEvent, shouldPause: Boolean) {
+		getGuildMusicManager(event.guild.idLong).audioPlayer.isPaused = shouldPause
+		if (shouldPause) {
+			event.channel.sendMessage("Player is Now Paused.").complete()
+					.delete().queueAfter(DEFAULT_MESSAGE_TIMEOUT, DEFAULT_TIME_UNIT)
+		} else {
+			event.channel.sendMessage("Player is Now Not Paused.").complete()
+					.delete().queueAfter(DEFAULT_MESSAGE_TIMEOUT, DEFAULT_TIME_UNIT)
+		}
 	}
 
 	fun skip(event: GuildMessageReceivedEvent, count: Int) {
