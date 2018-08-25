@@ -11,9 +11,10 @@ import java.io.IOException
 import java.util.Properties
 import javax.security.auth.login.LoginException
 
-fun main(args: Array<String>) {
-	val logger: Logger = LogManager.getRootLogger()
+val LOGGER: Logger = LogManager.getRootLogger()
+val SETTINGS = Properties()
 
+fun main(args: Array<String>) {
 	// Reads Tokens
 	val tokenValues = try {
 		readTokens(args)
@@ -50,7 +51,7 @@ fun main(args: Array<String>) {
 	val botProperties = try {
 		readToken(tokenValues.getOrDefault(Token.TokenFile, DEFAULT_TOKEN_FILE_NAME))
 	} catch (e: IOException) {
-		logger.fatal("Cannot Find Token File! Creating Empty Token File. Please Populate It.")
+		LOGGER.fatal("Cannot Find Token File! Creating Empty Token File. Please Populate It.")
 		createEmptyTokenFile(tokenValues.getOrDefault(Token.TokenFile, DEFAULT_TOKEN_FILE_NAME))
 		return
 	}
@@ -66,7 +67,7 @@ fun main(args: Array<String>) {
 				.setCompressionEnabled(false)
 				.build()
 	} catch (e: LoginException) {
-		logger.fatal("Please Place the Correct Token Inside of the Bot Properties File")
+		LOGGER.fatal("Please Place the Correct Token Inside of the Bot Properties File")
 	}
 }
 
