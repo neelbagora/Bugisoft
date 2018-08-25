@@ -61,7 +61,6 @@ fun main(args: Array<String>) {
 				.setToken(botProperties.getProperty("token"))
 				.setAutoReconnect(true)
 				.addEventListener(EventHandler)
-				.setAudioEnabled(false)
 				.setAudioEnabled(true)
 				.setAudioSendFactory(NativeAudioSendFactory())
 				.setCompressionEnabled(false)
