@@ -4,6 +4,8 @@ import com.beyondbell.bugisoft.eventHandling.EventHandler
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory
 import net.dv8tion.jda.core.AccountType
 import net.dv8tion.jda.core.JDABuilder
+import net.dv8tion.jda.core.OnlineStatus
+import net.dv8tion.jda.core.entities.Game
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import java.io.FileInputStream
@@ -60,11 +62,19 @@ fun main(args: Array<String>) {
 	try {
 		JDABuilder(AccountType.BOT)
 				.setToken(botProperties.getProperty("token"))
-				.setAutoReconnect(true)
 				.addEventListener(EventHandler)
 				.setAudioEnabled(true)
 				.setAudioSendFactory(NativeAudioSendFactory())
+				.setBulkDeleteSplittingEnabled(false)
+				.setAutoReconnect(true)
+				.setMaxReconnectDelay(32)
+				.setRequestTimeoutRetry(true)
 				.setCompressionEnabled(false)
+				.setContextEnabled(false)
+				.setCorePoolSize(1)
+				.setEnableShutdownHook(true)
+				.setGame(Game.playing("as a Sleeping Guard!"))
+				.setStatus(OnlineStatus.IDLE)
 				.build()
 	} catch (e: LoginException) {
 		LOGGER.fatal("Please Place the Correct Token Inside of the Bot Properties File")
