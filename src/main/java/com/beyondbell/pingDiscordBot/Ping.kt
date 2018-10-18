@@ -1,8 +1,5 @@
-package com.beyondbell.bugisoft.ping
+package com.beyondbell.pingDiscordBot
 
-import com.beyondbell.bugisoft.MAX_CONCURRENT_PING_REQUESTS
-import com.beyondbell.bugisoft.utilities.ErrorMessage
-import com.beyondbell.bugisoft.utilities.sendErrorMessage
 import net.dv8tion.jda.core.EmbedBuilder
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent
@@ -10,19 +7,8 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter
 import java.util.concurrent.TimeUnit
 
 object Ping : ListenerAdapter() {
-	private val times = HashMap<Int, Long>()
+	internal val times: Array<Long?> = arrayOf(null, null, null, null, null)
 	private var outboundRequests = 0
-
-	fun ping(event: GuildMessageReceivedEvent) {
-		val id = getNextId()
-		if (id != -1) {
-			changeListenerStatus(event.jda, true)
-			times[id] = System.currentTimeMillis()
-			event.channel.sendMessage("Ping Request: $id").queue()
-		} else {
-			sendErrorMessage(ErrorMessage.PingLimitReached, event.channel)
-		}
-	}
 
 	override fun onGuildMessageReceived(event: GuildMessageReceivedEvent) {
 		if (event.author.isBot && event.message.contentRaw.startsWith("Ping Request: ")) {
@@ -34,26 +20,24 @@ object Ping : ListenerAdapter() {
 					.addField("First Gateway Ping", event.jda.ping.toString(), true)
 					.addField("Estimated Server Ping", (totalPing - event.jda.ping).toString(), true)
 					.build()).complete()
-			event.message.delete().queueAfter(1, TimeUnit.HOURS)
+			event.message.delete().queueAfter(1, TimeUnit.MINUTES)
 
-			times.remove(Integer.valueOf(event.message.contentRaw.removePrefix("Ping Request: ")))
+			times[event.message.contentRaw.removePrefix("Ping Request: ").toInt()] = null
 
 			changeListenerStatus(event.jda, false)
 		}
 	}
 
-	@Synchronized
-	private fun getNextId(): Int {
-		for (i in 0 until MAX_CONCURRENT_PING_REQUESTS) {
-			if (!times.containsKey(i)) {
+	internal fun getNextId(): Int {
+		for (i in 0 until times.size) {
+			if (times[i] == null) {
 				return i
 			}
 		}
 		return -1
 	}
 
-	@Synchronized
-	private fun changeListenerStatus(jda: JDA, register: Boolean) {
+	internal fun changeListenerStatus(jda: JDA, register: Boolean) {
 		if (register) {
 			if (outboundRequests++ == 0) {
 				jda.addEventListener(this)
